@@ -84,19 +84,16 @@ class Song(object):
         self.chord_list = []
 
     def transpose_to_c(self, note):
-        if self.key and self.mode:
-            if self.mode == 'minor':
-                return (note - self.key - 3) % 12
-            else:
-                return (note - self.key) % 12
+        if self.mode == 'minor':
+            return (note - self.key - 3) % 12
+        else:
+            return (note - self.key) % 12
 
     def transpose_chord_to_c(self, note):
-        if self.key and self.mode:
-            if self.mode == 'minor':
-                return (note - 1 - self.key - 3) % 12 + 1
-            else:
-                return (note - 1 - self.key) % 12 + 1
-
+        if self.mode == 'minor':
+            return ((note - 1 - self.key - 3) % 12) + 1
+        else:
+            return ((note - 1 - self.key) % 12) + 1
 
     def get_X_and_y(self):
         '''
@@ -117,6 +114,7 @@ class Song(object):
         y.append(self.chord_list[0].pc)
         for chord in self.chord_list[1:]:
             x = []
+            print chord.pc, self.transpose_chord_to_c(chord.pc), self.key
             y.append(self.transpose_chord_to_c(chord.pc))
             time = chord.time
             while notes_list_copy[0].note_on < time:
@@ -131,7 +129,6 @@ class Song(object):
             x_note = [self.transpose_to_c(note.pc), note.duration]
             x.append(x_note)
         X.append(x)
-
         return X, y
 
 

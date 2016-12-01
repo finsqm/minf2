@@ -1,4 +1,4 @@
-from kp_hmm import HMM
+from bag_of_notes.kp_hmm import HMM
 from kp_data_loader import KPDataLoader
 from sklearn.cross_validation import KFold
 import logging
