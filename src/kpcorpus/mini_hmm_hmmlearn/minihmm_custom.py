@@ -1,3 +1,5 @@
+# TODO - unfinished
+
 from hmmlearn import base
 from collections import Counter
 import numpy as np
