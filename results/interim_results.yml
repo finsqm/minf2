@@ -1,0 +1,25 @@
+KP Corpus:
+ - One HMM:
+  - HMM: 0.5104
+  - Percpetron: 0.5052
+ - Bag of Notes:
+  - 0.0340
+ - Chord Tones:
+  - 0.1972
+ - Mini HMM:
+  - 0.2176
+ - Mini HMM hmmlearn:
+  - 0.0748
+WJAZZ:
+ - One HMM:
+  - 0.3273
+ - Structured Perceptron:
+  - 0.3307
+ - Bag of Notes:
+  - 0.032
+ - Mini HMM:
+  - 0.210
+ - Chord Tones:
+  - 0.275
+ - Template:
+  - 0.237

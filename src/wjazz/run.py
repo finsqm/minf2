@@ -61,5 +61,5 @@ model.fit(X_train, Y_train, L_train)
 logger.info('Testing model ...')
 accuracy = model.score(X_test, Y_test, L_test)
 logger.info("Accuracy: {0}".format(accuracy))
-for i in model.predict(X_test):
-    print "{0} ".format(i),
+# for i in model.predict(X_test):
+#     print "{0} ".format(i),

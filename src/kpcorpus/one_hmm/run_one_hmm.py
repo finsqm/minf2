@@ -6,10 +6,7 @@ import sys
 from seqlearn import hmm, perceptron
 
 logger = logging.getLogger()
-logger.setLevel(logging.DEBUG)
-ch = logging.StreamHandler(sys.stdout)
-ch.setLevel(logging.DEBUG)
-logger.addHandler(ch)
+logging.basicConfig(filename='../../../results/run_one_hmm.log',level=logging.DEBUG)
 
 # -----------------------------------------------
 
