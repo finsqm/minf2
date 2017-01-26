@@ -24,8 +24,9 @@ The data required for this project is symbolic melodic sequences annotated the a
 Year 1
 -------------------------
 
-The focus in the first year of this project was on finding the best Emission Model to use. Three methods were developed, a 'Bag of Notes' model, a 'Chord Tone' model and a 
+The focus in the first year of this project was on finding the best Emission Model to use. Three methods were developed, a 'Bag of Notes' model, a 'Chord Tone' model and a 'Concatenative HMM'. They were all combined with a simple bigram transition model and trained using the viterbi algorithm.
 
+The results of the first year of this project did not show a substantial improvement over
 
 
 ------------------------
