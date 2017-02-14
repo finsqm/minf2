@@ -10,9 +10,19 @@ KP Corpus:
   - 0.2176
  - Mini HMM hmmlearn:
   - 0.0748
+ - Baselines:
+  - test/train 0.1:
+   - First Note: 0.141
+   - Tonic: 0.060
+  - test.train 0.9:
+   - First Note: 0.181
+   - Tonic: 0.133
 WJAZZ:
  - One HMM:
   - 0.3273
+ - Baselines:
+  - Tonic: 0.3273
+  - First: 0.1166
  - Structured Perceptron:
   - 0.3307
  - Bag of Notes:

@@ -54,7 +54,7 @@ def process_chord_string(chord_raw, key=None):
     else:
         tpc = pc
 
-    return tpc + 1
+    return tpc
 
 class DataLoader(object):
 
@@ -89,9 +89,9 @@ class DataLoader(object):
 
                 chord = process_chord_string(chord_raw, key_raw)
                 tpc = int(tpc_raw)
-                tpc_vec = to_one_hot_vector(tpc, TPC_DIM)
+                # tpc_vec = to_one_hot_vector(tpc, TPC_DIM)
 
-                X.append(tpc_vec)
+                X.append(tpc)
                 Y.append(chord)
 
             L.append(counter)
