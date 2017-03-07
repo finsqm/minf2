@@ -344,6 +344,48 @@ def train_on_copy_task(session, model,
 
     return loss_track
 
+############################################
+
+def train_on_wjazz_data(session, model,
+                       length_from=3, length_to=8,
+                       vocab_lower=2, vocab_upper=10,
+                       batch_size=100,
+                       max_batches=5000,
+                       batches_in_epoch=1000,
+                       verbose=True):
+
+    # batches = helpers.random_sequences(length_from=length_from, length_to=length_to,
+    #                                    vocab_lower=vocab_lower, vocab_upper=vocab_upper,
+    #                                    batch_size=batch_size)
+
+    
+    loss_track = []
+    try:
+        for batch in range(max_batches+1):
+            batch_data = next(batches)
+            fd = model.make_train_inputs(batch_data, batch_data)
+            _, l = session.run([model.train_op, model.loss], fd)
+            loss_track.append(l)
+
+            if verbose:
+                if batch == 0 or batch % batches_in_epoch == 0:
+                    print('batch {}'.format(batch))
+                    print('  minibatch loss: {}'.format(session.run(model.loss, fd)))
+                    for i, (e_in, dt_pred) in enumerate(zip(
+                            fd[model.encoder_inputs].T,
+                            session.run(model.decoder_prediction_train, fd).T
+                        )):
+                        print('  sample {}:'.format(i + 1))
+                        print('    enc input           > {}'.format(e_in))
+                        print('    dec train predicted > {}'.format(dt_pred))
+                        if i >= 2:
+                            break
+                    print()
+    except KeyboardInterrupt:
+        print('training interrupted')
+
+    return loss_track
+
 
 if __name__ == '__main__':
     import sys
