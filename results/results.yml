@@ -1,2 +1,14 @@
+# All train/test is 50/50
 lstm:
   - LSTM(100), Dense(12), 5 epochs: 0.41999054341585329
+  - LSTM(100), Dense(12), 100 epochs: 0.4221182748488635
+  - LSTM(100) x3 Dense(12), 100 epochs: 0.41310074639467731 - 113 non zero
+  - LSTM(10), LSTM(10), Dense(12), 10 epochs: 0.413776216690871
+  - LSTM(12), Dense(12), 100 epochs : 0.41335404775574996
+gru:
+  - GRU(12), Dense(12), 100 epochs : 0.41340470802796447
+  - GRU(100), Dense(12), 100 epochs : 0.41814988685872539
+bidirectional:
+  - LSTM(12), Dense(12), 50 epochs: 0.41369178290384678
+seq2seq:
+  - Simple, 10 hidden, 50 epochs: 0.413776216690871 - all zero
