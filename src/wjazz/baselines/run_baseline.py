@@ -11,7 +11,7 @@ ch = logging.StreamHandler(sys.stdout)
 ch.setLevel(logging.DEBUG)
 logger.addHandler(ch)
 
-TRAINING_RATIO = 0.9
+TRAINING_RATIO = 0.5
 TONIC = 0
 
 logger.info('Getting data ...')

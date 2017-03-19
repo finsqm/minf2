@@ -25,7 +25,7 @@ class Note(object):
     def __init__(self, note_on, pitch):
         self.note_on = note_on
         self.pitch = pitch
-        self.pc = pitch % 12
+        self.pc = int(pitch % 12)
         self.on = True
 
     def set_note_off(self, note_off):
@@ -51,31 +51,31 @@ class Chord(object):
         minor = 'min' in chord_string
 
         if modifier == '#':
-        	m = 1
+            m = 1
         elif modifier == 'b':
             m = -1
         else:
-        	m = 0
+            m = 0
 
         k = key.capitalize()
         d = ord(k) - 67
 
         # For A and B
         if d < 0:
-        	d = 7 + d
+            d = 7 + d
 
         # C,D,E
         if d < 3:
-        	pc = 2 * d
+            pc = 2 * d
         # F,G,A,B
         else:
-        	pc = (2 * d) - 1
+            pc = (2 * d) - 1
 
         pc = (pc + m) % 12
         if minor:
             pc = (pc + 3) % 12
 
-        self.pc = pc + 1
+        self.pc = int(pc + 1)
 
 class Song(object):
     def __init__(self):
@@ -98,11 +98,11 @@ class Song(object):
     def get_X_and_y(self):
         '''
         X :	3D
-			X[:] 		= frames (varying size)
-			X[:][:]		= notes
-			X[:][:][:]	= components
+            X[:] 		= frames (varying size)
+            X[:][:]		= notes
+            X[:][:][:]	= components
         y :	1D
-			y[:]	= Labels
+            y[:]	= Labels
 
         Note: assumes ordered chord and note list
         '''
@@ -114,7 +114,6 @@ class Song(object):
         y.append(self.chord_list[0].pc)
         for chord in self.chord_list[1:]:
             x = []
-            print chord.pc, self.transpose_chord_to_c(chord.pc), self.key
             y.append(self.transpose_chord_to_c(chord.pc))
             time = chord.time
             while notes_list_copy[0].note_on < time:

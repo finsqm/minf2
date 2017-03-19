@@ -41,16 +41,16 @@ def transform_to_X_Y(X, y):
     return X_out, Y_out
 
 def to_one_hot_vector(x, n):
-	"""
-	Input :
-		x : scalar
-		n : dim
-	Output :
-		vetor: 1D one hot numpy array of size n
-	"""
-	vector = np.zeros((n,), dtype=np.int)
-	vector[x] = 1
-	return vector
+    """
+    Input :
+        x : scalar
+        n : dim
+    Output :
+        vetor: 1D one hot numpy array of size n
+    """
+    vector = np.zeros((n,), dtype=np.int)
+    vector[int(x)] = 1
+    return vector
 
 def sequence(XX, YY):
     """

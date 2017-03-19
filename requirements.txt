@@ -19,7 +19,7 @@ cycler==0.10.0
 Cython==0.25.2
 decorator==4.0.10
 Django==1.9.7
-docker-py==1.7.2
+docker-pycreds==0.2.1
 docutils==0.12
 entrypoints==0.2.2
 enum34==1.1.6
@@ -36,6 +36,7 @@ gnureadline==6.3.3
 grappler-local==0.11.1
 grappler-logger-py3==2.0.29
 hmmlearn==0.2.0
+ipaddress==1.0.18
 ipykernel==4.5.1
 ipython==5.1.0
 ipython-genutils==0.1.0
@@ -50,6 +51,7 @@ jupyter-client==4.4.0
 jupyter-console==5.0.0
 jupyter-core==4.2.0
 kafka==1.1.1
+Keras==1.2.2
 MarkupSafe==0.23
 matplotlib==1.5.3
 mccabe==0.4.0
@@ -91,8 +93,10 @@ pytest-mock==1.1
 python-dateutil==2.5.3
 python-hosts==0.3.2
 pytz==2016.7
+PyYAML==3.12
 pyzmq==16.0.2
 qtconsole==4.2.1
+recurrentshop==0.0.1
 requests==2.10.0
 rsa==3.4.2
 s3transfer==0.0.1
@@ -100,6 +104,7 @@ schemas-py3==3.411
 scikit-learn==0.18.1
 scipy==0.18.1
 seaborn==0.7.1
+seq2seq==0.1.0
 seqlearn==0.2
 simplegeneric==0.8.1
 singledispatch==3.4.0.3
@@ -110,6 +115,7 @@ stevedore==1.15.0
 tensorflow==1.0.0rc2
 terminado==0.6
 tflearn==0.2.1
+Theano==0.8.2
 tornado==4.4.2
 tqdm==4.10.0
 traitlets==4.3.1

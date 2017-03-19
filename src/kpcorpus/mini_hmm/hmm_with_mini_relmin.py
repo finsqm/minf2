@@ -199,11 +199,11 @@ class HMM(object):
 
 		seq = [None for i in range(T)]
 
-		state = backpointers[N+1,T-1]
+		state = int(backpointers[N+1,T-1])
 		seq[-1] = state
 
 		for i in range(1,T):
-			state = backpointers[state,T-i]
+			state = backpointers[int(state),T-i]
 			seq[-(i+1)] = state
 
 		return seq

@@ -12,3 +12,6 @@ bidirectional:
   - LSTM(12), Dense(12), 50 epochs: 0.41369178290384678
 seq2seq:
   - Simple, 10 hidden, 50 epochs: 0.413776216690871 - all zero
+conv1d:
+  - conv1d(100), conv1d(50), conv1d(25), dense(12): 0.4112263163227397
+  - as above with LSTM(10): 0.40619406261609647
