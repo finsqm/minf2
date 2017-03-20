@@ -1,0 +1,237 @@
+0, 0, Header, 0, 1, 120
+1, 0, Start_track
+1, 0, Title_t, "untitled"
+1, 0, Time_signature, 2, 2, 24, 8
+1, 0, Key_signature, -4, "major"
+1, 0, Tempo, 2400000
+1, 0, Program_c, 0, 0
+1, 0, Note_on_c, 0, 60, 49
+1, 0, Note_on_c, 0, 56, 49
+1, 0, Note_on_c, 0, 44, 49
+1, 0, Lyric_t, "Ab_maj_0 "
+1, 30, Note_on_c, 0, 56, 0
+1, 30, Note_on_c, 0, 51, 49
+1, 60, Note_on_c, 0, 51, 0
+1, 60, Note_on_c, 0, 56, 49
+1, 90, Note_on_c, 0, 56, 0
+1, 90, Note_on_c, 0, 51, 49
+1, 120, Note_on_c, 0, 51, 0
+1, 120, Note_on_c, 0, 44, 0
+1, 120, Note_on_c, 0, 60, 0
+1, 120, Note_on_c, 0, 58, 49
+1, 120, Note_on_c, 0, 55, 49
+1, 120, Note_on_c, 0, 49, 49
+1, 120, Lyric_t, "Eb_dom7_3 "
+1, 150, Note_on_c, 0, 55, 0
+1, 150, Note_on_c, 0, 51, 49
+1, 180, Note_on_c, 0, 51, 0
+1, 180, Note_on_c, 0, 55, 49
+1, 210, Note_on_c, 0, 55, 0
+1, 210, Note_on_c, 0, 51, 49
+1, 240, Note_on_c, 0, 51, 0
+1, 240, Note_on_c, 0, 49, 0
+1, 240, Note_on_c, 0, 58, 0
+1, 240, Note_on_c, 0, 63, 49
+1, 240, Note_on_c, 0, 56, 49
+1, 240, Note_on_c, 0, 48, 49
+1, 240, Lyric_t, "Ab_maj_1 "
+1, 270, Note_on_c, 0, 56, 0
+1, 270, Note_on_c, 0, 51, 49
+1, 300, Note_on_c, 0, 51, 0
+1, 300, Note_on_c, 0, 56, 49
+1, 330, Note_on_c, 0, 56, 0
+1, 330, Note_on_c, 0, 51, 49
+1, 360, Note_on_c, 0, 51, 0
+1, 360, Note_on_c, 0, 48, 0
+1, 360, Note_on_c, 0, 58, 49
+1, 360, Note_on_c, 0, 43, 49
+1, 360, Lyric_t, "Eb_dom7_1 "
+1, 390, Note_on_c, 0, 58, 0
+1, 390, Note_on_c, 0, 51, 49
+1, 420, Note_on_c, 0, 51, 0
+1, 420, Note_on_c, 0, 63, 0
+1, 420, Note_on_c, 0, 61, 49
+1, 420, Note_on_c, 0, 58, 49
+1, 450, Note_on_c, 0, 58, 0
+1, 450, Note_on_c, 0, 51, 49
+1, 480, Note_on_c, 0, 51, 0
+1, 480, Note_on_c, 0, 61, 0
+1, 480, Note_on_c, 0, 43, 0
+1, 480, Note_on_c, 0, 60, 49
+1, 480, Note_on_c, 0, 56, 49
+1, 480, Note_on_c, 0, 44, 49
+1, 480, Lyric_t, "Ab_maj_0 "
+1, 510, Note_on_c, 0, 56, 0
+1, 510, Note_on_c, 0, 51, 49
+1, 540, Note_on_c, 0, 51, 0
+1, 540, Note_on_c, 0, 44, 0
+1, 540, Note_on_c, 0, 60, 0
+1, 540, Note_on_c, 0, 63, 49
+1, 540, Note_on_c, 0, 58, 49
+1, 540, Note_on_c, 0, 43, 49
+1, 540, Lyric_t, "Eb_maj_1 "
+1, 570, Note_on_c, 0, 58, 0
+1, 570, Note_on_c, 0, 51, 49
+1, 600, Note_on_c, 0, 51, 0
+1, 600, Note_on_c, 0, 43, 0
+1, 600, Note_on_c, 0, 63, 0
+1, 600, Note_on_c, 0, 68, 49
+1, 600, Note_on_c, 0, 60, 49
+1, 600, Note_on_c, 0, 41, 49
+1, 600, Lyric_t, "F_min_0 "
+1, 630, Note_on_c, 0, 60, 0
+1, 630, Note_on_c, 0, 56, 49
+1, 660, Note_on_c, 0, 56, 0
+1, 660, Note_on_c, 0, 41, 0
+1, 660, Note_on_c, 0, 68, 0
+1, 660, Note_on_c, 0, 70, 49
+1, 660, Note_on_c, 0, 62, 49
+1, 660, Note_on_c, 0, 53, 49
+1, 660, Lyric_t, "Bb_dom7_2 "
+1, 690, Note_on_c, 0, 62, 0
+1, 690, Note_on_c, 0, 56, 49
+1, 720, Note_on_c, 0, 56, 0
+1, 720, Note_on_c, 0, 53, 0
+1, 720, Note_on_c, 0, 70, 0
+1, 720, Note_on_c, 0, 63, 49
+1, 720, Note_on_c, 0, 55, 49
+1, 720, Note_on_c, 0, 51, 49
+1, 720, Lyric_t, "Eb_maj_0 "
+1, 750, Note_on_c, 0, 55, 0
+1, 750, Note_on_c, 0, 58, 49
+1, 780, Note_on_c, 0, 58, 0
+1, 780, Note_on_c, 0, 55, 49
+1, 810, Note_on_c, 0, 55, 0
+1, 810, Note_on_c, 0, 58, 49
+1, 840, Note_on_c, 0, 58, 0
+1, 840, Note_on_c, 0, 51, 0
+1, 840, Note_on_c, 0, 55, 49
+1, 840, Note_on_c, 0, 39, 49
+1, 870, Note_on_c, 0, 55, 0
+1, 870, Note_on_c, 0, 58, 49
+1, 900, Note_on_c, 0, 58, 0
+1, 900, Note_on_c, 0, 63, 0
+1, 900, Note_on_c, 0, 64, 49
+1, 900, Note_on_c, 0, 55, 49
+1, 930, Note_on_c, 0, 55, 0
+1, 930, Note_on_c, 0, 58, 49
+1, 960, Note_on_c, 0, 58, 0
+1, 960, Note_on_c, 0, 64, 0
+1, 960, Note_on_c, 0, 39, 0
+1, 960, Note_on_c, 0, 65, 49
+1, 960, Note_on_c, 0, 55, 49
+1, 960, Note_on_c, 0, 37, 49
+1, 960, Lyric_t, "G_hdim_2 "
+1, 990, Note_on_c, 0, 55, 0
+1, 990, Note_on_c, 0, 58, 49
+1, 1020, Note_on_c, 0, 58, 0
+1, 1020, Note_on_c, 0, 55, 49
+1, 1050, Note_on_c, 0, 55, 0
+1, 1050, Note_on_c, 0, 58, 49
+1, 1080, Note_on_c, 0, 58, 0
+1, 1080, Note_on_c, 0, 37, 0
+1, 1080, Note_on_c, 0, 65, 0
+1, 1080, Note_on_c, 0, 58, 49
+1, 1080, Note_on_c, 0, 55, 49
+1, 1080, Note_on_c, 0, 49, 49
+1, 1080, Lyric_t, "Eb_dom7_3 "
+1, 1110, Note_on_c, 0, 55, 0
+1, 1110, Note_on_c, 0, 51, 49
+1, 1140, Note_on_c, 0, 51, 0
+1, 1140, Note_on_c, 0, 55, 49
+1, 1170, Note_on_c, 0, 55, 0
+1, 1170, Note_on_c, 0, 58, 0
+1, 1170, Note_on_c, 0, 60, 49
+1, 1170, Note_on_c, 0, 51, 49
+1, 1185, Note_on_c, 0, 60, 0
+1, 1185, Note_on_c, 0, 61, 49
+1, 1185, Lyric_t, "Ab_maj_1 "
+1, 1200, Note_on_c, 0, 61, 0
+1, 1200, Note_on_c, 0, 51, 0
+1, 1200, Note_on_c, 0, 49, 0
+1, 1200, Note_on_c, 0, 63, 49
+1, 1200, Note_on_c, 0, 56, 49
+1, 1200, Note_on_c, 0, 48, 49
+1, 1230, Note_on_c, 0, 56, 0
+1, 1230, Note_on_c, 0, 51, 49
+1, 1260, Note_on_c, 0, 51, 0
+1, 1260, Note_on_c, 0, 56, 49
+1, 1290, Note_on_c, 0, 56, 0
+1, 1290, Note_on_c, 0, 51, 49
+1, 1320, Note_on_c, 0, 51, 0
+1, 1320, Note_on_c, 0, 48, 0
+1, 1320, Note_on_c, 0, 63, 0
+1, 1320, Note_on_c, 0, 57, 49
+1, 1320, Note_on_c, 0, 51, 49
+1, 1320, Note_on_c, 0, 41, 49
+1, 1320, Lyric_t, "F_dom7_0 "
+1, 1350, Note_on_c, 0, 51, 0
+1, 1350, Note_on_c, 0, 48, 49
+1, 1380, Note_on_c, 0, 48, 0
+1, 1380, Note_on_c, 0, 51, 49
+1, 1410, Note_on_c, 0, 51, 0
+1, 1410, Note_on_c, 0, 48, 49
+1, 1440, Note_on_c, 0, 48, 0
+1, 1440, Note_on_c, 0, 41, 0
+1, 1440, Note_on_c, 0, 57, 0
+1, 1440, Note_on_c, 0, 61, 49
+1, 1440, Note_on_c, 0, 53, 49
+1, 1440, Note_on_c, 0, 34, 49
+1, 1440, Lyric_t, "Bb_min_0 "
+1, 1470, Note_on_c, 0, 53, 0
+1, 1470, Note_on_c, 0, 49, 49
+1, 1500, Note_on_c, 0, 49, 0
+1, 1500, Note_on_c, 0, 53, 49
+1, 1530, Note_on_c, 0, 53, 0
+1, 1530, Note_on_c, 0, 49, 49
+1, 1560, Note_on_c, 0, 49, 0
+1, 1560, Note_on_c, 0, 34, 0
+1, 1560, Note_on_c, 0, 61, 0
+1, 1560, Note_on_c, 0, 60, 49
+1, 1560, Note_on_c, 0, 49, 49
+1, 1560, Note_on_c, 0, 39, 49
+1, 1560, Lyric_t, "Eb_dom7_0 "
+1, 1590, Note_on_c, 0, 49, 0
+1, 1590, Note_on_c, 0, 60, 0
+1, 1590, Note_on_c, 0, 58, 49
+1, 1590, Note_on_c, 0, 49, 49
+1, 1620, Note_on_c, 0, 49, 0
+1, 1620, Note_on_c, 0, 58, 0
+1, 1620, Note_on_c, 0, 56, 49
+1, 1620, Note_on_c, 0, 49, 49
+1, 1650, Note_on_c, 0, 49, 0
+1, 1650, Note_on_c, 0, 56, 0
+1, 1650, Note_on_c, 0, 55, 49
+1, 1650, Note_on_c, 0, 49, 49
+1, 1680, Note_on_c, 0, 49, 0
+1, 1680, Note_on_c, 0, 55, 0
+1, 1680, Note_on_c, 0, 39, 0
+1, 1680, Note_on_c, 0, 55, 49
+1, 1680, Note_on_c, 0, 58, 49
+1, 1680, Note_on_c, 0, 49, 49
+1, 1680, Note_on_c, 0, 32, 49
+1, 1680, Lyric_t, "Ab_maj_0 "
+1, 1710, Note_on_c, 0, 49, 0
+1, 1710, Note_on_c, 0, 51, 49
+1, 1740, Note_on_c, 0, 51, 0
+1, 1740, Note_on_c, 0, 32, 0
+1, 1740, Note_on_c, 0, 49, 49
+1, 1740, Note_on_c, 0, 44, 49
+1, 1770, Note_on_c, 0, 49, 0
+1, 1770, Note_on_c, 0, 51, 49
+1, 1800, Note_on_c, 0, 51, 0
+1, 1800, Note_on_c, 0, 44, 0
+1, 1800, Note_on_c, 0, 58, 0
+1, 1800, Note_on_c, 0, 55, 0
+1, 1800, Note_on_c, 0, 48, 49
+1, 1800, Note_on_c, 0, 56, 49
+1, 1800, Note_on_c, 0, 32, 49
+1, 1820, Note_on_c, 0, 56, 0
+1, 1820, Note_on_c, 0, 48, 0
+1, 1820, Note_on_c, 0, 51, 49
+1, 1839, Note_on_c, 0, 56, 49
+1, 1840, Note_on_c, 0, 51, 0
+1, 1859, Note_on_c, 0, 56, 0
+1, 1860, Note_on_c, 0, 32, 0
+1, 1860, End_track
+0, 0, End_of_file
