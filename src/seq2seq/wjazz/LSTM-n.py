@@ -23,7 +23,7 @@ for i in xrange(273):
 
 model = Sequential()
 accuracies = dict()
-for i in range(1, 200, 10):
+for i in range(1, 200, 20):
     mask = np.zeros(12)
     model.add(Masking(mask_value=mask, input_shape=(m, 12)))
     model.add(LSTM(i, return_sequences=True, dropout_W=0.1, dropout_U=0.1))
@@ -56,7 +56,7 @@ for i in range(1, 200, 10):
         return total / count
     history = model.fit(X_train, Y_train, batch_size=136, nb_epoch=20, sample_weight=sample_weights_train)
     Y_prediction = model.predict_classes(X_test, batch_size=5)
-    accuracies[i] = weighted_accuracy(Y_test, Y_prediction), history
+    accuracies[i] = weighted_accuracy(Y_test, Y_prediction)
 
-with open('LSTM-n-script.pkl', 'w') as f:
-    cPickle.dump(accuracies, f)
+    with open('LSTM-{0}-script.pkl'.format(i), 'w') as f:
+        cPickle.dump(accuracies[i], f)
