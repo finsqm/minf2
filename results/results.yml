@@ -15,3 +15,8 @@ seq2seq:
 conv1d:
   - conv1d(100), conv1d(50), conv1d(25), dense(12): 0.4112263163227397
   - as above with LSTM(10): 0.40619406261609647
+###########
+# KP Corpus
+###########
+lstm:
+  - LSTM(100) No Dropout: 0.30387931034482757
