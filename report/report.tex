@@ -12,13 +12,19 @@
 \date{\today}
 
 \abstract{
-This is the interim report for the second year of the MInf Project. It details previous work done, work accomplished so far and work still left to do. The project aims to create a model that can perform a harmonic analysis on melodies, taking a sequence of note (i.e. a song) to a sequence of chords.
 }
 
 \maketitle
 
 %\pagenumbering{arabic}
+\chapter{Introduction}
+\chapter{Background}
+\chapter{Design and Implementation}
+\chapter{Experimental Methodology and Datasets}
+\chapter{Results}
+\chapter{Conclusion}
 
+\chapter{Interim Report Hereafter}
 \chapter{Introduction}
 The aim of this project is to learn a model that can map a musical melodic sequence to to harmonic sequence. More specifically this model takes a temporal, monophonic sequence of notes and predicts the corresponding sequence of chords. These chords correspond to the harmonic accompaniment intended by the composer to be played along with the piece.
 
@@ -156,7 +162,6 @@ The second baseline will take the starting note of the song as the root of the c
 
 The final step in this project will be to implement a model that differs quite significantly in its assumptions from the others. This will be a sequence to sequence model, consisting of an encoder and a decoder. The encoder will take the note sequence of the song and encode it into a fixed dimension vector. The decoder will then take this vector and decode it into a sequence of chords. These two models will be Recurrent Neural Networks (RNN), implemented in tensorflow. The RNNs used will be a basic RNN Cell, a Long Short Term Memory Cell (LSTM) and a Gated Recurrent Unit Cell (GRU).
 
-\chapter{Experimental Results}
 
 
 
