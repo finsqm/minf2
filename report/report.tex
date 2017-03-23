@@ -1,10 +1,10 @@
-\documentclass[bsc,singlespacing,parskip, deptreport]{infthesis}
+\documentclass[bsc,singlespacing,logo, parskip, deptreport]{infthesis}
 
 \begin{document}
 
 \title{Automatic Harmonic Analysis of Melodies}
 
-\author{Finlay McAfee - s1220880}
+\author{Finlay McAfee}
 
 \course{Master of Informatics}
 \project{{\bf MInf Project (Part 2) Report}}
@@ -15,14 +15,81 @@
 }
 
 \maketitle
+%\includeshield
+\begin{acknowledgements}
+  I would like to thank Mark Steedman and Andrew McLeod for their advice and guidance on this project.
+\end{acknowledgements}
+\standarddeclaration
+\tableofcontents
 
-%\pagenumbering{arabic}
+\pagenumbering{arabic}
+
+%Summarize contributions
 \chapter{Introduction}
-\chapter{Background}
+This is a report to detail the work carried out in the second year of the MInf Project.
+
+\section{Summary of contributions}
+
+\section{Previous Year}
+
+
+%Summarize knowledge needed to understand project
+\chapter{Theoretical Background}
+This section goes through the main concepts necessary to understand the design of the systems built in this project. Each section is intended to provide a brief summary of the necessary information on each topic to allow the reader to fully understand the workings of the models in the next section, as well as an understanding of the design choices.
+
+\section{Music Theory}
+It is safely assumed that the reader is familiar with the concept of music. If not then it is suggested that they study the following albums before returning to read this report: Blood On The Tracks by Bob Dylan \cite{dylan1975blood} and Songs From a Room by Leonard Cohen \cite{cohen2007songs}.
+
+Music is fundamentally concerned with two concepts: rhythm and pitch. Rhythm is, at its simplest, a regularly repeating pattern. The periods of repetition that musical rhythm is most concerned with lie around the same frequency as that of the human gait, or heart beat (the reader is left to draw their own conclusions about the significance of this). Pitch is, essentially, also concerned with regularly repeating patterns, only now the domain is hundreds of beats per second. The human ear experiences this as a musical note, rising and falling in pitch as the frequencies increase and decrease.
+
+Music has been studied and practised by many different cultures over the course of human history and there have been many different formalisms for describing it developed. The most common, and that used in this report is {\em Western Tonal Music} (WTM). Under this paradigm, the continuous range of pitch is divided into repeating {\em octaves}, where corresponding points on each {\em octave} are perceived as the same note at different pitches. These ranges are then subdivided into 12 distinct notes. The method used for these divisions is based on ratios between note frequencies, the most commonly used being Equal Temperament \cite{regener1973pitch}. Pieces of music are organised into one of 12 {\em keys}, each with a {\em tonic} corresponding to one of the 12 notes. Keys can be thought of as a prior over the distribution of notes in a song, where the tonic note has the highest probability of being played.
+
+
+\section{Natural Language Processing}
+
+\section{Hidden Markov Models}
+
+\section{Recurrent Neural Networks}
+
+\section{Review of Previous Work on Automatic Harmonic Analysis}
+
+
+%Specify everything I did and why!!!
 \chapter{Design and Implementation}
-\chapter{Experimental Methodology and Datasets}
-\chapter{Results}
+
+\section{Hidden Markov Model Based System}
+\subsection{Design}
+\subsection{Implementation}
+
+\section{Recurrent Neural Network Based System}
+\subsection{Design}
+\subsection{Implementation}
+
+
+%Detail every single run of things, talk about data things
+\chapter{Experimental Results}
+
+\section{Datasets}
+\subsection{Weimar Jazz Database}
+\subsection{KP Corpus}
+
+\section{Metrics}
+
+\section{Baselines}
+
+\section{HMM Results}
+
+\section{LSTM Results}
+
+\section{Other Results}
+
+
 \chapter{Conclusion}
+
+\section{Discussion}
+
+\section{Future Work}
+
 
 \chapter{Interim Report Hereafter}
 \chapter{Introduction}
@@ -163,11 +230,11 @@ The second baseline will take the starting note of the song as the root of the c
 The final step in this project will be to implement a model that differs quite significantly in its assumptions from the others. This will be a sequence to sequence model, consisting of an encoder and a decoder. The encoder will take the note sequence of the song and encode it into a fixed dimension vector. The decoder will then take this vector and decode it into a sequence of chords. These two models will be Recurrent Neural Networks (RNN), implemented in tensorflow. The RNNs used will be a basic RNN Cell, a Long Short Term Memory Cell (LSTM) and a Gated Recurrent Unit Cell (GRU).
 
 
-
-
 % use the following and \cite{} as above if you use BibTeX
 % otherwise generate bibtem entries
 \bibliographystyle{plain}
 \bibliography{bibfile}
+
+
 
 \end{document}
