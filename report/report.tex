@@ -1,5 +1,5 @@
 \documentclass[bsc,singlespacing,logo, parskip, deptreport]{infthesis}
-
+\usepackage{amsmath}
 \begin{document}
 
 \title{Automatic Harmonic Analysis of Melodies}
@@ -35,7 +35,7 @@ This is a report to detail the work carried out in the second year of the MInf P
 
 %Summarize knowledge needed to understand project
 \chapter{Theoretical Background}
-This section goes through the main concepts necessary to understand the design of the systems built in this project. Each section is intended to provide a brief summary of the necessary information on each topic to allow the reader to fully understand the workings of the models in the next section, as well as an understanding of the design choices.
+This chapter goes through the main concepts necessary to understand the design of the systems built in this project. Each section is intended to provide a brief summary of the necessary information on each topic to allow the reader to fully understand the workings of the models in the next chapter, as well as an understanding of the design choices.
 
 \section{Music Theory}
 It is safely assumed that the reader is familiar with the concept of music. If not then it is suggested that they study the following albums before returning to read this report: Blood On The Tracks by Bob Dylan \cite{dylan1975blood} and Songs From a Room by Leonard Cohen \cite{cohen2007songs}.
@@ -70,9 +70,45 @@ A small, simplifying assumption that must be made when addressing the problem in
 
 \section{Natural Language Processing}
 
-An often-drawn comparison is that of the similarity between music and language. Many postulate that music is itself a form of language CITE (although perhaps it is more enlightening to say that language is a music). 
+An often-drawn comparison is that of the similarity between music and language. Many postulate that music is itself a form of language \cite{cohen2008music} (although perhaps it is more enlightening to say that language is a music). This is useful when analysing music as there is a wealth of literature on natural language processing.
+
+The immediate comparison that can be drawn is to Part of Speech (POS) Tagging. In this problem we are trying to assign grammatical tags to a tokenized sequence of words. This one-to-one mapping problem is analogous to chord labelling in the case where each note is labelled with a corresponding chord:
+
+DIAGRAM
+
+Both are examples of a problem where the visible variables that are observed are dependant on the latent variables that are trying to be determined. This problem would be simple if said latent variables were not dependant on each other:
+
+PLATE DIAGRAM
+
+But this is clearly not the case. An adjective is very likely to be followed by a noun, and a G major is very likely to be followed by a C major. In reality the situation looks more like this:
+
+NON-PLATE DIAGRAM - LATENT VARS CONNECTED
+
+The complex relationships between the latent variables is one area where the difficulty arises in these problems. An often used approach to this is to apply the first-order Markov Assumption. This allows us to assume that each latent variable $h_t$ is only dependant on the previous latent variable $h_{t-1}$ in a temporal ordering $t \in \{1:T\}$. This model is known as a Hidden Markov Model (HMM). POS Tagging is a success story for the HMM \cite{kupiec1992robust}. 
 
 \section{Hidden Markov Models}
+
+The HMM assumes an underlying latent state space $\mathcal H$, with transition probabilities between members. These variables are conditionally independent of each other, given the previous $h_{t-1}$, i.e. the first-order Markov Assumption:
+
+\begin{align}
+  P(h_t | h_{t-1}),& \quad h_t, h_{t-1} \in {\mathcal H}, \quad  t \in \{1:T\} \\
+  I(h_t, h_i | h_{t-1}),&  \quad i \in \{1:T\}
+\end{align}
+
+And a visible variable space $\mathcal V$, which are conditionally independent of each other given the corresponding latent variable at time $t$:
+
+\begin{align}
+  P(v_t | h_t),& \quad h_t \in {\mathcal H}, \quad v_t \in {\mathcal V}, \quad  t \in \{1:T\} \\
+  I(v_t, v_i | h_{t}),& \quad \forall i \in \{1:T\}
+\end{align}
+
+Given these assumptions we can write the entire joint probability distribution as:
+
+\begin{equation}
+  P(\{v_{t}\}^{T}_{t=1}, \{h_{t}\}^{T}_{t=1}) = \prod_{t=1}^{T} P(v_t | h_t) P(h_t | h_{t-1})
+\end{equation}
+
+Which simplifies the complexity of the problem enormously.
 
 \section{Recurrent Neural Networks}
 

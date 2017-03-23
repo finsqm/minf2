@@ -1,5 +1,11 @@
 \begin{thebibliography}{1}
 
+\bibitem{cohen2008music}
+Cynthia Cohen.
+\newblock Music: A universal language.
+\newblock {\em Music and conflict transformation. Harmonies and dissonances in
+  geopolitics}, pages 26--39, 2008.
+
 \bibitem{cohen2007songs}
 Leonard Cohen.
 \newblock {\em Songs from a Room}.
@@ -9,6 +15,11 @@ Leonard Cohen.
 Bob Dylan.
 \newblock {\em Blood on the Tracks}.
 \newblock Ram's Horn music, 1975.
+
+\bibitem{kupiec1992robust}
+Julian Kupiec.
+\newblock Robust part-of-speech tagging using a hidden markov model.
+\newblock {\em Computer Speech \& Language}, 6(3):225--242, 1992.
 
 \bibitem{regener1973pitch}
 Eric Regener.
