@@ -1,0 +1,31 @@
+\BOOKMARK [0][-]{chapter.1}{Introduction}{}% 1
+\BOOKMARK [1][-]{section.1.1}{Summary of contributions}{chapter.1}% 2
+\BOOKMARK [1][-]{section.1.2}{Previous Year}{chapter.1}% 3
+\BOOKMARK [0][-]{chapter.2}{Theoretical Background}{}% 4
+\BOOKMARK [1][-]{section.2.1}{Music Theory}{chapter.2}% 5
+\BOOKMARK [1][-]{section.2.2}{Natural Language Processing}{chapter.2}% 6
+\BOOKMARK [1][-]{section.2.3}{Hidden Markov Models}{chapter.2}% 7
+\BOOKMARK [1][-]{section.2.4}{Neural Networks}{chapter.2}% 8
+\BOOKMARK [2][-]{subsection.2.4.1}{Perceptrons and MLPs}{section.2.4}% 9
+\BOOKMARK [2][-]{subsection.2.4.2}{Recurrent Neural Networks and LSTMs}{section.2.4}% 10
+\BOOKMARK [1][-]{section.2.5}{Review of Previous Work on Automatic Harmonic Analysis}{chapter.2}% 11
+\BOOKMARK [0][-]{chapter.3}{Design and Implementation}{}% 12
+\BOOKMARK [1][-]{section.3.1}{Hidden Markov Model Based System}{chapter.3}% 13
+\BOOKMARK [2][-]{subsection.3.1.1}{Design}{section.3.1}% 14
+\BOOKMARK [2][-]{subsection.3.1.2}{Implementation}{section.3.1}% 15
+\BOOKMARK [1][-]{section.3.2}{Recurrent Neural Network Based System}{chapter.3}% 16
+\BOOKMARK [2][-]{subsection.3.2.1}{Design}{section.3.2}% 17
+\BOOKMARK [2][-]{subsection.3.2.2}{Implementation}{section.3.2}% 18
+\BOOKMARK [0][-]{chapter.4}{Experimental Results}{}% 19
+\BOOKMARK [1][-]{section.4.1}{Datasets}{chapter.4}% 20
+\BOOKMARK [2][-]{subsection.4.1.1}{Weimar Jazz Database}{section.4.1}% 21
+\BOOKMARK [2][-]{subsection.4.1.2}{KP Corpus}{section.4.1}% 22
+\BOOKMARK [1][-]{section.4.2}{Metrics}{chapter.4}% 23
+\BOOKMARK [1][-]{section.4.3}{Baselines}{chapter.4}% 24
+\BOOKMARK [1][-]{section.4.4}{HMM Results}{chapter.4}% 25
+\BOOKMARK [1][-]{section.4.5}{LSTM Results}{chapter.4}% 26
+\BOOKMARK [1][-]{section.4.6}{Other Results}{chapter.4}% 27
+\BOOKMARK [0][-]{chapter.5}{Conclusion}{}% 28
+\BOOKMARK [1][-]{section.5.1}{Discussion}{chapter.5}% 29
+\BOOKMARK [1][-]{section.5.2}{Future Work}{chapter.5}% 30
+\BOOKMARK [0][-]{chapter*.2}{Bibliography}{}% 31

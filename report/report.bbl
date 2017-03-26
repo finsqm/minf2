@@ -1,4 +1,17 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
+
+\bibitem{allan2005harmonising}
+Moray Allan and Christopher~KI Williams.
+\newblock Harmonising chorales by probabilistic inference.
+\newblock {\em Advances in neural information processing systems}, 17:25--32,
+  2005.
+
+\bibitem{chuan2007hybrid}
+Ching-Hua Chuan and Elaine Chew.
+\newblock A hybrid system for automatic generation of style-specific
+  accompaniment.
+\newblock In {\em Proceedings of the 4th International Joint Workshop on
+  Computational Creativity}, pages 57--64. Citeseer, 2007.
 
 \bibitem{cohen2008music}
 Cynthia Cohen.
@@ -11,19 +24,249 @@ Leonard Cohen.
 \newblock {\em Songs from a Room}.
 \newblock Song BMG Music Entertainment, 1969.
 
+\bibitem{cybenko1989approximation}
+George Cybenko.
+\newblock Approximation by superpositions of a sigmoidal function.
+\newblock {\em Mathematics of Control, Signals, and Systems (MCSS)},
+  2(4):303--314, 1989.
+
+\bibitem{deng2010binary}
+Li~Deng, Michael~L Seltzer, Dong Yu, Alex Acero, Abdel-rahman Mohamed, and
+  Geoffrey~E Hinton.
+\newblock Binary coding of speech spectrograms using a deep auto-encoder.
+\newblock In {\em Interspeech}, pages 1692--1695. Citeseer, 2010.
+
 \bibitem{dylan1975blood}
 Bob Dylan.
 \newblock {\em Blood on the Tracks}.
 \newblock Ram's Horn music, 1975.
+
+\bibitem{ebciouglu1990expert}
+Kemal Ebcio{\u{g}}lu.
+\newblock An expert system for harmonizing chorales in the style of js bach.
+\newblock {\em The Journal of Logic Programming}, 8(1-2):145--185, 1990.
+
+\bibitem{eck2008learning}
+Douglas Eck and Jasmin Lapalme.
+\newblock Learning musical structure directly from sequences of music.
+\newblock {\em University of Montreal, Department of Computer Science, CP},
+  6128, 2008.
+
+\bibitem{forte1962tonal}
+Allen Forte.
+\newblock {\em Tonal harmony in concept and practice}.
+\newblock Holt, Rinehart and Winston, 1962.
+
+\bibitem{forte1967syntax}
+Allen Forte.
+\newblock Syntax-based analytic reading of musical scores.
+\newblock 1967.
+
+\bibitem{greff2016lstm}
+Klaus Greff, Rupesh~K Srivastava, Jan Koutn{\'\i}k, Bas~R Steunebrink, and
+  J{\"u}rgen Schmidhuber.
+\newblock Lstm: A search space odyssey.
+\newblock {\em IEEE transactions on neural networks and learning systems},
+  2016.
+
+\bibitem{han2017ese}
+Song Han, Junlong Kang, Huizi Mao, Yiming Hu, Xin Li, Yubin Li, Dongliang Xie,
+  Hong Luo, Song Yao, Yu~Wang, et~al.
+\newblock Ese: Efficient speech recognition engine with sparse lstm on fpga.
+\newblock In {\em Proceedings of the 2017 ACM/SIGDA International Symposium on
+  Field-Programmable Gate Arrays}, pages 75--84. ACM, 2017.
+
+\bibitem{hebb1949first}
+Donald~O Hebb.
+\newblock The first stage of perception: Growth of the assembly.
+\newblock {\em The Organization of Behavior}, pages 60--78, 1949.
+
+\bibitem{hinton2006reducing}
+Geoffrey~E Hinton and Ruslan~R Salakhutdinov.
+\newblock Reducing the dimensionality of data with neural networks.
+\newblock {\em science}, 313(5786):504--507, 2006.
+
+\bibitem{hochreiter1998vanishing}
+Sepp Hochreiter.
+\newblock The vanishing gradient problem during learning recurrent neural nets
+  and problem solutions.
+\newblock {\em International Journal of Uncertainty, Fuzziness and
+  Knowledge-Based Systems}, 6(02):107--116, 1998.
+
+\bibitem{hochreiter1997long}
+Sepp Hochreiter and J{\"u}rgen Schmidhuber.
+\newblock Long short-term memory.
+\newblock {\em Neural computation}, 9(8):1735--1780, 1997.
+
+\bibitem{hornik1989multilayer}
+Kurt Hornik, Maxwell Stinchcombe, and Halbert White.
+\newblock Multilayer feedforward networks are universal approximators.
+\newblock {\em Neural networks}, 2(5):359--366, 1989.
+
+\bibitem{krizhevsky2012imagenet}
+Alex Krizhevsky, Ilya Sutskever, and Geoffrey~E Hinton.
+\newblock Imagenet classification with deep convolutional neural networks.
+\newblock In {\em Advances in neural information processing systems}, pages
+  1097--1105, 2012.
+
+\bibitem{kruger2003linear}
+Jens Kr{\"u}ger and R{\"u}diger Westermann.
+\newblock Linear algebra operators for gpu implementation of numerical
+  algorithms.
+\newblock In {\em ACM Transactions on Graphics (TOG)}, volume~22, pages
+  908--916. ACM, 2003.
 
 \bibitem{kupiec1992robust}
 Julian Kupiec.
 \newblock Robust part-of-speech tagging using a hidden markov model.
 \newblock {\em Computer Speech \& Language}, 6(3):225--242, 1992.
 
+\bibitem{laden1989representation}
+Bernice Laden and Douglas~H Keefe.
+\newblock The representation of pitch in a neural net model of chord
+  classification.
+\newblock {\em Computer Music Journal}, 13(4):12--26, 1989.
+
+\bibitem{lee2004ring}
+Hong-Ru Lee and JS~Roger Jang.
+\newblock i-ring: A system for humming transcription and chord generation.
+\newblock In {\em Multimedia and Expo, 2004. ICME'04. 2004 IEEE International
+  Conference on}, volume~2, pages 1031--1034. IEEE, 2004.
+
+\bibitem{lees1957syntactic}
+Robert~B Lees and N~Chomsky.
+\newblock Syntactic structures.
+\newblock {\em Language}, 33(3 Part 1):375--408, 1957.
+
+\bibitem{maxwell1992expert}
+H~John Maxwell.
+\newblock An expert system for harmonizing analysis of tonal music,
+  understanding music with ai: perspectives on music cognition, 1992.
+
+\bibitem{minsky1969perceptrons}
+Marvin Minsky and Seymour Papert.
+\newblock Perceptrons.
+\newblock 1969.
+
+\bibitem{oh2004gpu}
+Kyoung-Su Oh and Keechul Jung.
+\newblock Gpu implementation of neural networks.
+\newblock {\em Pattern Recognition}, 37(6):1311--1314, 2004.
+
+\bibitem{olah_2015}
+C.~Olah.
+\newblock Understanding lstm networks.
+\newblock \url{http://colah.github.io/posts/2015-08-Understanding-LSTMs/}, Aug
+  2015.
+
+\bibitem{oudre2011probabilistic}
+Laurent Oudre, C{\'e}dric F{\'e}votte, and Yves Grenier.
+\newblock Probabilistic template-based chord recognition.
+\newblock {\em Audio, Speech, and Language Processing, IEEE Transactions on},
+  19(8):2249--2259, 2011.
+
+\bibitem{oudre2009template}
+Laurent Oudre, Yves Grenier, and C{\'e}dric F{\'e}votte.
+\newblock Template-based chord recognition: Influence of the chord types.
+\newblock In {\em ISMIR}, pages 153--158, 2009.
+
+\bibitem{pardo2002algorithms}
+Bryan Pardo and William~P Birmingham.
+\newblock Algorithms for chordal analysis.
+\newblock {\em Computer Music Journal}, 26(2):27--49, 2002.
+
+\bibitem{pichotta2016using}
+Karl Pichotta and Raymond~J Mooney.
+\newblock Using sentence-level lstm language models for script inference.
+\newblock {\em arXiv preprint arXiv:1604.02993}, 2016.
+
 \bibitem{regener1973pitch}
 Eric Regener.
 \newblock {\em Pitch notation and equal temperament: A formal study}, volume~6.
 \newblock University of California Press, 1973.
+
+\bibitem{rosenblatt1958perceptron}
+Frank Rosenblatt.
+\newblock The perceptron: A probabilistic model for information storage and
+  organization in the brain.
+\newblock {\em Psychological review}, 65(6):386, 1958.
+
+\bibitem{russell2002artificial}
+Stuart~J Russell and Peter Norvig.
+\newblock Artificial intelligence: a modern approach (international edition).
+\newblock 2002.
+
+\bibitem{ryynanen2008automatic}
+Matti~P Ryyn{\"a}nen and Anssi~P Klapuri.
+\newblock Automatic transcription of melody, bass line, and chords in
+  polyphonic music.
+\newblock {\em Computer Music Journal}, 32(3):72--86, 2008.
+
+\bibitem{schenker1979harmony}
+Heinrich Schenker.
+\newblock {\em Harmony}, volume~1.
+\newblock University of Chicago Press, 1979.
+
+\bibitem{mysong}
+Ian Simon, Dan Morris, and Sumit Basu.
+\newblock Mysong: automatic accompaniment generation for vocal melodies.
+\newblock In {\em Proceedings of the SIGCHI Conference on Human Factors in
+  Computing Systems}, pages 725--734. ACM, 2008.
+
+\bibitem{smaill1993hierarchical}
+Alan Smaill, Geraint Wiggins, and Mitch Harris.
+\newblock Hierarchical music representation for composition and analysis.
+\newblock {\em Computers and the Humanities}, 27(1):7--17, 1993.
+
+\bibitem{smoliar1979computer}
+Stephen~W Smoliar.
+\newblock A computer aid for schenkerian analysis.
+\newblock In {\em Proceedings of the 1979 annual conference}, pages 110--115.
+  ACM, 1979.
+
+\bibitem{sundermeyer2012lstm}
+Martin Sundermeyer, Ralf Schl{\"u}ter, and Hermann Ney.
+\newblock Lstm neural networks for language modeling.
+\newblock In {\em Interspeech}, pages 194--197, 2012.
+
+\bibitem{uziela2017proq3d}
+Karolis Uziela, David~Men{\'e}ndez Hurtado, Nanjiang Shu, Bj{\"o}rn Wallner,
+  and Arne Elofsson.
+\newblock Proq3d: Improved model quality assessments using deep learning.
+\newblock {\em Bioinformatics}, page btw819, 2017.
+
+\bibitem{vincent2008extracting}
+Pascal Vincent, Hugo Larochelle, Yoshua Bengio, and Pierre-Antoine Manzagol.
+\newblock Extracting and composing robust features with denoising autoencoders.
+\newblock In {\em Proceedings of the 25th international conference on Machine
+  learning}, pages 1096--1103. ACM, 2008.
+
+\bibitem{wen2016multi}
+Tsung-Hsien Wen, Milica Gasic, Nikola Mrksic, Lina~M Rojas-Barahona, Pei-Hao
+  Su, David Vandyke, and Steve Young.
+\newblock Multi-domain neural network language generation for spoken dialogue
+  systems.
+\newblock {\em arXiv preprint arXiv:1603.01232}, 2016.
+
+\bibitem{werbos_1974}
+P~Werbos.
+\newblock {\em Beyond Regression: New Tools for Prediction and Analysis in the
+  Behavioral Sciences.}
+\newblock PhD thesis, 1974.
+
+\bibitem{werbos1990backpropagation}
+Paul~J Werbos.
+\newblock Backpropagation through time: what it does and how to do it.
+\newblock {\em Proceedings of the IEEE}, 78(10):1550--1560, 1990.
+
+\bibitem{widmer1992qualitative}
+Gerhard Widmer.
+\newblock Qualitative perception modeling and intelligent musical learning.
+\newblock {\em Computer Music Journal}, 16(2):51--68, 1992.
+
+\bibitem{winograd1968linguistics}
+Terry Winograd.
+\newblock Linguistics and the computer analysis of tonal harmony.
+\newblock {\em journal of Music Theory}, 12(1):2--49, 1968.
 
 \end{thebibliography}

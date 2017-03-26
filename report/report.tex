@@ -1,5 +1,11 @@
 \documentclass[bsc,singlespacing,logo, parskip, deptreport]{infthesis}
+
 \usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{bm}
+\usepackage{url}
+\usepackage{hyperref}
+
 \begin{document}
 
 \title{Automatic Harmonic Analysis of Melodies}
@@ -17,12 +23,12 @@
 \maketitle
 %\includeshield
 \begin{acknowledgements}
-  I would like to thank Mark Steedman and Andrew McLeod for their advice and guidance on this project.
+I would like to thank Mark Steedman and Andrew McLeod for their advice and guidance on this project.
 \end{acknowledgements}
 \standarddeclaration
 \tableofcontents
 
-\pagenumbering{arabic}
+%\pagenumbering{arabic}
 
 %Summarize contributions
 \chapter{Introduction}
@@ -63,6 +69,8 @@ DIAGRAM OF C CHORD
 A modern musical arrangement, for example a jazz standard, typically consists of both a melody and an associated progression of chords, intended to be played as an accompaniment to the melody. The problem space of this project is concerned with the association between these two, specifically the problem of generating one if the other is not present. Generating a melody is what is typically considered musical composition, a difficult problem to solve on which much work has been done in recent years CITE ALL THE THINGS. This project concerns itself with the other direction, predicting chord sequences from melodies. This problem is conceptually half sequential classification, half generation, as there is not necessarily a unique chord sequence for every melody, but there is still a ground truth that can, theoretically, be derived from the observed notes. The following piece of music is an example from one of the corpora used for training the models.
 
 DIAGRAM MINUET IN G
+
+DISCUSS WITH WORKED EXAMPLE ON ABOVE
 
 In terms of a traditional classification problem, $f(x) = y$, the $x$ here is a sequence of notes and the $y$ is a sequence of chord labels. Hence we have a sequence to sequence problem.
 
@@ -105,22 +113,155 @@ And a visible variable space $\mathcal V$, which are conditionally independent o
 Given these assumptions we can write the entire joint probability distribution as:
 
 \begin{equation}
-  P(\{v_{t}\}^{T}_{t=1}, \{h_{t}\}^{T}_{t=1}) = \prod_{t=1}^{T} P(v_t | h_t) P(h_t | h_{t-1})
+  P(\{v_{t}\}^{T}_{t=1}, \{h_{t}\}^{T}_{t=1}) = P(v_1 | h_1) P(h_1) \prod_{t=2}^{T} P(v_t | h_t) P(h_t | h_{t-1})
 \end{equation}
 
 Which simplifies the complexity of the problem enormously.
 
-\section{Recurrent Neural Networks}
+There are various forms of inference that can be performed on HMMs. In the case of on-line accompaniment prediction, the probability we are interested in would be $P(h_{t+1} | \{v_i\}_{i=1}^{t})$. This can be performed by first summing over all possible states at time $t$, then calculating probabilities of those $h_t$ by propagating recursively back to the start state. This is referred to as the forward algorithm or {\em filtering} \cite{russell2002artificial}. In terms of message passing in graphical inference, the message is being passed from all observed variables $\{v_i\}_{i=1}^{t}$, starting at $t=1$, summing over the latent variables $h_t$ as the message is passed up the chain.
+
+The case looked at for this report is concerned with the off-line variant of this problem, predicting the most probable sequence of latent variables, given the full observed sequence:
+
+\begin{equation}
+  {\mathrm arg}\max_{\{h\}_{t=1}^{T}} P(\{h\}_{t=1}^{T} | \{v\}_{t=1}^{T})
+\end{equation}
+
+This is calculated by a form of dynamic programming called the Viterbi Algorithm \cite{russell2002artificial}, see section \ref{HMM IMP}.
+
+So this model allows us to generate the most likely sequence of hidden, latent variables given an observed sequence, with the assumptions the each observed variable is only dependant on the others {\em through} its corresponding latent variable, and that each latent variable is only dependant on its past {\em through} the previous time step, and is entirely independent of its future. See section \ref{HMM DES} for a discussion on the problems these assumptions raise for this problem space.
+
+\section{Neural Networks}
+
+One immediate concern with the HMM is that it is unable to capture long term dependencies. It is memoryless, or, more accurately, can only remember one thing: the last place it visited. This contradicts our intuitive grammatical understanding of language. A grammar is a tree structured language model, where the following section can be very dependant on something that happened at the start of the sequence. One example of this in music is repeated phrases; you can't repeat something if you have forgotten it.
+
+What we want is a model that can carry information through it then learn when to forget it and when to incorporate it into deciding the output at a given time. A popular model for this type of system is the Recurrent Neural Network (RNN), in particular with a Long Short Term Memory (LSTM) cell.
+
+Work on neural networks architectures has flourished in the past few years, due largely in part to advances in optimised computation on GPUs \cite{oh2004gpu}\cite{krizhevsky2012imagenet}, as well as new pre-training methods such as autoencoders \cite{hinton2006reducing}\cite{vincent2008extracting}\cite{deng2010binary}. However the basic concept has not changed very significantly since its their beginnings in Hebbian Learning and the Perceptron in the 1940s and 1950s \cite{hebb1949first} \cite{rosenblatt1958perceptron}.
+
+\subsection{Perceptrons and MLPs}
+
+A perceptron is a linear classifier based on an abstraction of a neuron. It is, in essence, a weighted sum of inputs with one output.
+
+PERCEPTRON DIAGRAM
+
+The key observation is that these weights can be trained to create a binary classification model, where the two classes are linearly separable. The classic example of a problem this model cannot solve is the XOR logic gate, as in this case a straight line cannot be drawn which separates the two classes \cite{minsky1969perceptrons}.
+
+If we take a row of perceptrons with the same inputs but different weights, we now have one layer of a Multi Layer Perceptron (MLP). MLPs are built by taking the outputs of these layers, applying an activation function such as a logistic sigmoid ($\sigma$) or a hyperbolic tangent ($tanh$), then treating these values as the inputs to another layer.
+
+MLP DIAGRAM
+
+Another name for these models are Feed-Forward Artificial Neural Networks (ANNs). By continuing like this we can build an arbitrarily large ANN, which can be used to model more and more complex problems. In fact it can be proven that even just a single layer, finite length ANN can be used to approximate any continuous function on compact subsets of ${\mathbb R}^n$ \cite{cybenko1989approximation}\cite{hornik1989multilayer}. This astounding property, known as the Universal Approximation Theorem, is one of the reasons that neural networks are outperforming many traditional mathematical models currently, in a variety of fields from computer vision \cite{krizhevsky2012imagenet} to protein modelling \cite{uziela2017proq3d}.
+
+However this theorem gives no algorithm for building these complex models. The difficulty comes in training the weights to correctly model the problem, and in the cases of very deep models this can mean millions of parameters. Even worse, there is no analytic solution in optimising these parameters, they must be trained iteratively. This means a large amount of computation time and resources.
+
+To train an ANN in a supervised manner, an error function is needed between the output of the network and the training labels. To continue the notation introduced in the HMM section we will let the $\{v_i\}_{i=1}^{T}$ be the input to the network, $\bm{v}$ using vector notation. The output variables are re-named $\{y_i\}_{i=1}^{S}$, or $\bm{y}$, to avoid confusion with the hidden layers of the network, $\bm{h}_i$, for the $i$th layer. Let the training label associated with $\bm{y}$ be denoted $\bm{t}$. A superscript in parentheses, $\bm{y}^{(j)}$, will be used to denote the $j$th instance of data, from a data sample of size $N$. Hence we have an error function:
+
+\begin{equation}
+  \label{error}
+  \sum_{j = 1}^{N} E(\bm{y}^{(j)}, \bm{t}^{(j)})
+\end{equation}
+
+The weights are then updated in a way that minimises this error function. To do this it is necessary to take the derivative of the error with respect to each weight. This is simple to do with a single layer but becomes more complex with a deep network. The method for achieving this is called Back Propagation and was created by Paul Werbos in 1974 \cite{werbos_1974}. Methods for iteratively updating the gradients based on these derivatives are called Gradient Descent and tend to take the following form:
+
+\begin{equation}
+  w_{ik} := w_{ik} - \eta \frac{\partial E(\bm{y}, \bm{t})}{\partial w_{ik}}
+\end{equation}
+
+Where $w_{ik}$ is the $k$th weight of the $i$th layer. These gradients can either be done per data point $j$ or by summing over batches as in \ref{error}. By this method the neural network can be slowly pivoted towards on optimal configuration, but there is no guarantee of avoiding local minima, and even if it manages to perfectly fit the training data, it will likely be overfit and not generalise to held out test data. Despite these problems, advances in processing speeds and hardware level algorithms \cite{kruger2003linear} have made training these models possible.
+
+\subsection{Recurrent Neural Networks and LSTMs}
+
+So is it possible to use neural networks to predict a sequence of chords from a sequence of notes? Unfortunately, in the current state described, the ANN takes a vector $\bm{v}$ of fixed-size $T$ as input, and outputs $\bm{y}$ of fixed size $S$. What is needed is a network with a flexible input and output size, a tricky problem under the current architecture as this would been adding and removing weights for every data sample. Recurrent Neural Networks (RNNs) solve exactly this problem.
+
+An RNN is a neural network that scales dynamically to it's input. It is composed of {\em cells} that share weights and are connected together in a chain. A single RNN cell looks like a standard feed-forward network, but it's input $v_t$ is combined with an output from the previous cell $h_{t-1}$. Architectures vary but it is common for the output of the cell, $y_t$, to be the output of a second layer that takes $h_t$ as input, and for the output of this hidden layer, $h_t$, to be passed to the next cell in the chain. Of course these cells can be further stacked to result in deeper architectures that learn higher-level features of their input.
+
+RNN DIAGRAM
+
+To train these models we can unfold them after receiving all of the input, so that it looks like a complex feed-forward model, that back propagate the error in a similar method to before, now called Back Propagation Through Time (BPTT) \cite{werbos1990backpropagation}.
+
+ROLLED OUT RNN BPTT
+
+A problem with this method, referred to as the vanishing gradient problem \cite{hochreiter1998vanishing}, is where the earlier weights in the network receive a much smaller update than those closer to the final output, as the back propagated gradient at time $t$ has been through $T - t$ applications of the chain rule, each involving multiplication with numbers $< 1$, resulting in the gradient becoming incredibly small. Hence errors caused by weights near the start of the sequence won't be corrected.
+
+One proposed solution to this is the Long Short Term Memory (LSTM) Cell \cite{hochreiter1997long}. This is a more complex cell structure involving 3 {\em gates} and an explicit cell state, $c_t$, that serves as the system's memory. Each gate combines the input and the cell state in a way that serves an intuitive purpose.
+
+The first gate is called the {\em forget gate}. It takes as input a concatenation of the input $v_t$ and the output of the previous hidden layer $h_t$, performs a weighted sum, and uses a logistic sigmoid to output a value between 0 and 1 for each component of the cell state $c_t$. Through element-wise multiplication, this is used to decide which elements of the cell state to forget at this time step. This is the equation for the input gate before updating the cell state (note that bias terms are omitted).
+
+\begin{equation}
+  \label{forget gate}
+  f_t = \sigma (W_f [h_{t-1} : v_t])
+\end{equation}
+
+The next gate is the {\em input gate}. This is used to determine what new information to add to the cell state. The components to update are chosen in a similar manner to above, then the $tanh$ function is used to generate new updates from the input.
+
+\begin{align}
+  \label{input gate}
+  i_t =& \sigma (W_i [h_{t-1} : v_t]) \\
+  c^*_t =& \mathrm{tanh} (W_c [h_{t-1} : v_t])
+\end{align}
+
+These updates are then applied together to the cell state.
+
+\begin{equation}
+  \label{update cell}
+  c_t = f_t * c_{t-1} + i_t * c^*t
+\end{equation}
+
+Where here $*$ signifies element-wise multiplication.
+
+Lastly the output gate decides what to output as $h_t$ for this time step. It chooses components by the same method as the previous gates, then generates the output from the cell state.
+
+\begin{align}
+  \label{output gate}
+  o_t =& \sigma (W_o [h_{t-1} : v_t]) \\
+  h_t =& o_t * \mathrm{tanh}(c_t)
+\end{align}
+
+The full cell takes this shape:
+
+LSTM Image
+
+This cell represents a single layer LSTM model. This could be used as the full model, in which case the $h_t$ would be the outputs $y_t$ of the system. Alternatively these LSTM cells could be stacked, creating a deep learning model where the $h_{it}$ of each layer $i$ would be the input to the layer $i+1$, where $h_{1t}$ are the original inputs $v_t$.
+
+All this serves to create a model where information can be remembered and forgotten dynamically based on where we are in the input sequence. This is very useful for the purposes of this project as repeated musical phrases and structures could be implicitly captured by the model, as shown to be possible by \cite{eck2008learning}.
+
+LSTMs are currently the cutting edge for many different areas of natural language processing, including language modelling \cite{sundermeyer2012lstm} \cite{pichotta2016using}, speech recognition \cite{han2017ese} and language generation in spoken dialogue systems \cite{wen2016multi}.
+
+
+
+For an in-depth discussion on LSTMs, \cite{olah_2015} or \cite{greff2016lstm} is recommended.
 
 \section{Review of Previous Work on Automatic Harmonic Analysis}
 
+A brief review of previous work on chord progression estimation and related works will be presented in this section. Note that this is largely unchanged from the report presented last year.
+
+The field of automatic harmonic analysis of music has seen a wide range of research in the past few decades. Much of this stems from the interpretation of music as a form of language, or at least recognising the similarities between music and natural language and exploiting them to achieve certain tasks. The works of \cite{winograd1968linguistics} and \cite{forte1967syntax} were some of the first applications of computational linguistic theory to the field of music, inspired by the pioneering work of Noam Chomsky on the formal definitions of languages and syntax \cite{lees1957syntactic}. In \cite{winograd1968linguistics} a generative grammar for the parsing of a harmonic phrase was proposed, using an adaptation of the formalism of tonal harmony proposed by \cite{forte1962tonal}. This mechanism was capable of automatically parsing chorales.
+
+An alternative method of harmonic analysis, introduced by \cite{schenker1979harmony}, was used in another computationally assisted, automatic parsing of music in \cite{smoliar1979computer}. Similar to the above, Smolier applied existing NLP parsing techniques to a grammatical formalism of tonal music.
+
+Logic based approaches have also been attempted. In \cite{ebciouglu1990expert} an expert system for the harmonic analysis of chorales is proposed, based on first order predicate logic. This was expanded on by \cite{maxwell1992expert}, where a full approach applicable to all tonal music was presented. A similar hierarchical logical representation for the computational analysis of music was proposed by \cite{smaill1993hierarchical}.
+
+The development of probabilistic machine learning algorithms allowed for a more statistical approach to harmonic analysis to be developed. The work of \cite{laden1989representation} applies neural networks to chord classification, focusing on the problem of how to best represent pitch. A more qualitative perception model for musical learning is presented in \cite{widmer1992qualitative}.
+
+A popular and successful method of probabilistic harmonic analysis is the HMM based approach. The harmonic analysis of chorales proposed in \cite{allan2005harmonising} uses HMM probabilistic inference. In \cite{lee2004ring} an HMM based method for chord generation from a hummed input is presented. A simple frequency count based HMM is used in the chordal analysis of the MySong application by Microsoft \cite[]{mysong}, a system that automatically generates an accompaniment for a real-time vocal input. A more complex HMM based system is utilised by \cite{ryynanen2008automatic} in the automatic transcription of melody and chords from the first eight Beatles albums.
+
+The HMM based approach shall form the basis of the baseline model for this project, where in the following year the markov assumption shall be replaced with a more complex grammar based language model. 
+
+In more recent years, a template based approach to chordal analysis has been proposed, notably in the work of \cite{pardo2002algorithms}, \cite{oudre2009template} and \cite{oudre2011probabilistic}. This method moves away from more statistical techniques and instead assigns a rule-based scoring to a frame, based on whether the observed notes are present in the stored chord model template.
+
+More complex hybrid approaches have also been attempted. A combination of neo-Riemannian transformations, Markov chains and Support Vector Machines are used in \cite{chuan2007hybrid} for the generation of style-specific accompaniment. This method uses machine learning techniques to decide how probable it is that an observed note is a 'chord tone' for the current chord and is the inspiration for one of the proposed emission models in this report.  
+
+It should be noted that the majority of these approaches assume pre-segmentation of the input into distinct chord segments for classification, as does the work presented in this report. A complete model of chordal analysis must take this aspect into account as well. There are many well researched methods for accomplishing this, a good review of a few of these is provided in \cite{pardo2002algorithms}.
 
 %Specify everything I did and why!!!
 \chapter{Design and Implementation}
 
 \section{Hidden Markov Model Based System}
-\subsection{Design}
-\subsection{Implementation}
+\subsection{Design} \label{HMM DES}
+
+
+
+\subsection{Implementation} \label{HMM IMP}
 
 \section{Recurrent Neural Network Based System}
 \subsection{Design}
@@ -151,151 +292,9 @@ Which simplifies the complexity of the problem enormously.
 
 \section{Future Work}
 
-
-\chapter{Interim Report Hereafter}
-\chapter{Introduction}
-The aim of this project is to learn a model that can map a musical melodic sequence to to harmonic sequence. More specifically this model takes a temporal, monophonic sequence of notes and predicts the corresponding sequence of chords. These chords correspond to the harmonic accompaniment intended by the composer to be played along with the piece.
-
-The primary assumption of this project is that it is useful to treat the melody as an observed sequence generated by the underlying chord sequence. In this sense we have a noisy channel model, similar to a natural language processing problem, where the note sequence can be likened to a sequence of words in a sentence and the chord sequence corresponds to the underlying meaning represented in these notes.
-
-To this we can add the Markov Assumption. Specifically that the notes generated by a chord a time $t_i$ are conditionally independent of the notes generated by chords at all other times $t_j, i \neq j$, given the chord at $t_i$.
-
-\begin{equation} \label{eq1}
-P(c_t | n_t) = P(n_t | c_t) P(c_t | c_{t-1})
-\end{equation}
-
-where $c_t$ is the chord at time $t$ and $n_t$ is the sequence of notes at time $t$.
-
-This divides the problem into two distinct parts.
-
-The first is modelling the generative process from chord to sequence of notes, here called the Emission Model. This model is very dependent on the frame of notes considered to be generated by a chord. This project works with two possible variants, either the Emission Model generates all the notes observed in the time frame associated with a certain chord, or we consider each note on it's own as independently being generated by a single chord instance and ignore the concept of frames. In the second case there will be a one-to-one correspondence between the chord sequence and the note sequence, and hence the former will consist of many repeated sections of chords.
-
-The second model we must consider is the transitions between the chords, here on the Transition Model. Each chord can be thought of as a state, and hence every transition a movement between two states. Under a first order Markov Assumption, where we assume that the current state is only dependant on the previous one, then the transition model becomes a bigram model between chords, and the combined system becomes a Hidden Markov Model. Other possible transition models will be the focus of the remainder of this project. 
-
-The data required for this project is symbolic melodic sequences annotated the accompanying chord. Hence this is not a system that is built to model raw sound data, neither is it an unsupervised model that can develop a notion of chords from unlabelled data. In the first year of this project data was used from the Weimar Jazz Database. This data consists of transcribed solos from jazz musicians over jazz standards. The data is heavily annotated and comes with chord labels drawn from the standards. However solos are a special subset of melodies with huge room for seemingly random improvisation and other forms of noise. This makes the problem significantly harder and hence one of the aims of this year was to find a dataset more suitable for the task and to further investigate the difficulties in using this data. 
-
-\chapter{Year 1}
-
-The focus in the first year of this project was on finding the best Emission Model to use. Three methods were developed, a 'Bag of Notes' model, a 'Chord Tone' model and a 'Concatenative HMM'. They were all combined with a simple bigram transition model and trained using the Viterbi algorithm.
-
-\section{Bag of Notes}
-
-The Bag of Notes model is analogous to a bag of words model, commonly applied to document analysis, where the frequencies of individual words are used to classify the document. Here the frequencies of notes in a frame are used to determine the chord. The training process creates $n$ smoothed and normalised frequency distributions over the $m$ possible notes, where $n$ is the number of chords being classified. 
-
-Note that typically in this project $n = 12$ and we are training the model to classify the root note of the chord, as opposed to the particular variant of the chord i.e. whether it is major, minor or dominant. The number of possible notes, $m$, is typically also set to 12, where we are interested in Tonal Pitch Classes instead of absolute values. A Tonal Pitch Class (TPC) is an integer between 0 and 11, representing the relative separation between the note and the key of the song. Hence in the key of C, a D note would have a TPC of 2, and a C note would have a TPC of 0.
-
-The failings of this model lie in the fact that it throws away sequential data and has no underlying musical intuition associated with it. The following model also discards local sequential data but is inspired by musical assumptions.
-
-\section{Chord Tone Model}
-
-The chords that are trying to be learned in this project are represented by root notes, but in reality are represented by a number of chord tones. In the case of majors and minors there 3 chord tones per chord, these are the root, the 3rd and the 5th. It can be safely assumed that in a melody over a chord, the chord tones of that particular chord are more likely to appear than the other notes. Hence a probabilistic model can that identify the chord tones in a melody has more information about the underlying chord than a blind frequency distribution.
-
-Experiments were carried out to find the best method of determining which notes are more likely to be chord tones. The resulting model had two layers, each with a decision tree trained for classification. The first level took as input a feature vector representing a note. This vector had encoded metrical, structural and melodic information about the note. The dataset was modified to label which notes in the training set were chord tones, which the decision tree was then trained over. The second decision tree then took only the notes that were classified as chord tones and predicted the underlying chord. This layer was trained in a similar way, taking the chord tones in the training data as input and classifying the given chord labels. This two-layer system then formed the Emission Model and, together with the HMM Transition Model, used the Viterbi Algorithm to produce the most likely sequence of chords.
-
-\section{Concatenative HMM}
-
-The above model produced much more promising results than Bag of Notes, but it still disregards all local sequential data. Intuitively a lot of musical information is stored in the intervals between notes, and it was thought that a model that could capture this would perform better when determining the underlying chords. The Concatenative HMM attempts to capture this by training $n$ different HMMs, one for each chord, over frames of notes 'generated' by that chord. An observed sequence can then be run through these models, producing probabilities. These are then the emission probabilities for that sequence of observed notes, given the chord. Combining these with the Transition HMM model can be thought of as concatenating together a long list of smaller HMMs. 
-
-There are two possible methods of training this model, supervised and unsupervised. As it is not the state sequence, but the probabilities that we are interested in for the lower level HMMs, the musical structure that the states would represent seems unclear. With an unsupervised approach, all that is necessary would be to define the number of states, then the Expectation Maximisation (EM) algorithm can be used to learn the optimum state sequences for the training data. This approach will be discussed later in the report.
-
-The other approach is to train in a supervised way and decide the representation of states manually based on musical knowledge. Again chord tones were used as a suitable middle ground between chords and notes, and the states of the low level HMMs were trained over labelled data, where each  note was annotated with chord tone information. In this model, however, multiple levels of chord tone were decided on, based on the intuition that the root and the 5th are more strongly related than the root and the 3rd, and that 7th is also used in some chords and could be considered a weaker form of chord tone. Hence multiple variants of this model were attempted, with different numbers of internal states for the HMMs.
-
-\section{Implementation}
-
-The language used for both years of this project in the implementation is Python. This choice was made based on a familiarity with the available libraries and a suitability for the domain of problem. Python is suitably high-level and well adept at processing scientific data.
-
-The first part of this project involved an implementation of generalized HMMs for supervised learning, where the Emission Model and the Transition Model are modular, in the sense that the same HMM implementation could be used over the above three models, requiring only a class that could be trained and produced log probabilities given input data for the Emission Model. This was not readily available in pre-existing libraries. This involved implementation of the Viterbi algorithm.
-
-The data was stored mainly in Python data structures and Numpy arrays. Scikit-learn was used for cross-validation methods.
-
-\section{Evaluation}
-
-The evaluation of these models is subtly difficult and tends to be overly critical on the jazz corpus. This is due to the presence of jazz substitutions, where many different chords can be played in the place of one another for very little change in harmonic structure. Nonetheless the clear way for evaluating this system is to test over a set of data not used in training and to compare the generated chords with the ground truth chords and create an accuracy metric. The results for the above models, classifying 12 chords, are presented in Table \ref{12}.
-
-\begin{table}
-\centering
-\caption{Year 1 Results}
-\label{12}
-\begin{tabular}{l|l}
-Model               & Accuracy (\%) \\ \hline
-Bag of Notes HMM    & 22.5           \\
-Concat HMM          & 30.7          \\
-Chord Tone HMM (DT) & 27.5          \\
-\end{tabular}
-\end{table}
-
-Against a baseline of random chance, 8.3\%, these models show some promise, but not as much as expected. These results promoted a more in-depth investigation into the data that will be detailed in the rest of this report. Another important discussion is the use of random choice as a baseline. This is overly generous to the models, a baseline that takes into account some basic music knowledge might be more enlightening as to the quality of both the models and the data.
-
-\chapter{Year 2}
-
-\section{Work Done So Far}
-\subsection{New Data}
-The first task faced in the second year of this project was to find a new dataset. This would allow for a more robust analysis of the previous year's models and the opportunity to develop better models this year.
-
-A remark should be made about the difficulty in collecting data in this field. There exist many private collections of song data annotated for this purpose, some with the intention of being made public, but copyright laws cause this to be very difficult in practice. Of the data that does exist in the public domain, much of it is either melodic or chord data, rarely are the two aligned for the purposes required by this task. The Weimar Jazz Database is a superb resource, it is unfortunate that harmonic analysis of data in the specific domain of jazz solos turns out to be very difficult.
-
-After investigation, the most promising new source of data appeared to be the KP Corpus of annotated classical melodies. It consists of midi versions of 46 classical excerpts, annotated with chord names.
-
-The next step was to write a midi parser that would transform the data into Numpy arrays. MIDICSV was used to convert the data into csv format then Python's csv library was used to parse the data into Numpy. From here the models used last year were re-implemented. The results are presented in \ref{kp}.
-
-\begin{table}
-\centering
-\caption{KP Corpus}
-\label{kp}
-\begin{tabular}{l|l}
-Model               & Accuracy (\%) \\ \hline
-Bag of Notes HMM    & 3.4           \\
-Concat HMM          & 21.7          \\
-Chord Tone HMM (DT) & 19.7          \\
-\end{tabular}
-\end{table} 
-
-Although the data in this corpus is much more suited to the task, there is much less data than the Weimar Jazz Database, so the models end up performing slightly worse. 
- 
-\subsection{Unsupervised HMMs}
-
-The Concatenative HMM model used supervised HMMs as the Emission Model, as described in Section 2.3. Part of the continued work of this year was to reimplement this model with unsupervised HMMs, trained using the Expectation Maximisation (EM) algorithm. 
-
-The HMMs used previously were implemented from scratch, to allow for generality, but for these unsupervised models the hmmlearn python library was used. The notes were encoded into one-hot vectors and $n$ Multinomial HMMs were trained, one for each chord.
-
-
-
-\subsection{Unframed HMMs}
-
-So far every model in this project has processed the melody into frames, with one chord 'generating' a small sequence of notes. Hence the Emission Model has been a sequential probabilistic model and the Transition Model has been a simple matrix of transition probabilities between chords.
-
-For the next model we will alter our assumptions slightly, so that instead there is a one-to-one correspondence between notes and chords. Hence the data is modified so that the labels consist of repeated instances of each chord. This translates to many self-transitions between states and a simple chord-to-note Emission Model.
-
-In this way the entire system can be represented as an HMM with multinomial emissions, where the notes are again encoded as one-hot vectors.
-
-This model surprisingly out performed all others on the KP corpus, achieving an accuracy of 51.04\%. Interestingly, the same model trained on the Weimar Jazz Database predicts only the tonic chord every time, scoring 32\% accuracy. This can be taken as evidence that the KP corpus is better suited to the task of chord prediction. 
-
-\section{Work Still To Do}
-
-\subsection{Data Analysis}
-
-The next task to be completed will be a deeper analysis of the songs from both corpora, to confirm the intuitions drawn from working with both and the results of the models.
-
-This will involve manual analysis of individual songs, where I will attempt to perform the task being carried out by these models to determine the inherent difficulties associated with each corpus. This will also help to inform an understanding of how the models will capture the associations between melodies and chords. 
-
-\subsection{Baselines}
-
-The baseline chosen to compare the models to was one of random chance, i.e. $1/n$ where $n$ is the number of chords. This is overly simplistic and hence two more baselines will be implemented as models for comparison.
-
-The first will determine the tonic chord and guess this every time. Note that this is what the unframed HMM did in practice on the Weimar Jazz Database. This may be an overly harsh baseline, as it is quite hard to beat (the tonic chord is almost always the most common, and most melodies in a key will fit over the tonic).
-
-The second baseline will take the starting note of the song as the root of the chord that it guesses every time. This seems a fairer baseline as it inherently models less information about the whole structure of the song.
-
-\subsection{Sequence to Sequence Model}
-
-The final step in this project will be to implement a model that differs quite significantly in its assumptions from the others. This will be a sequence to sequence model, consisting of an encoder and a decoder. The encoder will take the note sequence of the song and encode it into a fixed dimension vector. The decoder will then take this vector and decode it into a sequence of chords. These two models will be Recurrent Neural Networks (RNN), implemented in tensorflow. The RNNs used will be a basic RNN Cell, a Long Short Term Memory Cell (LSTM) and a Gated Recurrent Unit Cell (GRU).
-
-
 % use the following and \cite{} as above if you use BibTeX
 % otherwise generate bibtem entries
 \bibliographystyle{plain}
 \bibliography{bibfile}
-
-
 
 \end{document}

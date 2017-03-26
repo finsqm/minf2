@@ -1,46 +1,31 @@
-\contentsline {chapter}{\numberline {1}Introduction}{2}
-\contentsline {section}{\numberline {1.1}Summary of contributions}{2}
-\contentsline {section}{\numberline {1.2}Previous Year}{2}
-\contentsline {chapter}{\numberline {2}Theoretical Background}{3}
-\contentsline {section}{\numberline {2.1}Music Theory}{3}
-\contentsline {section}{\numberline {2.2}Natural Language Processing}{5}
-\contentsline {section}{\numberline {2.3}Hidden Markov Models}{6}
-\contentsline {section}{\numberline {2.4}Recurrent Neural Networks}{6}
-\contentsline {section}{\numberline {2.5}Review of Previous Work on Automatic Harmonic Analysis}{6}
-\contentsline {chapter}{\numberline {3}Design and Implementation}{7}
-\contentsline {section}{\numberline {3.1}Hidden Markov Model Based System}{7}
-\contentsline {subsection}{\numberline {3.1.1}Design}{7}
-\contentsline {subsection}{\numberline {3.1.2}Implementation}{7}
-\contentsline {section}{\numberline {3.2}Recurrent Neural Network Based System}{7}
-\contentsline {subsection}{\numberline {3.2.1}Design}{7}
-\contentsline {subsection}{\numberline {3.2.2}Implementation}{7}
-\contentsline {chapter}{\numberline {4}Experimental Results}{8}
-\contentsline {section}{\numberline {4.1}Datasets}{8}
-\contentsline {subsection}{\numberline {4.1.1}Weimar Jazz Database}{8}
-\contentsline {subsection}{\numberline {4.1.2}KP Corpus}{8}
-\contentsline {section}{\numberline {4.2}Metrics}{8}
-\contentsline {section}{\numberline {4.3}Baselines}{8}
-\contentsline {section}{\numberline {4.4}HMM Results}{8}
-\contentsline {section}{\numberline {4.5}LSTM Results}{8}
-\contentsline {section}{\numberline {4.6}Other Results}{8}
-\contentsline {chapter}{\numberline {5}Conclusion}{9}
-\contentsline {section}{\numberline {5.1}Discussion}{9}
-\contentsline {section}{\numberline {5.2}Future Work}{9}
-\contentsline {chapter}{\numberline {6}Interim Report Hereafter}{10}
-\contentsline {chapter}{\numberline {7}Introduction}{11}
-\contentsline {chapter}{\numberline {8}Year 1}{13}
-\contentsline {section}{\numberline {8.1}Bag of Notes}{13}
-\contentsline {section}{\numberline {8.2}Chord Tone Model}{13}
-\contentsline {section}{\numberline {8.3}Concatenative HMM}{14}
-\contentsline {section}{\numberline {8.4}Implementation}{15}
-\contentsline {section}{\numberline {8.5}Evaluation}{15}
-\contentsline {chapter}{\numberline {9}Year 2}{16}
-\contentsline {section}{\numberline {9.1}Work Done So Far}{16}
-\contentsline {subsection}{\numberline {9.1.1}New Data}{16}
-\contentsline {subsection}{\numberline {9.1.2}Unsupervised HMMs}{17}
-\contentsline {subsection}{\numberline {9.1.3}Unframed HMMs}{17}
-\contentsline {section}{\numberline {9.2}Work Still To Do}{17}
-\contentsline {subsection}{\numberline {9.2.1}Data Analysis}{17}
-\contentsline {subsection}{\numberline {9.2.2}Baselines}{18}
-\contentsline {subsection}{\numberline {9.2.3}Sequence to Sequence Model}{18}
-\contentsline {chapter}{Bibliography}{19}
+\contentsline {chapter}{\numberline {1}Introduction}{5}{chapter.1}
+\contentsline {section}{\numberline {1.1}Summary of contributions}{5}{section.1.1}
+\contentsline {section}{\numberline {1.2}Previous Year}{5}{section.1.2}
+\contentsline {chapter}{\numberline {2}Theoretical Background}{6}{chapter.2}
+\contentsline {section}{\numberline {2.1}Music Theory}{6}{section.2.1}
+\contentsline {section}{\numberline {2.2}Natural Language Processing}{8}{section.2.2}
+\contentsline {section}{\numberline {2.3}Hidden Markov Models}{9}{section.2.3}
+\contentsline {section}{\numberline {2.4}Neural Networks}{10}{section.2.4}
+\contentsline {subsection}{\numberline {2.4.1}Perceptrons and MLPs}{10}{subsection.2.4.1}
+\contentsline {subsection}{\numberline {2.4.2}Recurrent Neural Networks and LSTMs}{12}{subsection.2.4.2}
+\contentsline {section}{\numberline {2.5}Review of Previous Work on Automatic Harmonic Analysis}{13}{section.2.5}
+\contentsline {chapter}{\numberline {3}Design and Implementation}{16}{chapter.3}
+\contentsline {section}{\numberline {3.1}Hidden Markov Model Based System}{16}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}Design}{16}{subsection.3.1.1}
+\contentsline {subsection}{\numberline {3.1.2}Implementation}{16}{subsection.3.1.2}
+\contentsline {section}{\numberline {3.2}Recurrent Neural Network Based System}{16}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Design}{16}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}Implementation}{16}{subsection.3.2.2}
+\contentsline {chapter}{\numberline {4}Experimental Results}{17}{chapter.4}
+\contentsline {section}{\numberline {4.1}Datasets}{17}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Weimar Jazz Database}{17}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}KP Corpus}{17}{subsection.4.1.2}
+\contentsline {section}{\numberline {4.2}Metrics}{17}{section.4.2}
+\contentsline {section}{\numberline {4.3}Baselines}{17}{section.4.3}
+\contentsline {section}{\numberline {4.4}HMM Results}{17}{section.4.4}
+\contentsline {section}{\numberline {4.5}LSTM Results}{17}{section.4.5}
+\contentsline {section}{\numberline {4.6}Other Results}{17}{section.4.6}
+\contentsline {chapter}{\numberline {5}Conclusion}{18}{chapter.5}
+\contentsline {section}{\numberline {5.1}Discussion}{18}{section.5.1}
+\contentsline {section}{\numberline {5.2}Future Work}{18}{section.5.2}
+\contentsline {chapter}{Bibliography}{19}{chapter*.2}
