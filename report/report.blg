@@ -1,8 +1,13 @@
 This is BibTeX, Version 0.99d (TeX Live 2016)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: report.aux
+White space in argument---line 92 of file report.aux
+ : \citation{bag
+ :               of words}
+I'm skipping whatever remains of this command
 The style file: plain.bst
 Database file #1: bibfile.bib
+Warning--I didn't find a database entry for "self"
 Warning--empty journal in forte1967syntax
 Warning--can't use both volume and number fields in kruger2003linear
 Warning--empty journal in minsky1969perceptrons
@@ -10,7 +15,7 @@ Warning--empty journal in russell2002artificial
 Warning--empty school in werbos_1974
 You've used 48 entries,
             2118 wiz_defined-function locations,
-            783 strings with 11470 characters,
+            784 strings with 11474 characters,
 and the built_in function-call counts, 16543 in all, are:
 = -- 1687
 > -- 669
@@ -49,4 +54,4 @@ warning$ -- 5
 while$ -- 173
 width$ -- 50
 write$ -- 523
-(There were 5 warnings)
+(There was 1 error message)

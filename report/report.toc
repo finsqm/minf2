@@ -12,20 +12,20 @@
 \contentsline {chapter}{\numberline {3}Design and Implementation}{16}{chapter.3}
 \contentsline {section}{\numberline {3.1}Hidden Markov Model Based System}{16}{section.3.1}
 \contentsline {subsection}{\numberline {3.1.1}Design}{16}{subsection.3.1.1}
-\contentsline {subsection}{\numberline {3.1.2}Implementation}{16}{subsection.3.1.2}
-\contentsline {section}{\numberline {3.2}Recurrent Neural Network Based System}{16}{section.3.2}
-\contentsline {subsection}{\numberline {3.2.1}Design}{16}{subsection.3.2.1}
-\contentsline {subsection}{\numberline {3.2.2}Implementation}{16}{subsection.3.2.2}
-\contentsline {chapter}{\numberline {4}Experimental Results}{17}{chapter.4}
-\contentsline {section}{\numberline {4.1}Datasets}{17}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Weimar Jazz Database}{17}{subsection.4.1.1}
-\contentsline {subsection}{\numberline {4.1.2}KP Corpus}{17}{subsection.4.1.2}
-\contentsline {section}{\numberline {4.2}Metrics}{17}{section.4.2}
-\contentsline {section}{\numberline {4.3}Baselines}{17}{section.4.3}
-\contentsline {section}{\numberline {4.4}HMM Results}{17}{section.4.4}
-\contentsline {section}{\numberline {4.5}LSTM Results}{17}{section.4.5}
-\contentsline {section}{\numberline {4.6}Other Results}{17}{section.4.6}
-\contentsline {chapter}{\numberline {5}Conclusion}{18}{chapter.5}
-\contentsline {section}{\numberline {5.1}Discussion}{18}{section.5.1}
-\contentsline {section}{\numberline {5.2}Future Work}{18}{section.5.2}
-\contentsline {chapter}{Bibliography}{19}{chapter*.2}
+\contentsline {subsection}{\numberline {3.1.2}Implementation}{17}{subsection.3.1.2}
+\contentsline {section}{\numberline {3.2}Recurrent Neural Network Based System}{17}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Design}{17}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}Implementation}{17}{subsection.3.2.2}
+\contentsline {chapter}{\numberline {4}Experimental Results}{18}{chapter.4}
+\contentsline {section}{\numberline {4.1}Datasets}{18}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Weimar Jazz Database}{18}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}KP Corpus}{18}{subsection.4.1.2}
+\contentsline {section}{\numberline {4.2}Metrics}{18}{section.4.2}
+\contentsline {section}{\numberline {4.3}Baselines}{18}{section.4.3}
+\contentsline {section}{\numberline {4.4}HMM Results}{18}{section.4.4}
+\contentsline {section}{\numberline {4.5}LSTM Results}{18}{section.4.5}
+\contentsline {section}{\numberline {4.6}Other Results}{18}{section.4.6}
+\contentsline {chapter}{\numberline {5}Conclusion}{19}{chapter.5}
+\contentsline {section}{\numberline {5.1}Discussion}{19}{section.5.1}
+\contentsline {section}{\numberline {5.2}Future Work}{19}{section.5.2}
+\contentsline {chapter}{Bibliography}{20}{chapter*.2}
