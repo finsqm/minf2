@@ -6,6 +6,11 @@ Moray Allan and Christopher~KI Williams.
 \newblock {\em Advances in neural information processing systems}, 17:25--32,
   2005.
 
+\bibitem{buitinck}
+L~Buitinck.
+\newblock seqlearn.
+\newblock \url{http://larsmans.github.io/seqlearn/}, 2013.
+
 \bibitem{chuan2007hybrid}
 Ching-Hua Chuan and Elaine Chew.
 \newblock A hybrid system for automatic generation of style-specific
@@ -126,6 +131,11 @@ Bernice Laden and Douglas~H Keefe.
 \newblock The representation of pitch in a neural net model of chord
   classification.
 \newblock {\em Computer Music Journal}, 13(4):12--26, 1989.
+
+\bibitem{lebedev_2015}
+S~Lebedev.
+\newblock hmmlearn.
+\newblock \url{https://github.com/hmmlearn/hmmlearn}, Feb 2015.
 
 \bibitem{lee2004ring}
 Hong-Ru Lee and JS~Roger Jang.

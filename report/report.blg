@@ -13,45 +13,45 @@ Warning--can't use both volume and number fields in kruger2003linear
 Warning--empty journal in minsky1969perceptrons
 Warning--empty journal in russell2002artificial
 Warning--empty school in werbos_1974
-You've used 48 entries,
+You've used 50 entries,
             2118 wiz_defined-function locations,
-            784 strings with 11474 characters,
-and the built_in function-call counts, 16543 in all, are:
-= -- 1687
-> -- 669
+            796 strings with 11679 characters,
+and the built_in function-call counts, 16961 in all, are:
+= -- 1727
+> -- 683
 < -- 18
-+ -- 274
-- -- 218
-* -- 1074
-:= -- 2653
-add.period$ -- 151
-call.type$ -- 48
-change.case$ -- 246
++ -- 280
+- -- 222
+* -- 1088
+:= -- 2723
+add.period$ -- 157
+call.type$ -- 50
+change.case$ -- 254
 chr.to.int$ -- 0
-cite$ -- 53
-duplicate$ -- 679
-empty$ -- 1329
-format.name$ -- 218
-if$ -- 3537
+cite$ -- 55
+duplicate$ -- 693
+empty$ -- 1373
+format.name$ -- 222
+if$ -- 3629
 int.to.chr$ -- 0
-int.to.str$ -- 48
+int.to.str$ -- 50
 missing$ -- 50
-newline$ -- 242
-num.names$ -- 96
-pop$ -- 276
+newline$ -- 252
+num.names$ -- 100
+pop$ -- 292
 preamble$ -- 1
-purify$ -- 204
+purify$ -- 210
 quote$ -- 0
-skip$ -- 519
+skip$ -- 533
 stack$ -- 0
-substring$ -- 1111
-swap$ -- 191
+substring$ -- 1121
+swap$ -- 193
 text.length$ -- 18
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 182
+type$ -- 190
 warning$ -- 5
-while$ -- 173
-width$ -- 50
-write$ -- 523
+while$ -- 177
+width$ -- 52
+write$ -- 543
 (There was 1 error message)

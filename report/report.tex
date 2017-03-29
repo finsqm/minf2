@@ -272,14 +272,23 @@ Hence a new design of the HMM system is proposed and implemented this year, befo
 
 RELABEL MINUET IN G
 
+This corresponds to the following HMM:
 
+HMM Graph
 
+Now the $v_t$ each correspond to a single note, and the probabilistic model of $P(v_t | h_t)$ is a simple multinomial distribution that can be observed from the training data, instead of a complex mini-sequence generation task.
+
+DISCUSS RESULTS OF RUNNING HMM ON MINUET IN G
 
 \subsection{Implementation} \label{HMM IMP}
+
+To implement the Hidden Markov Model used in the previous year's work, it was necessary to be modular in approach, with a re-usable high level structure of state transitions (the Transition Model) and a pluggable variety of chord state to note group models (the Emission Model). This allowed for the implementation and testing of the three main emission models described above. However, the majority of HMM libraries that exist in Python, the chosen language for this project, are restricted to basic Gaussian and Multinomial emission models \cite{lebedev_2015} \cite{buitinck}.
+
 
 \section{Recurrent Neural Network Based System}
 \subsection{Design}
 \subsection{Implementation}
+
 
 
 %Detail every single run of things, talk about data things
