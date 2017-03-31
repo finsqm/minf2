@@ -74,8 +74,6 @@ DISCUSS WITH WORKED EXAMPLE ON ABOVE
 
 In terms of a traditional classification problem, $f(x) = y$, the $x$ here is a sequence of notes and the $y$ is a sequence of chord labels. Hence we have a sequence to sequence problem.
 
-A small, simplifying assumption that must be made when addressing the problem in this way is for the case of polyphonic music, where more than one note is played at a time in the melody. In this case we can simply treat each combination of notes as a sequence of notes played in quick succession, with order being determined arbitrarily.
-
 \section{Natural Language Processing}
 
 An often-drawn comparison is that of the similarity between music and language. Many postulate that music is itself a form of language \cite{cohen2008music} (although perhaps it is more enlightening to say that language is a music). This is useful when analysing music as there is a wealth of literature on natural language processing.
@@ -278,25 +276,115 @@ HMM Graph
 
 Now the $v_t$ each correspond to a single note, and the probabilistic model of $P(v_t | h_t)$ is a simple multinomial distribution that can be observed from the training data, instead of a complex mini-sequence generation task.
 
-DISCUSS RESULTS OF RUNNING HMM ON MINUET IN G
+Below an sample of the results of the HMM model will be analysed for our example excerpt to shed light on what this model can and can't capture.
+
+DIAGRAM OF RESULTS OF RUNNING HMM ON MINUET IN G
+
+PROBLEM - GUESSED ALL TONIC - REWRITE BELOW
+
+STILL INCLUDE BELOW BUT ALSO EVALUATE OTHER SONG
+
+The first thing to note is that, as discussed later, each song is transposed to the same key to improve training. The above results are not from that model, they are from a model trained with un-transposed songs. This is because, for this particular song and some others, the HMM determines that:
+
+\begin{itemize}
+  \item The majority of notes observed will occur when the tonic chord is played
+  \item The majority of chords played are the tonic
+\end{itemize}
+
+Hence the model guessed the tonic chord for every single position. This is an enlightening problem with the HMM model.
 
 \subsection{Implementation} \label{HMM IMP}
 
-To implement the Hidden Markov Model used in the previous year's work, it was necessary to be modular in approach, with a re-usable high level structure of state transitions (the Transition Model) and a pluggable variety of chord state to note group models (the Emission Model). This allowed for the implementation and testing of the three main emission models described above. However, the majority of HMM libraries that exist in Python, the chosen language for this project, are restricted to basic Gaussian and Multinomial emission models \cite{lebedev_2015} \cite{buitinck}.
+To implement the Hidden Markov Model used in the previous year's work, it was necessary to be modular in approach, with a re-usable high level structure of state transitions (the Transition Model) and a pluggable variety of chord state to note group models (the Emission Model). This allowed for the implementation and testing of the three main emission models described above. However, the majority of HMM libraries that exist in Python, the chosen language for this project, are restricted to basic Gaussian and Multinomial emission models \cite{lebedev_2015} \cite{buitinck}. For this reason the decision was made to implement or more general HMM class that could be modified for each case of emission model. This involved implementing the Viterbi Algorithm \cite{forney1973viterbi}, a dynamic programming method of the determining the most likely sequence of hidden states in a HMM.
 
+Note that this implementation HMMs was purely for supervised learning, where the hidden states are known in the training data. This is fine for the high level structure where HMMs are used to predict chords, but for one of the emission models HMMs were used for the note groups at a lower level as well, where the hidden states are not as clear. In the previous year a second level of labels was added for this purpose, based on a system that measured likely the note was to appear in a version of the chord (c.f. chord tones). For this year of the project one new implementation that was added was an unsupervised HMM that could approximate these hidden states on its own, using the expectation maximisation (EM) algorithm \cite{moon1996expectation}. As this was only required for lower level use, with a multinomial emission, the {\tt hmmlearn} \cite{lebedev_2015} Python library was used.
+
+The major alteration to the HMM model, discussed in the previous section, also had a relatively simpler emission model, compared to the previous year, and so the {\tt seqlearn} Python library \cite{buitinck} was also made use of, for the supervised training of the model, allowing the system to benefit from optimisation that was not possible in the previous implementation of supervised HMMs.
+
+For this new supervised HMM it was also necessary to replicate the observed chord labels for each note in the data. One small design decision that was necessary was the case of polyphonic melodies, where more than one note is played at once. For this case it was sufficient to treat these notes as being played after each other in quick succession, with order being split arbitrarily. In this sense the chords in the melodies are being split into arpeggios.
+
+One key problem in the implementation of these systems is how to model sequential data. Mutable list structures in Python are inefficient at storing large quantities of data. Internally they are actually stored as arrays, not linked lists \cite{rockyb_2015}, so lookup for individual values are still $O(1)$, but Python lists are actually an array of pointers to Python objects. Numpy arrays \cite{numpy_2005} however are highly optimised, storing arrays of uniform type values, requiring a lot less space. But importantly for sequences of undetermined size, a Python list will require $O(k)$ time complexity if the lists size goes beyond the pre-defined allocated memory. This not an ideal method of dealing with sequential data, where we have high dimensions of data of undefined size.
+
+One method for dealing with this problem is to concatenate the sequences into a single dimension and to store this as a Numpy array. For this implementation each note is stored as size 12 one-hot vector, where each index corresponds to a note pitch and the vector contains zeros at every index except that corresponding to the note it encodes. In this way we are treating notes as categorical data, avoiding the inherent ordering of storing them as integers. Hence we can store all the data as a 2 dimensional, $D \times T$, Numpy array, where $D$ is the number of notes (12) and:
+
+\begin{align}
+  T = \sum_{i=1}^{N} t_i
+\end{align}
+
+where $N$ is the number of songs and $t_i$ is the number of notes in song $i$. So the sequences of notes in each song have been concatenated together into a single data structure. A similar operation is done for the chord labels, of which there are also 12 as, for the purposes of experiments, only the roots of the chords are chosen as the labels, see section \ref{preprocessing}.
+
+Another benefit of storing data as Numpy arrays is the benefit of optimised matrix operations, in contrast to index iteration for the implementation of certain algorithms. This doesn't affect the HMM model but is very important when using neural networks see section \ref{LSTM IMP}
 
 \section{Recurrent Neural Network Based System}
+We now move on to the LSTM based system and the design decisions that were involved in building it. 
+
 \subsection{Design}
-\subsection{Implementation}
+The HMM is a very good approximate model with an intuitive understanding but it's main drawback is the first order markov assumption. We know from music theory that the is an underlying structure in the design of chord progressions \cite{krumhansl1982perceived} \cite{piston1948harmony}. One possible approach for making use of this structure would be to incorporate a grammatical `language' mode of chord progressions, as constructed by \cite{granroth2014robust} or \cite{rohrmeier2007generative}. The approach taken in this project was to instead build a system that could learn to an implicit representation of structure with memory. This was inspired by the success of such systems at learning language models in other applications, see \cite{schmidhuber2002learning} \cite{sundermeyer2012lstm}. Hence the decision was made to build an LSTM based sequence to sequence model.
 
+In general a sequence to sequence model refers to the combination of an encoder and a decoder, taking an input sequence to and output sequence, each of which can have a different length. This would have been possible to implement for this problem, but due to the direct local relationship of chords to notes it was decided that a simpler system would be more beneficial. This design makes use of the repeated representation of the data, where there is a one-to-one mapping between chord labels and notes. We can then use a model where each LSTM cell's output is treated as a chord in the prediction sequence. Graphically (and abstractly for simplification) we are modifying the model to take this structure:
 
+LSTM GRAPHICAL MODEL (add cell state to HMM model)
+
+Instead of only passing the information of which chord was last played to the next state, this model allows for the passing of abstract learned information from time $t-1$ to time $t$. This allows the system to model a more complex, context-dependent relationship between the current note and the current chord. For example the note $E$ on its own is not very likely to be played over a $D major$ (the triad notes of a $D major$ are $D$, $F\#$ and $A$, an E would be dissonant), but if it's preceded by a $D$ then it could be an intermediate note between $D$ and $F\#$. This relationship can be implicitly captured by the Viterbi algorithm for HMMs in the prediction of the most likely sequence (the chord sequence is not likely to jump to an $E major$ for a single note then back again) but in this way this information can be directly encoded in the LSTM model. Something that an HMM might not be able to capture is that if, say, the chord progression $G major$, $G\# diminished$, $A minor$ occurred at one point in the song, then if $G major$, $G\# diminished$ at some point later then a very probable next chord is the same $A minor$. Concepts like repeated structure (at note level too) and long term dependencies are theoretically able to be captured by the LSTM. In practice it is very difficult to determine whether this is has happened, as the information is encoded in the weight matrices of the LSTM cell, not an easily readable probability table.
+
+ANALYSIS OF MINUET IN G
+
+\subsection{Implementation} \label{LSTM IMP}
+
+In recent years new, open source tools have been made available to facilitate the implementation of machine learning (ML) algorithms. One notable example is Tensorflow \cite{tensorflow2015-whitepaper}, a highly optimised platform for creating ML architectures as a computation graph in C++, with a Python interface. Tensorflow has a symbolic, declarative structure. Variables and interactions between them such as matrix multiplications (a key operation in neural networks) are defined fully before any computation on data occurs, then a session is opened and the data is passed through the computation graph. This has proven to be a very powerful tool and it is now widely used in the field.
+
+A higher level, specifically neural network aimed Python API exists, built on a Tensorflow backend, called Keras \cite{chollet2015}. This framework abstracts away low level implementation of weight matrices and gradient calculation to allow design at the level of neural network layers and declarative algorithm choices. This library has proved very useful for research as it allows for quick, reliable design and experimentation on neural networks. These two libraries, Keras with a Tensorflow backend, were used in the implementation of the LSTM model.
+
+After general preprocessing (see the next section), it was necessary to transform the data into a form that could be processed by the LSTM model. This is the same problem of modelling sequential data face by the HMM. An alternate solution was used on this model, one in-line with the guidelines of the libraries used. Instead of concatenating the data into one dimension, it more beneficial for a system based on matrix multiplication, such as neural networks, to have more smaller dimensions, over-which these operations can efficiently be performed. Accordingly, our previously 2-dimensional data (pitch $\times$ full note sequence) is now modelled as a 3-dimensional tensor (pitch $\times$ song note sequence $\times$ songs). However this now poses a problem: The pitch dimension is always size 12 but there are a varying number of notes in each song. The solution is to simply pad the ends of each song with a special $PAD$ vector so that every song is the length of the longest song, which will have no padding, where the $PAD$ vector is implemented as the zero vector. This raises problems of its own, such as efficiency of checking the maximum length, and transferability to an on-line setting (how can you know if a longer song might appear next?), but it is suitable to the purposes of this project.
+
+This padded data is then fed into the first layer of the model, which is a masking layer that looks for the padding and masks it from influencing the rest of the layers while maintaining dimension size. This is, helpfully, a provided feature of Keras. The next step is the main LSTM layer, implemented with dropout to avoid overfitting on the training data, the hyper-parameters of which experiments were run over. Each LSTM cell in this layer outputs a vector which is then fed into a time distributed fully connected layer with softmax activation. Essentially this is a standard, dense neural network layer that takes the outputted vector of the LSTM cell to a $K$ dimensional vector of probabilities over each chord, where $K$ is the number of chords (typically 12 in this study). This dense layer is then repeated for every time step in the sequence, as the LSTM cell is a layer below. These softmax output logits are then used to predict the most likely chord, akin to the multinomial output of the HMM.
+
+LSTM KERAS DIAGRAM
+
+The model described above is the most simple of those used, for experiments on more complex structures see chapter \ref{Experimental Results}.
+
+The next step is to train the model. The loss function used for this training was the categorical cross-entropy between the logits and the true labels \cite{shore1980axiomatic}. This is a method for measuring the `distance' between two probability distributions (the labels can be considered a probability distribution with certainty on the true value) and can be defined as follows:
+
+\begin{align}
+  E(\bm{y}, \bm{t}) = - \sum_{i=1}^{T}\sum_{k=1}^{K} t_{i_k} \mathrm{log}(y_{i_k})
+\end{align}
+
+The gradient descent algorithm used for training was Root Mean Square Propagation (RMSProp), an idea proposed by Hinton and Tieleman in 2012 \cite{tieleman2012lecture}. The idea here is to, for each weight, divide the learning rate by a factor proportional to a running average of the size of that weight's gradient:
+
+\begin{align}
+  w_{i_j}^{(t+1)} = w_{i_j}^{(t)} - \frac{\eta}{v(w_{i_j}, t)} \frac{\partial E(\bm{y}, \bm{t})}{\partial w_{i_j}}
+\end{align}
+
+where $v(w_{i_j}, t)$ is the running average of the gradient size (implemented with a forget parameter) and $\eta$ is the learning rate. Note that in the model there are more than just two indices needed to identify all the weights, $i$ and $j$ here are used to simplify illustration.
+
+Another small consideration that was needed was to carefully weight the cross entropy loss to avoid taking the padding into account. Astonishingly high faux-accuracies and over-early celebrations were almost avoided.
+
+One advantage of the Tensorflow backend is that it is highly optimised to GPUs. The more complex models with more weights were trained on the university's compute {\tt msccluster} which has access to 3 Geforce Titan X Nvidia GPUs in each node.
+
+\section{Preprocessing} \label{preprocessing}
+
+This section briefly details the general pre-processing that was necessary for converting the data from its raw state to a form that could be processed by the models. The datasets used for the experiments are described in detail in section \ref{Datasets} but each provides data in very different forms, so each will be broken down here.
+
+\subsection{Weimar Jazz Database}
+
+The Weimar Jazz Database (see \ref{wjazz}) provides a graphical user interface packaged with pre-processing tools for the extraction of features from its dataset. The data used for this project in the first year made use of many of these features (metrical information etc.) but the models of this year abstract the melody as a simple sequence of 12 possible pitch classes (i.e. C through B$\flat$). Hence the data was exported as a {\tt csv} file of pitch classes with matching chord labels as strings. Note that these pitch classes are transposed to the same key, hence a 0 in the key of $C$ will be a $C$ note, but a 0 in the key of $G$ will be a $G$ note. These pitch classes are hence called Tonal Pitch Classes (TPCs).
+
+The transposition of all songs to the same key (the key of $C$) is beneficial to the design of all models as it allows for relative relationships to be learned, not just absolute relationships. Hence this is included in the design of the system, although it should be noted that in some cases the models make `more interesting' mistakes without transposition, see the results section.
+
+The chord strings are then converted pitch classes, and then transposed to TPCs, to be used as chord labels. All TPCs were then converted into one hot vectors. The reading of the {\tt csv} files, preprocessing and the collation into arrays for further processing is packaged into a {\tt DataLoader} class.
+
+\subsection{KP Corpus}
+
+The data from the KP Corpus (see \ref{kp}) is provided in Musical Instrument Digital Interface (MIDI) format. MIDI files consist of {\tt note\_on} and {\tt note\_off} events of varying length and pitch, arranged into a list, plus some meta data. The chord labels for this corpus are provided as annotated lyrics in the MIDI files.
+
+The {\tt midicsv} \cite{walker_2008} utility was used to convert the MIDI files to {\tt csv} format, with no other processing, allowing the {\tt note\_on} and {\tt note\_off} events to be read into Python. More complex preprocessing was then required to generate a sequence of TPCs, implemented in a separate {\tt DataLoader} class for this dataset. Transposition and chord label extraction was done in a similar way to the previous Weimar Jazz Database.
 
 %Detail every single run of things, talk about data things
-\chapter{Experimental Results}
+\chapter{Experimental Results} \label{Experimental Results}
 
-\section{Datasets}
-\subsection{Weimar Jazz Database}
-\subsection{KP Corpus}
+\section{Datasets} \label{Datasets}
+\subsection{Weimar Jazz Database} \label{wjazz}
+\subsection{KP Corpus} \label{kp}
 
 \section{Metrics}
 
@@ -304,7 +392,7 @@ To implement the Hidden Markov Model used in the previous year's work, it was ne
 
 \section{HMM Results}
 
-\section{LSTM Results}
+\section{LSTM Results} \label{LSTM Results}
 
 \section{Other Results}
 
@@ -317,7 +405,7 @@ To implement the Hidden Markov Model used in the previous year's work, it was ne
 
 % use the following and \cite{} as above if you use BibTeX
 % otherwise generate bibtem entries
-\bibliographystyle{plain}
+\bibliographystyle{acm}
 \bibliography{bibfile}
 
 \end{document}

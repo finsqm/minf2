@@ -179,22 +179,26 @@ class Song(object):
         notes_list_copy = copy.copy(self.notes_list)
         chord_list_copy = self.chord_list[1:]
 
+        # y.append(self.transpose_chord_to_c(self.chord_list[0].pc))
         y.append(self.chord_list[0].pc)
         for chord in self.chord_list[1:]:
             x = []
             # print chord.pc, self.transpose_chord_to_c(chord.pc), self.key
-            y.append(self.transpose_chord_to_c(chord.pc))
+            # y.append(self.transpose_chord_to_c(chord.pc))
+            y.append(chord.pc)
             time = chord.time
             while notes_list_copy[0].note_on < time:
                 note = notes_list_copy.pop(0)
-                x_note = self.transpose_to_c(note.pc)
+                # x_note = self.transpose_to_c(note.pc)
+                x_note = note.pc
                 x.append(x_note)
             X.append(x)
 
         x = []
         while len(notes_list_copy) > 0:
             note = notes_list_copy.pop(0)
-            x_note = self.transpose_to_c(note.pc)
+            # x_note = self.transpose_to_c(note.pc)
+            x_note = note.pc
             x.append(x_note)
         X.append(x)
         return X, y

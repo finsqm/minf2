@@ -183,7 +183,7 @@ class Song(object):
         notes_list_copy = copy.copy(self.notes_list)
         chord_list_copy = self.chord_list[1:]
 
-        y.append(to_one_hot_vector(self.chord_list[0].pc, 12))
+        y.append(to_one_hot_vector(self.transpose_chord_to_c(self.chord_list[0].pc), 12))
         for chord in self.chord_list[1:]:
             x = []
             # print chord.pc, self.transpose_chord_to_c(chord.pc), self.key

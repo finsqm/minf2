@@ -110,7 +110,7 @@ class Song(object):
         notes_list_copy = copy.copy(self.notes_list)
         chord_list_copy = self.chord_list[1:]
 
-        y.append(self.chord_list[0].pc)
+        y.append(self.transpose_chord_to_c(self.chord_list[0].pc))
         for chord in self.chord_list[1:]:
             x = []
             y.append(self.transpose_chord_to_c(chord.pc))
