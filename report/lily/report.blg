@@ -1,0 +1,59 @@
+This is BibTeX, Version 0.99d (TeX Live 2016)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: report.aux
+White space in argument---line 92 of file report.aux
+ : \citation{bag
+ :               of words}
+I'm skipping whatever remains of this command
+The style file: acm.bst
+Database file #1: bibfile.bib
+Warning--I didn't find a database entry for "self"
+Warning--empty journal in forte1967syntax
+Warning--can't use both volume and number fields in kruger2003linear
+Warning--empty journal in minsky1969perceptrons
+Warning--empty journal in MuellerKBA11_SMD_ISMIR-lateBreaking
+Warning--empty journal in russell2002artificial
+Warning--empty journal in turetsky2003ground
+Warning--empty school in werbos_1974
+You've used 69 entries,
+            2253 wiz_defined-function locations,
+            927 strings with 15406 characters,
+and the built_in function-call counts, 23264 in all, are:
+= -- 2250
+> -- 1078
+< -- 0
++ -- 458
+- -- 376
+* -- 1761
+:= -- 3719
+add.period$ -- 201
+call.type$ -- 69
+change.case$ -- 387
+chr.to.int$ -- 0
+cite$ -- 76
+duplicate$ -- 850
+empty$ -- 1881
+format.name$ -- 376
+if$ -- 4855
+int.to.chr$ -- 0
+int.to.str$ -- 69
+missing$ -- 65
+newline$ -- 342
+num.names$ -- 138
+pop$ -- 441
+preamble$ -- 1
+purify$ -- 325
+quote$ -- 0
+skip$ -- 589
+stack$ -- 0
+substring$ -- 1445
+swap$ -- 252
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 264
+warning$ -- 7
+while$ -- 235
+width$ -- 71
+write$ -- 683
+(There was 1 error message)

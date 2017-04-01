@@ -12,6 +12,7 @@
 \usepackage{tikz}
 \usetikzlibrary{bayesnet}
 
+\usepackage{graphics}
 \begin{document}
 
 \title{Automatic Harmonic Analysis of Melodies}
@@ -57,15 +58,20 @@ Music is fundamentally concerned with two concepts: rhythm and pitch. Rhythm is,
 Music has been studied and practised by many different cultures over the course of human history and there have been many different formalisms for describing it developed. The most common, and that used in this report is {\em Western Tonal Music} (WTM). Under this paradigm, the continuous range of pitch is divided into repeating {\em octaves}, where corresponding points on each {\em octave} are perceived as the same note at different pitches. These ranges are then subdivided into 12 distinct notes. The method used for these divisions is based on ratios between note frequencies, the most commonly used being Equal Temperament \cite{regener1973pitch}. Pieces of music are organised into one of 12 {\em keys}, each with a {\em tonic} corresponding to one of the 12 notes. Keys can be thought of as a prior over the distribution of notes in a song, where the tonic note has the highest probability of being played.
 
 In written music, pitch is associated with vertical direction on a {\em stave}, shown below.
-\begin{lilypond}
-  snippet = \relative c' {<f bes d>1 <e bes' d> <f a d> }
-  \score { 
-    \snippet 
-    \layout { 
-           #(layout-set-staff-size 14)
-                }
-              }
-          \end{lilypond} 
+{%
+\parindent 0pt
+\noindent
+\ifx\preLilyPondExample \undefined
+\else
+  \expandafter\preLilyPondExample
+\fi
+\def\lilypondbook{}%
+\input{a7/lily-da190b38-systems.tex}
+\ifx\postLilyPondExample \undefined
+\else
+  \expandafter\postLilyPondExample
+\fi
+} 
 STAVE
 
 Rhythm is concerned with the temporal positioning of these notes, both where and when they occur, as well as for how long to play them. In WTM a piece of music has an associated beat or {\em tempo} that defines the frequency of an underlying, unheard pulse, over which the notes of the piece are laid, typically close to 120 beats per minute. The {\em time signature} of a piece defines how to treat groups of these beats, with the most common being $\frac{4}{4}$. This corresponds to groupings of four beats (also called {\em quarter notes} or {\em crotchets}). These groupings are referred to as {\em bars} and are used to organise the temporal structure of a melody in a way that is both easy to read and represents the underlying rhythmic properties of the piece. As in western languages, time flows from left to right in written music.
