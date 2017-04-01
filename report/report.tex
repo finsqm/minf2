@@ -5,6 +5,8 @@
 \usepackage{bm}
 \usepackage{url}
 \usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{bayesnet}
 
 \begin{document}
 
@@ -74,23 +76,106 @@ DISCUSS WITH WORKED EXAMPLE ON ABOVE
 
 In terms of a traditional classification problem, $f(x) = y$, the $x$ here is a sequence of notes and the $y$ is a sequence of chord labels. Hence we have a sequence to sequence problem.
 
-\section{Natural Language Processing}
+\section{Inspiration from Natural Language Processing}
 
 An often-drawn comparison is that of the similarity between music and language. Many postulate that music is itself a form of language \cite{cohen2008music} (although perhaps it is more enlightening to say that language is a music). This is useful when analysing music as there is a wealth of literature on natural language processing.
 
-The immediate comparison that can be drawn is to Part of Speech (POS) Tagging. In this problem we are trying to assign grammatical tags to a tokenized sequence of words. This one-to-one mapping problem is analogous to chord labelling in the case where each note is labelled with a corresponding chord:
+The immediate comparison that can be drawn is to Part of Speech (POS) Tagging. In this problem we are trying to assign grammatical tags to a tokenized sequence of words, for example:
 
-DIAGRAM
+And/CC now/RB for/IN something/NN completely/RB different/JJ
 
-Both are examples of a problem where the visible variables that are observed are dependant on the latent variables that are trying to be determined. This problem would be simple if said latent variables were not dependant on each other:
+This one-to-one mapping problem is analogous to chord labelling in the case where each note is labelled with a corresponding chord:
 
-PLATE DIAGRAM
+c/Cmaj d/Cmaj e/Emin f/Emin g/Gmaj
+
+We can describe this in terms of latent variables $h_i$ and visible variables $v_i$:
+
+\begin{center}
+\begin{tikzpicture}[thick,scale=1.5, every node/.style={transform shape}]
+  % Nodes
+  \node[latent]       (h1)        {$h_1$};
+  \node[latent, right = of h1]       (h2)        {$h_2$};
+  \node[latent, right = of h2]       (h3)        {$h_3$};
+  \node[obs, below = of h1]       (v1)        {$v_1$};
+  \node[obs, right = of v1]       (v2)        {$v_2$};
+  \node[obs, right = of v2]       (v3)        {$v_3$};
+  % Connections
+  \draw[] (h1) -- (h2);
+  \draw[] (h2) -- (h3);
+  \path[] (h1) edge [bend left] (h3);
+  \draw[] (v1) -- (v2);
+  \draw[] (v2) -- (v3);
+  \path[] (v1) edge [bend left] (v3);
+  \draw[] (h1) -- (v1);
+  \draw[] (h2) -- (v2);
+  \draw[] (h3) -- (v3);
+  \draw[] (h1) -- (v2);
+  \draw[] (h1) -- (v3);
+  \draw[] (h2) -- (v1);
+  \draw[] (h3) -- (v1);
+  \draw[] (h2) -- (v3);
+  \draw[] (h3) -- (v2);
+\end{tikzpicture}
+\end{center}
+
+Both are examples of a problem where the visible variables that are observed are dependant on the latent variables that are trying to be determined. As can be seen in the diagram above, the naive approach introduces a large number of connections to model.  This problem would be simpler if said latent and observed variables were not dependant on each other, and each observed variable only depended on one hidden variable:
+
+\begin{center}
+\begin{tikzpicture}[thick,scale=1.5, every node/.style={transform shape}]
+  % Nodes
+  \node[latent]       (h1)        {$h_1$};
+  \node[latent, right = of h1]       (h2)        {$h_2$};
+  \node[latent, right = of h2]       (h3)        {$h_3$};
+  \node[obs, below = of h1]       (v1)        {$v_1$};
+  \node[obs, right = of v1]       (v2)        {$v_2$};
+  \node[obs, right = of v2]       (v3)        {$v_3$};
+  % Connections
+  \edge[] {h1} {v1};
+  \edge[] {h2} {v2};
+  \edge[] {h3} {v3};
+\end{tikzpicture}
+\end{center}
 
 But this is clearly not the case. An adjective is very likely to be followed by a noun, and a G major is very likely to be followed by a C major. In reality the situation looks more like this:
 
-NON-PLATE DIAGRAM - LATENT VARS CONNECTED
+\begin{center}
+\begin{tikzpicture}[thick,scale=1.5, every node/.style={transform shape}]
+  % Nodes
+  \node[latent]       (h1)        {$h_1$};
+  \node[latent, right = of h1]       (h2)        {$h_2$};
+  \node[latent, right = of h2]       (h3)        {$h_3$};
+  \node[obs, below = of h1]       (v1)        {$v_1$};
+  \node[obs, right = of v1]       (v2)        {$v_2$};
+  \node[obs, right = of v2]       (v3)        {$v_3$};
+  % Connections
+  \draw[] (h1) -- (h2);
+  \draw[] (h2) -- (h3);
+  \path[] (h1) edge [bend left] (h3);
+  \edge[] {h1} {v1};
+  \edge[] {h2} {v2};
+  \edge[] {h3} {v3};
+\end{tikzpicture}
+\end{center}
 
-The complex relationships between the latent variables is one area where the difficulty arises in these problems. An often used approach to this is to apply the first-order Markov Assumption. This allows us to assume that each latent variable $h_t$ is only dependant on the previous latent variable $h_{t-1}$ in a temporal ordering $t \in \{1:T\}$. This model is known as a Hidden Markov Model (HMM). POS Tagging is a success story for the HMM \cite{kupiec1992robust}. 
+It is useful to assume independence of observed variables given the latent variables and this is something that all the models do, but the relationship between the $h_i$ are more complex and this is one area where the difficulty arises in these problems. An often used approach to this is to apply the first-order Markov Assumption. This allows us to assume that each latent variable $h_t$ is only dependant on the previous latent variable $h_{t-1}$ in a temporal ordering $t \in \{1:T\}$. This model is known as a Hidden Markov Model (HMM). POS Tagging is a success story for the HMM \cite{kupiec1992robust}. 
+
+\begin{center}
+\begin{tikzpicture}[thick,scale=1.5, every node/.style={transform shape}]
+  % Nodes
+  \node[latent]       (h1)        {$h_t$};
+  \node[latent, right = of h1]       (h2)        {$h_{t+1}$};
+  \node[latent, right = of h2]       (h3)        {$h_{t+2}$};
+  \node[obs, below = of h1]       (v1)        {$v_t$};
+  \node[obs, below = of h2]       (v2)        {$v_{t+1}$};
+  \node[obs, below = of h3]       (v3)        {$v_{t+2}$};
+  % Connections
+  \edge[] {h1} {h2};
+  \edge[] {h2} {h3};
+  \edge[] {h1} {v1};
+  \edge[] {h2} {v2};
+  \edge[] {h3} {v3};
+\end{tikzpicture}
+\end{center}
 
 \section{Hidden Markov Models}
 
@@ -140,19 +225,77 @@ Work on neural networks architectures has flourished in the past few years, due 
 
 A perceptron is a linear classifier based on an abstraction of a neuron. It is, in essence, a weighted sum of inputs with one output.
 
-PERCEPTRON DIAGRAM
+\begin{center}
+  \begin{tikzpicture}[perceptron/.style={circle, draw, thick, minimum size=15mm}, input/.style={circle, draw, thick, minimum size=7mm}]
+    % Nodes
+    \node[perceptron] (p)   {$\sum$};
+    \node[input, left = of p]      (x2)  {$x_2$};
+    \node[input, above = of x2]      (x1)  {$x_1$};
+    \node[input, below = of x2]      (x3)  {$x_3$};
+    \node[input, right = of p] (out) {$y$};
+    % Connections
+    \edge[] {x1} {p};
+    \edge[] {x2} {p};
+    \edge[] {x3} {p};
+    \edge[] {p} {out};
+  \end{tikzpicture}
+\end{center}
 
 The key observation is that these weights can be trained to create a binary classification model, where the two classes are linearly separable. The classic example of a problem this model cannot solve is the XOR logic gate, as in this case a straight line cannot be drawn which separates the two classes \cite{minsky1969perceptrons}.
 
 If we take a row of perceptrons with the same inputs but different weights, we now have one layer of a Multi Layer Perceptron (MLP). MLPs are built by taking the outputs of these layers, applying an activation function such as a logistic sigmoid ($\sigma$) or a hyperbolic tangent ($tanh$), then treating these values as the inputs to another layer.
 
-MLP DIAGRAM
+\begin{center}
+  \begin{tikzpicture}[perceptron/.style={circle, draw, thick, minimum size=15mm}, input/.style={circle, draw, thick, minimum size=7mm}]
+    % Nodes
+    \node[perceptron] (p2)   {$\sum$};
+    \node[perceptron, above = of p2] (p1)   {$\sum$};
+    \node[perceptron, below = of p2] (p3)   {$\sum$};
+    \node[input, left = of p2]      (x2)  {$x_2$};
+    \node[input, left = of p1]      (x1)  {$x_1$};
+    \node[input, left = of p3]      (x3)  {$x_3$};
+    \node[input, right = of p2] (out2) {$y_2$};
+    \node[input, right = of p1] (out1) {$y_1$};
+    \node[input, right = of p3] (out3) {$y_3$};
+    % Connections
+    \edge[] {x1} {p1};
+    \edge[] {x2} {p1};
+    \edge[] {x3} {p1};
+    \edge[] {x1} {p2};
+    \edge[] {x2} {p2};
+    \edge[] {x3} {p2};
+    \edge[] {x1} {p3};
+    \edge[] {x2} {p3};
+    \edge[] {x3} {p3};
+    \edge[] {p1} {out1};
+    \edge[] {p2} {out2};
+    \edge[] {p3} {out3};
+  \end{tikzpicture}
+\end{center}
 
 Another name for these models are Feed-Forward Artificial Neural Networks (ANNs). By continuing like this we can build an arbitrarily large ANN, which can be used to model more and more complex problems. In fact it can be proven that even just a single layer, finite length ANN can be used to approximate any continuous function on compact subsets of ${\mathbb R}^n$ \cite{cybenko1989approximation}\cite{hornik1989multilayer}. This astounding property, known as the Universal Approximation Theorem, is one of the reasons that neural networks are outperforming many traditional mathematical models currently, in a variety of fields from computer vision \cite{krizhevsky2012imagenet} to protein modelling \cite{uziela2017proq3d}.
 
 However this theorem gives no algorithm for building these complex models. The difficulty comes in training the weights to correctly model the problem, and in the cases of very deep models this can mean millions of parameters. Even worse, there is no analytic solution in optimising these parameters, they must be trained iteratively. This means a large amount of computation time and resources.
 
-To train an ANN in a supervised manner, an error function is needed between the output of the network and the training labels. To continue the notation introduced in the HMM section we will let the $\{v_i\}_{i=1}^{T}$ be the input to the network, $\bm{v}$ using vector notation. The output variables are re-named $\{y_i\}_{i=1}^{S}$, or $\bm{y}$, to avoid confusion with the hidden layers of the network, $\bm{h}_i$, for the $i$th layer. Let the training label associated with $\bm{y}$ be denoted $\bm{t}$. A superscript in parentheses, $\bm{y}^{(j)}$, will be used to denote the $j$th instance of data, from a data sample of size $N$. Hence we have an error function:
+To train an ANN in a supervised manner, an error function is needed between the output of the network and the training labels. To continue the notation introduced in the HMM section we will let the $\{v_i\}_{i=1}^{T}$ be the input to the network, $\bm{v}$ using vector notation. The output variables are re-named $\{y_i\}_{i=1}^{S}$, or $\bm{y}$, to avoid confusion with the hidden layers of the network, $\bm{h}_i$, for the $i$th layer. Let the training label associated with $\bm{y}$ be denoted $\bm{t}$. A superscript in parentheses, $\bm{y}^{(j)}$, will be used to denote the $j$th instance of data, from a data sample of size $N$. In the case of three layers, this will look like:
+
+\begin{center}
+  \begin{tikzpicture}
+    % Layers
+    \node [draw,thick,minimum width=1cm,minimum height=5cm] (v) {$\bm{v}$};
+    \node [right of = v, draw,thick,minimum width=1cm,minimum height=5cm, node distance = 2cm] (h) {$\bm{h_1}$};
+    \node [right of = h, draw,thick,minimum width=1cm,minimum height=5cm, node distance = 2cm] (h2) {$\bm{h_2}$};
+    \node [right of = h2, draw,thick,minimum width=1cm,minimum height=5cm, node distance = 2cm] (h3) {$\bm{h_3}$};
+    \node [right of = h3, draw,thick,minimum width=1cm,minimum height=5cm, node distance = 2cm] (y) {$\bm{y}$};
+    % Connections
+    \edge {v} {h}
+    \edge {h} {h2}
+    \edge {h2} {h3}
+    \edge {h3} {y}
+  \end{tikzpicture}
+\end{center}
+
+Hence we have an error function:
 
 \begin{equation}
   \label{error}
@@ -173,11 +316,37 @@ So is it possible to use neural networks to predict a sequence of chords from a 
 
 An RNN is a neural network that scales dynamically to it's input. It is composed of {\em cells} that share weights and are connected together in a chain. A single RNN cell looks like a standard feed-forward network, but it's input $v_t$ is combined with an output from the previous cell $h_{t-1}$. Architectures vary but it is common for the output of the cell, $y_t$, to be the output of a second layer that takes $h_t$ as input, and for the output of this hidden layer, $h_t$, to be passed to the next cell in the chain. Of course these cells can be further stacked to result in deeper architectures that learn higher-level features of their input.
 
-RNN DIAGRAM
+The following diagram represents a simple, one-layer RNN, where the full layers are now represented as circular nodes, for compactness and comparison to the HMMs (note in the HMMs the arrows represent dependence relationships, here they represent weighted sums and activations, but the concept is similar):
+
+\begin{center}
+  \begin{tikzpicture}[thick,scale=1.5, every node/.style={transform shape}]
+  % Nodes
+  \node[latent]       (h1)        {$h_t$};
+  \node[latent, right = of h1]       (h2)        {$h_{t+1}$};
+  \node[latent, right = of h2]       (h3)        {$h_{t+2}$};
+  \node[obs, below = of h1]       (v1)        {$v_t$};
+  \node[obs, below = of h2]       (v2)        {$v_{t+1}$};
+  \node[obs, below = of h3]       (v3)        {$v_{t+2}$};
+  \node[obs, above = of h1]       (y1)        {$y_t$};
+  \node[obs, above = of h2]       (y2)        {$y_{t+1}$};
+  \node[obs, above = of h3]       (y3)        {$y_{t+2}$};
+  \coordinate[left = of h1] (hneg);
+  \coordinate[right = of h3] (hpos);
+  % Connections
+  \edge[] {hneg} {h1}
+  \edge[] {h3} {hpos}
+  \edge[] {h1} {h2};
+  \edge[] {h2} {h3};
+  \edge[] {v1} {h1};
+  \edge[] {v2} {h2};
+  \edge[] {v3} {h3};
+  \edge[] {h1} {y1};
+  \edge[] {h2} {y2};
+  \edge[] {h3} {y3};
+\end{tikzpicture}
+\end{center}
 
 To train these models we can unfold them after receiving all of the input, so that it looks like a complex feed-forward model, that back propagate the error in a similar method to before, now called Back Propagation Through Time (BPTT) \cite{werbos1990backpropagation}.
-
-ROLLED OUT RNN BPTT
 
 A problem with this method, referred to as the vanishing gradient problem \cite{hochreiter1998vanishing}, is where the earlier weights in the network receive a much smaller update than those closer to the final output, as the back propagated gradient at time $t$ has been through $T - t$ applications of the chain rule, each involving multiplication with numbers $< 1$, resulting in the gradient becoming incredibly small. Hence errors caused by weights near the start of the sequence won't be corrected.
 
@@ -217,15 +386,46 @@ Lastly the output gate decides what to output as $h_t$ for this time step. It ch
 
 The full cell takes this shape:
 
-LSTM Image
+\begin{center}
+  \begin{tikzpicture}[thick,scale=1.5, every node/.style={transform shape}]
+    % Nodes
+    \node[det] (inputplus) {$+$};
+    \node[det, below = of inputplus] (inputtimes) {$\times$};
+    \node[latent, below = of inputtimes] (inputtanh) {$tanh$};
+    \node[latent, left = of inputtanh] (inputsig) {$\sigma$};
+    \node[latent, left = of inputsig] (forgetsig) {$\sigma$};
+    \node[det, above = of forgetsig, left = of inputplus] (forgettimes) {$\times$};
+    \node[latent, right = of inputtanh] (outputsig) {$\sigma$};
+    \node[det, right = of inputplus] (outputtanh) {$tanh$};
+    \node[det, below = of outputtanh] (outputtimes) {$\times$};
+    \node[obs, below = of inputtanh] (x) {$x_t : h_{t-1}$};
+    \node[obs, right = of outputtimes, scale = 1.5] (h) {$h_t$};
+    \node[obs, left = of forgettimes, scale = 1.5] (c) {$c_{t-1}$};
+    \node[obs, above = of inputplus, scale = 1.5] (cnext) {$c_{t}$};
+    % Connections
+    \edge {forgetsig} {forgettimes};
+    \edge {forgettimes} {inputplus};
+    \edge {inputsig} {inputtimes};
+    \edge {inputtanh} {inputtimes};
+    \edge {inputtimes} {inputplus};
+    \edge {outputtanh} {outputtimes};
+    \edge {outputsig} {outputtimes};
+    \edge {inputplus} {outputtanh};
+    \edge {x} {inputsig};
+    \edge {x} {forgetsig};
+    \edge {x} {inputtanh};
+    \edge {x} {outputsig};
+    \edge {outputtimes} {h};
+    \edge {c} {forgettimes};
+    \edge {inputplus} {cnext};
+  \end{tikzpicture}
+\end{center}
 
-This cell represents a single layer LSTM model. This could be used as the full model, in which case the $h_t$ would be the outputs $y_t$ of the system. Alternatively these LSTM cells could be stacked, creating a deep learning model where the $h_{it}$ of each layer $i$ would be the input to the layer $i+1$, where $h_{1t}$ are the original inputs $v_t$.
+This cell represents a single layer LSTM model, where the white circles are neural network layers with an activation function, the diamonds are pointwise operations and the dark circles input/output states. This could be used as the full model, in which case the $h_t$ would be the outputs $y_t$ of the system. Alternatively these LSTM cells could be stacked, creating a deep learning model where the $h_{it}$ of each layer $i$ would be the input to the layer $i+1$, where $h_{1t}$ are the original inputs $v_t$.
 
 All this serves to create a model where information can be remembered and forgotten dynamically based on where we are in the input sequence. This is very useful for the purposes of this project as repeated musical phrases and structures could be implicitly captured by the model, as shown to be possible by \cite{eck2008learning}.
 
 LSTMs are currently the cutting edge for many different areas of natural language processing, including language modelling \cite{sundermeyer2012lstm} \cite{pichotta2016using}, speech recognition \cite{han2017ese} and language generation in spoken dialogue systems \cite{wen2016multi}.
-
-
 
 For an in-depth discussion on LSTMs, \cite{olah_2015} or \cite{greff2016lstm} is recommended.
 
