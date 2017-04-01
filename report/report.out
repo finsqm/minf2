@@ -23,7 +23,7 @@
 \BOOKMARK [1][-]{section.4.1}{Datasets}{chapter.4}% 23
 \BOOKMARK [2][-]{subsection.4.1.1}{Weimar Jazz Database}{section.4.1}% 24
 \BOOKMARK [2][-]{subsection.4.1.2}{KP Corpus}{section.4.1}% 25
-\BOOKMARK [1][-]{section.4.2}{Metrics}{chapter.4}% 26
+\BOOKMARK [1][-]{section.4.2}{Accuracy Metric}{chapter.4}% 26
 \BOOKMARK [1][-]{section.4.3}{Baselines}{chapter.4}% 27
 \BOOKMARK [1][-]{section.4.4}{HMM Results}{chapter.4}% 28
 \BOOKMARK [1][-]{section.4.5}{LSTM Results}{chapter.4}% 29

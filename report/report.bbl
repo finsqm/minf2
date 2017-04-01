@@ -12,6 +12,14 @@
   2015.
 \newblock Software available from tensorflow.org.
 
+\bibitem{wjazz}
+{\sc Abe{\ss}er, J., Frieler, K., Pfleiderer, M., and Zaddach, W.-G.}
+\newblock Introducing the jazzomat project-jazz solo analysis using music
+  information retrieval methods.
+\newblock In {\em Proceedings of the 10th International Symposium on Computer
+  Music Multidisciplinary Research (CMMR) Sound, Music and Motion, Marseille,
+  France\/} (2013), pp.~187--192.
+
 \bibitem{allan2005harmonising}
 {\sc Allan, M., and Williams, C.~K.}
 \newblock Harmonising chorales by probabilistic inference.
@@ -22,6 +30,12 @@
 {\sc Buitinck, L.}
 \newblock seqlearn.
 \newblock \url{http://larsmans.github.io/seqlearn/}, 2013.
+
+\bibitem{burgoyne2011expert}
+{\sc Burgoyne, J.~A., Wild, J., and Fujinaga, I.}
+\newblock An expert ground truth set for audio chord recognition and music
+  analysis.
+\newblock In {\em ISMIR\/} (2011), vol.~11, pp.~633--638.
 
 \bibitem{chollet2015}
 {\sc Chollet, F.}
@@ -57,6 +71,13 @@
   G.~E.}
 \newblock Binary coding of speech spectrograms using a deep auto-encoder.
 \newblock In {\em Interspeech\/} (2010), Citeseer, pp.~1692--1695.
+
+\bibitem{digiorgi2013automatic}
+{\sc Di~Giorgi, B., Zanoni, M., Sarti, A., and Tubaro, S.}
+\newblock Automatic chord recognition based on the probabilistic modeling of
+  diatonic modal harmony.
+\newblock In {\em Multidimensional Systems (nDS), 2013. Proceedings of the 8th
+  International Workshop on\/} (Sept 2013), pp.~1--6.
 
 \bibitem{dylan1975blood}
 {\sc Dylan, B.}
@@ -194,6 +215,10 @@
 \newblock The expectation-maximization algorithm.
 \newblock {\em IEEE Signal processing magazine 13}, 6 (1996), 47--60.
 
+\bibitem{MuellerKBA11_SMD_ISMIR-lateBreaking}
+{\sc M{\"u}ller, M., Konz, V., Bogler, W., and Arifi-M{\"u}ller, V.}
+\newblock Saarland music data ({SMD}).
+
 \bibitem{numpy_2005}
 {\sc NumPy}.
 \newblock Numpy.
@@ -312,6 +337,11 @@
 \newblock Lecture 6.5-rmsprop: Divide the gradient by a running average of its
   recent magnitude.
 \newblock {\em COURSERA: Neural networks for machine learning 4}, 2 (2012).
+
+\bibitem{turetsky2003ground}
+{\sc Turetsky, R.~J., and Ellis, D.~P.}
+\newblock Ground-truth transcriptions of real music from force-aligned midi
+  syntheses.
 
 \bibitem{uziela2017proq3d}
 {\sc Uziela, K., Hurtado, D.~M., Shu, N., Wallner, B., and Elofsson, A.}

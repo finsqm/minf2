@@ -157,16 +157,22 @@ class Song(object):
         self.chord_list = []
 
     def transpose_to_c(self, note):
+        moves_around_wheel = self.key * 7
+        key_tpc = moves_around_wheel % 12
+
         if self.mode == 'minor':
-            return (note - self.key - 3) % 12
+            return (note - key_tpc - 3) % 12
         else:
-            return (note - self.key) % 12
+            return (note - key_tpc) % 12
 
     def transpose_chord_to_c(self, note):
+        moves_around_wheel = self.key * 7
+        key_tpc = moves_around_wheel % 12
+
         if self.mode == 'minor':
-            return (note - self.key - 3) % 12
+            return ((note -  key_tpc - 3) % 12)
         else:
-            return (note - self.key) % 12
+            return ((note -  key_tpc) % 12)
 
     def get_X_and_y(self):
         """

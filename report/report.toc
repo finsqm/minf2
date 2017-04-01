@@ -23,12 +23,12 @@
 \contentsline {section}{\numberline {4.1}Datasets}{25}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}Weimar Jazz Database}{25}{subsection.4.1.1}
 \contentsline {subsection}{\numberline {4.1.2}KP Corpus}{25}{subsection.4.1.2}
-\contentsline {section}{\numberline {4.2}Metrics}{25}{section.4.2}
-\contentsline {section}{\numberline {4.3}Baselines}{25}{section.4.3}
-\contentsline {section}{\numberline {4.4}HMM Results}{25}{section.4.4}
-\contentsline {section}{\numberline {4.5}LSTM Results}{25}{section.4.5}
-\contentsline {section}{\numberline {4.6}Other Results}{25}{section.4.6}
-\contentsline {chapter}{\numberline {5}Conclusion}{26}{chapter.5}
-\contentsline {section}{\numberline {5.1}Discussion}{26}{section.5.1}
-\contentsline {section}{\numberline {5.2}Future Work}{26}{section.5.2}
-\contentsline {chapter}{Bibliography}{27}{chapter*.2}
+\contentsline {section}{\numberline {4.2}Accuracy Metric}{26}{section.4.2}
+\contentsline {section}{\numberline {4.3}Baselines}{26}{section.4.3}
+\contentsline {section}{\numberline {4.4}HMM Results}{26}{section.4.4}
+\contentsline {section}{\numberline {4.5}LSTM Results}{26}{section.4.5}
+\contentsline {section}{\numberline {4.6}Other Results}{26}{section.4.6}
+\contentsline {chapter}{\numberline {5}Conclusion}{27}{chapter.5}
+\contentsline {section}{\numberline {5.1}Discussion}{27}{section.5.1}
+\contentsline {section}{\numberline {5.2}Future Work}{27}{section.5.2}
+\contentsline {chapter}{Bibliography}{28}{chapter*.2}

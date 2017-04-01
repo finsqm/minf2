@@ -3,7 +3,6 @@ import csv
 import copy
 import logging
 import sys
-import numpy as np
 
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
@@ -22,72 +21,6 @@ CHORD_INDEX = 3
 KEY_INDEX = 3
 MODE_INDEX = 4
 
-
-def transform_to_X_Y(X, y):
-    """
-    Input:
-        X : 2D
-        y : 1D
-    Output:
-        X : 1D
-        Y : 1D
-    """
-    X_out = []
-    Y_out = []
-    for i, x in enumerate(X):
-        for x_j in x:
-            X_out.append(x_j)
-            Y_out.append(y[i])
-    return X_out, Y_out
-
-def to_one_hot_vector(x, n):
-    """
-    Input :
-        x : scalar
-        n : dim
-    Output :
-        vetor: 1D one hot numpy array of size n
-    """
-    vector = np.zeros((n,), dtype=np.int)
-    vector[int(x)] = 1
-    return vector
-
-def sequence(XX, YY):
-    """
-    Inputs:
-        XX          : 2D
-        XX[:]       : songs
-        XX[:][:]    : notes
-
-        YY          : 2D
-        YY[:]       : songs
-        YY[:][:]    : chords
-
-    Output:
-        X          : 2D
-        X[:]       : notes
-        X[:][:]    : note vector
-
-        Y[:]       : chords
-
-        L[:]       : song lengths
-    """
-    X = []
-    Y = []
-    L = []
-    note_dim = 12
-    for i, XX_song in enumerate(XX):
-        counter = 0
-        for j, XX_note in enumerate(XX_song):
-            counter += 1
-            note_vec = to_one_hot_vector(XX_note, note_dim)
-            X.append(note_vec)
-            Y.append(YY[i][j])
-        L.append(counter)
-
-    return np.asarray(X), np.asarray(Y), np.asarray(L)
-
-
 class Note(object):
     def __init__(self, note_on, pitch):
         self.note_on = note_on
@@ -104,7 +37,6 @@ class Note(object):
 
     def is_on(self):
         return self.on
-
 
 class Chord(object):
     def __init__(self, time, chord_string):
@@ -140,11 +72,10 @@ class Chord(object):
         	pc = (2 * d) - 1
 
         pc = (pc + m) % 12
-        # if minor:
-        #     pc = (pc + 3) % 12
+        if minor:
+            pc = (pc + 3) % 12
 
         self.pc = pc + 1
-
 
 class Song(object):
     def __init__(self):
@@ -153,22 +84,16 @@ class Song(object):
         self.chord_list = []
 
     def transpose_to_c(self, note):
-        moves_around_wheel = self.key * 7
-        key_tpc = moves_around_wheel % 12
-
         if self.mode == 'minor':
-            return (note - key_tpc - 3) % 12
+            return (note - self.key - 3) % 12
         else:
-            return (note - key_tpc) % 12
+            return (note - self.key) % 12
 
     def transpose_chord_to_c(self, note):
-        moves_around_wheel = self.key * 7
-        key_tpc = moves_around_wheel % 12
-
         if self.mode == 'minor':
-            return ((note - 1 - key_tpc - 3) % 12) + 1
+            return ((note - 1 - self.key - 3) % 12) + 1
         else:
-            return ((note - 1 - key_tpc) % 12) + 1
+            return ((note - 1 - self.key) % 12) + 1
 
     def get_X_and_y(self):
         '''
@@ -185,30 +110,24 @@ class Song(object):
         notes_list_copy = copy.copy(self.notes_list)
         chord_list_copy = self.chord_list[1:]
 
-        y.append(self.transpose_chord_to_c(self.chord_list[0].pc))
-        # y.append(self.chord_list[0].pc)
+        y.append(self.chord_list[0].pc)
         for chord in self.chord_list[1:]:
             x = []
-            # print chord.pc, self.transpose_chord_to_c(chord.pc), self.key
-            y.append(self.transpose_chord_to_c(chord.pc))
-            # y.append(chord.pc)
+            y.append(chord.pc)
             time = chord.time
             while notes_list_copy[0].note_on < time:
                 note = notes_list_copy.pop(0)
-                x_note = self.transpose_to_c(note.pc)
-                # x_note = note.pc
+                x_note = note.pc
                 x.append(x_note)
             X.append(x)
 
         x = []
         while len(notes_list_copy) > 0:
             note = notes_list_copy.pop(0)
-            x_note = self.transpose_to_c(note.pc)
-            # x_note = note.pc
+            x_note = note.pc
             x.append(x_note)
         X.append(x)
         return X, y
-
 
 
 
@@ -253,13 +172,12 @@ class KPDataLoader(object):
 
         self.songs.append(song)
 
-    def get_XX_and_YY(self):
+    def get_XX_and_Y(self):
         if len(self.songs) > 0:
             XX = []
-            YY = []
+            Y = []
             for song in self.songs:
-                x, y = song.get_X_and_y()
-                X, Y = transform_to_X_Y(x,y)
+                X, y = song.get_X_and_y()
                 XX.append(X)
-                YY.append(Y)
-        return XX, YY
+                Y.append(y)
+        return XX, Y

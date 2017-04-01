@@ -40,6 +40,7 @@ def transform_to_X_Y(X, y):
             Y_out.append(y[i])
     return X_out, Y_out
 
+
 def to_one_hot_vector(x, n):
     """
     Input :
@@ -51,6 +52,7 @@ def to_one_hot_vector(x, n):
     vector = np.zeros((n,), dtype=np.int)
     vector[int(x)] = 1
     return vector
+
 
 def sequence(XX, YY):
     """
@@ -110,6 +112,8 @@ class Chord(object):
     def __init__(self, time, chord_string):
         self.time = time
         self.chord_string = chord_string
+        self.pc = None
+        # Set self.pc
         self.set_pc(chord_string)
 
     def set_pc(self, chord_string):
@@ -119,31 +123,31 @@ class Chord(object):
         minor = 'min' in chord_string
 
         if modifier == '#':
-        	m = 1
+            m = 1
         elif modifier == 'b':
             m = -1
         else:
-        	m = 0
+            m = 0
 
         k = key.capitalize()
         d = ord(k) - 67
 
         # For A and B
         if d < 0:
-        	d = 7 + d
+            d = 7 + d
 
         # C,D,E
         if d < 3:
-        	pc = 2 * d
+            pc = 2 * d
         # F,G,A,B
         else:
-        	pc = (2 * d) - 1
+            pc = (2 * d) - 1
 
         pc = (pc + m) % 12
         # if minor:
         #     pc = (pc + 3) % 12
 
-        self.pc = pc + 1
+        self.pc = pc
 
 
 class Song(object):
@@ -166,51 +170,44 @@ class Song(object):
         key_tpc = moves_around_wheel % 12
 
         if self.mode == 'minor':
-            return ((note - 1 - key_tpc - 3) % 12) + 1
+            return ((note -  key_tpc - 3) % 12)
         else:
-            return ((note - 1 - key_tpc) % 12) + 1
+            return ((note -  key_tpc) % 12)
 
     def get_X_and_y(self):
-        '''
+        """
         X :	2D
-			X[:] 		= frames (varying size)
-			X[:][:]		= notes
+            X[:] 		= frames (varying size)
+            X[:][:]		= notes
         y :	1D
-			y[:]	= Labels
+            y[:]	= Labels
 
         Note: assumes ordered chord and note list
-        '''
+        """
         X = []
         y = []
         notes_list_copy = copy.copy(self.notes_list)
         chord_list_copy = self.chord_list[1:]
 
-        y.append(self.transpose_chord_to_c(self.chord_list[0].pc))
-        # y.append(self.chord_list[0].pc)
+        y.append(to_one_hot_vector(self.chord_list[0].pc, 12))
         for chord in self.chord_list[1:]:
             x = []
             # print chord.pc, self.transpose_chord_to_c(chord.pc), self.key
-            y.append(self.transpose_chord_to_c(chord.pc))
-            # y.append(chord.pc)
+            y.append(to_one_hot_vector(chord.pc, 12))
             time = chord.time
             while notes_list_copy[0].note_on < time:
                 note = notes_list_copy.pop(0)
-                x_note = self.transpose_to_c(note.pc)
-                # x_note = note.pc
-                x.append(x_note)
+                x_note = note.pc
+                x.append(to_one_hot_vector(x_note, 12))
             X.append(x)
 
         x = []
         while len(notes_list_copy) > 0:
             note = notes_list_copy.pop(0)
-            x_note = self.transpose_to_c(note.pc)
-            # x_note = note.pc
-            x.append(x_note)
+            x_note = note.pc
+            x.append(to_one_hot_vector(x_note, 12))
         X.append(x)
         return X, y
-
-
-
 
 
 class KPDataLoader(object):
@@ -257,9 +254,13 @@ class KPDataLoader(object):
         if len(self.songs) > 0:
             XX = []
             YY = []
+            max_length = 0
             for song in self.songs:
                 x, y = song.get_X_and_y()
-                X, Y = transform_to_X_Y(x,y)
+                X, Y = transform_to_X_Y(x, y)
+                length = len(X)
+                if length > max_length:
+                    max_length = length
                 XX.append(X)
                 YY.append(Y)
-        return XX, YY
+            return XX, YY, max_length

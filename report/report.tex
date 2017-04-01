@@ -382,11 +382,24 @@ The {\tt midicsv} \cite{walker_2008} utility was used to convert the MIDI files 
 %Detail every single run of things, talk about data things
 \chapter{Experimental Results} \label{Experimental Results}
 
-\section{Datasets} \label{Datasets}
-\subsection{Weimar Jazz Database} \label{wjazz}
-\subsection{KP Corpus} \label{kp}
+In this chapter the datasets used, experimental design and main results of the project will be presented and discussed.
 
-\section{Metrics}
+\section{Datasets} \label{Datasets}
+A key problem with analysing the harmonic structure of melodies is the availability of data. Primarily due to copyright issues, much of the data used by similar projects in the literature is not made available publicly. What is available is largely just melodic, without chord annotations \cite{turetsky2003ground} \cite{MuellerKBA11_SMD_ISMIR-lateBreaking}. Some purely harmonic datasets also exist \cite{burgoyne2011expert} \cite{digiorgi2013automatic}, but this task requires the aligning of the two for training and analysis.
+
+\subsection{Weimar Jazz Database} \label{wjazz}
+The dataset used for the previous year's work was the Weimar Jazz Database \cite{wjazz}. This is a collection of 273 transcribed solos from famous Jazz musicians, typically over a Jazz Standard (a commonly known piece of jazz music over which a group of musicians will improvise). The meta data in this data set is extensive and of a very high quality, but inherent difficulties come in domain of melodies. Improvised jazz solos are, in a music theoretic sense, very noisy. They tend to be unpredictable and ambiguous harmonically, increasing the difficulty of this problem.
+
+EXAMPLE
+
+\subsection{KP Corpus} \label{kp}
+The first main task of this year's work was to find a new database that contained simpler melodies, on which the models of last year could be retrained on and on which the new models could be developed. For the reasons stated above this was a difficult search. The dataset the was settled on was a collection of excerpts from classical songs in MIDI format. These melodies are much simpler and easier to analyse, with a stronger correlation between notes and chords. The example used earlier, Minuet in G (shown below) is from this dataset. The only downside of this corpus is that there are only 46 excerpts, a small number for training and evaluating stochastic models.
+
+MINUET IN G
+
+\section{Accuracy Metric}
+
+
 
 \section{Baselines}
 

@@ -11,47 +11,49 @@ Warning--I didn't find a database entry for "self"
 Warning--empty journal in forte1967syntax
 Warning--can't use both volume and number fields in kruger2003linear
 Warning--empty journal in minsky1969perceptrons
+Warning--empty journal in MuellerKBA11_SMD_ISMIR-lateBreaking
 Warning--empty journal in russell2002artificial
+Warning--empty journal in turetsky2003ground
 Warning--empty school in werbos_1974
-You've used 64 entries,
+You've used 69 entries,
             2253 wiz_defined-function locations,
-            900 strings with 14127 characters,
-and the built_in function-call counts, 21367 in all, are:
-= -- 2070
-> -- 983
+            927 strings with 15406 characters,
+and the built_in function-call counts, 23264 in all, are:
+= -- 2250
+> -- 1078
 < -- 0
-+ -- 418
-- -- 342
-* -- 1629
-:= -- 3426
-add.period$ -- 188
-call.type$ -- 64
-change.case$ -- 355
++ -- 458
+- -- 376
+* -- 1761
+:= -- 3719
+add.period$ -- 201
+call.type$ -- 69
+change.case$ -- 387
 chr.to.int$ -- 0
-cite$ -- 69
-duplicate$ -- 767
-empty$ -- 1735
-format.name$ -- 342
-if$ -- 4447
+cite$ -- 76
+duplicate$ -- 850
+empty$ -- 1881
+format.name$ -- 376
+if$ -- 4855
 int.to.chr$ -- 0
-int.to.str$ -- 64
-missing$ -- 60
-newline$ -- 319
-num.names$ -- 128
-pop$ -- 398
+int.to.str$ -- 69
+missing$ -- 65
+newline$ -- 342
+num.names$ -- 138
+pop$ -- 441
 preamble$ -- 1
-purify$ -- 298
+purify$ -- 325
 quote$ -- 0
-skip$ -- 527
+skip$ -- 589
 stack$ -- 0
-substring$ -- 1343
-swap$ -- 224
+substring$ -- 1445
+swap$ -- 252
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 244
-warning$ -- 5
-while$ -- 217
-width$ -- 66
-write$ -- 638
+type$ -- 264
+warning$ -- 7
+while$ -- 235
+width$ -- 71
+write$ -- 683
 (There was 1 error message)
