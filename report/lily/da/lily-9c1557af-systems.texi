@@ -1,0 +1,3 @@
+@image{da/lily-9c1557af-1}
+@image{da/lily-9c1557af-2}
+@c eof

@@ -39,7 +39,6 @@ I would like to thank Mark Steedman and Andrew McLeod for their advice and guida
 %Summarize contributions
 \chapter{Introduction}
 This is a report to detail the work carried out in the second year of the MInf Project.
-CHANGE
 \section{Summary of contributions}
 
 \section{Previous Year}
@@ -57,34 +56,61 @@ Music is fundamentally concerned with two concepts: rhythm and pitch. Rhythm is,
 Music has been studied and practised by many different cultures over the course of human history and there have been many different formalisms for describing it developed. The most common, and that used in this report is {\em Western Tonal Music} (WTM). Under this paradigm, the continuous range of pitch is divided into repeating {\em octaves}, where corresponding points on each {\em octave} are perceived as the same note at different pitches. These ranges are then subdivided into 12 distinct notes. The method used for these divisions is based on ratios between note frequencies, the most commonly used being Equal Temperament \cite{regener1973pitch}. Pieces of music are organised into one of 12 {\em keys}, each with a {\em tonic} corresponding to one of the 12 notes. Keys can be thought of as a prior over the distribution of notes in a song, where the tonic note has the highest probability of being played.
 
 In written music, pitch is associated with vertical direction on a {\em stave}, shown below.
-\begin{lilypond}
-  snippet = \relative c' {<f bes d>1 <e bes' d> <f a d> }
-  \score { 
-    \snippet 
-    \layout { 
-           #(layout-set-staff-size 14)
-                }
-              }
-          \end{lilypond} 
-STAVE
+\begin{center}
+  \begin{lilypond}
+    snippet = \relative c' {<f bes d>1 <e bes' d> <f a d> }
+    \score { 
+      \snippet 
+      \layout { 
+        #(layout-set-staff-size 20)
+      }
+    }
+  \end{lilypond}
+\end{center}
 
 Rhythm is concerned with the temporal positioning of these notes, both where and when they occur, as well as for how long to play them. In WTM a piece of music has an associated beat or {\em tempo} that defines the frequency of an underlying, unheard pulse, over which the notes of the piece are laid, typically close to 120 beats per minute. The {\em time signature} of a piece defines how to treat groups of these beats, with the most common being $\frac{4}{4}$. This corresponds to groupings of four beats (also called {\em quarter notes} or {\em crotchets}). These groupings are referred to as {\em bars} and are used to organise the temporal structure of a melody in a way that is both easy to read and represents the underlying rhythmic properties of the piece. As in western languages, time flows from left to right in written music.
 
-DIAGRAM
-
 The above is a very brief overview of melodic structure in a piece of music. However there is another concept that is fundamental to this problem space, and that is {\em harmony}. Fundamentally, {\em harmony} is the relationship between the pitches of two notes, as they are heard together. It is concerned with the {\em intervals} between the notes and how they are perceived. The most basic interval is the {\em semitone}, the distance between one note and its neighbour, hence there are 12 semitones in an octave. The harmonic perception of an interval of two or less semitones is dissonant and jarring. The octave itself is an interval, which is perceived as resonant and uncharacterised, another way of saying that two pitches an octave apart are perceived as the same note. The next simplest interval is when two notes are 5 semitones apart, the {\em perfect fifth}, referred to as a {\em power chord} in guitar terminology, it adds the most basic harmonic colour. The intervals of 3 and 4 semitones are where harmony takes on an emotional quality, 3 semitones is referred to as a {\em minor third}, and evokes a feeling of darkness and melancholy, when perceived; whereas 4 semitones, the {\em major third} evokes the opposite emotion, that of brightness. It is this incredible connection between emotions and intervals that makes musical harmony so fascinating.
 
-INTERVAL DIAGRAM
+\begin{center}
+  \begin{lilypond}
+    \relative {
+        <c' d> <c e> <c ees> <c g'> <c c'>
+      }
+  \end{lilypond}
+\end{center}
 
 A {\em chord} is when more than one note is played at one point in time, typically at least three. The basic three-note chord is called a {\em triad}, composed of notes that are based on intervals, relative to the note in the first position, the {\em root}. The other two are the {\em perfect fifth} and a {\em third}, either {\em major} or {\em minor}. Depending on the {\em third} that is chosen, the full chord with take on one of these qualities. The following diagram shows the basic C major chord.
 
-DIAGRAM OF C CHORD
+\begin{center}
+  \begin{lilypond}
+    \relative {
+        <c' e g>
+      }
+  \end{lilypond}
+\end{center}
 
 A modern musical arrangement, for example a jazz standard, typically consists of both a melody and an associated progression of chords, intended to be played as an accompaniment to the melody. The problem space of this project is concerned with the association between these two, specifically the problem of generating one if the other is not present. Generating a melody is what is typically considered musical composition, a difficult problem to solve on which much work has been done in recent years CITE ALL THE THINGS. This project concerns itself with the other direction, predicting chord sequences from melodies. This problem is conceptually half sequential classification, half generation, as there is not necessarily a unique chord sequence for every melody, but there is still a ground truth that can, theoretically, be derived from the observed notes. The following piece of music is an example from one of the corpora used for training the models.
 
-DIAGRAM MINUET IN G
+  \begin{lilypond}
+    harmonies = \chords {g1. c2. g}
+    <<
+    \new ChordNames {
+      \set chordChanges = ##t
+      \harmonies
+    }
+    \relative {
+        \time 3/4
+        d''4 g,8 a8 b8 c8
+        d4 g, g
+        e' c8 d e f 
+        g4 g, g
+      }
+    >>
+  \end{lilypond}
 
-DISCUSS WITH WORKED EXAMPLE ON ABOVE
+
+WITH WORKED EXAMPLE ON ABOVE
 
 In terms of a traditional classification problem, $f(x) = y$, the $x$ here is a sequence of notes and the $y$ is a sequence of chord labels. Hence we have a sequence to sequence problem.
 
