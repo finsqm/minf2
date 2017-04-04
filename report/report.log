@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  2 APR 2017 00:21
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  2 APR 2017 13:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1381,25 +1381,25 @@ LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
 ]
 Chapter 1.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <17.28> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 43.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 42.
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <17.28> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 43.
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 42.
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
-(Font)              scaled to size 15.55188pt on input line 43.
+(Font)              scaled to size 15.55188pt on input line 42.
 [5
 
 ]
 Chapter 2.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 53.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 52.
 
-LaTeX Warning: Citation `dylan1975blood' on page 6 undefined on input line 53.
-
-
-LaTeX Warning: Citation `cohen2007songs' on page 6 undefined on input line 53.
+LaTeX Warning: Citation `dylan1975blood' on page 6 undefined on input line 52.
 
 
-LaTeX Warning: Citation `regener1973pitch' on page 6 undefined on input line 57
+LaTeX Warning: Citation `cohen2007songs' on page 6 undefined on input line 52.
+
+
+LaTeX Warning: Citation `regener1973pitch' on page 6 undefined on input line 56
 .
 
 [6
@@ -1412,14 +1412,14 @@ See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.60 \begin{lilypond}
-                     
+l.60   \begin{lilypond}
+                       
 ? 
 ! Emergency stop.
  ...                                              
                                                   
-l.60 \begin{lilypond}
-                     
+l.60   \begin{lilypond}
+                       
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
@@ -1428,7 +1428,7 @@ or  <return>  to continue without it.
 Here is how much of TeX's memory you used:
  30925 strings out of 493014
  635039 string characters out of 6133351
- 667323 words of memory out of 5000000
+ 667325 words of memory out of 5000000
  33983 multiletter control sequences out of 15000+600000
  24670 words of font info for 43 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191

@@ -1,0 +1,55 @@
+This is BibTeX, Version 0.99d (TeX Live 2016)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: report.aux
+The style file: acm.bst
+Database file #1: bibfile.bib
+Warning--empty journal in forte1967syntax
+Warning--can't use both volume and number fields in kruger2003linear
+Warning--empty publisher in mcafee
+Warning--empty journal in minsky1969perceptrons
+Warning--empty journal in MuellerKBA11_SMD_ISMIR-lateBreaking
+Warning--empty journal in russell2002artificial
+Warning--empty journal in turetsky2003ground
+Warning--empty school in werbos_1974
+You've used 72 entries,
+            2253 wiz_defined-function locations,
+            939 strings with 15786 characters,
+and the built_in function-call counts, 24059 in all, are:
+= -- 2322
+> -- 1114
+< -- 0
++ -- 473
+- -- 388
+* -- 1816
+:= -- 3850
+add.period$ -- 209
+call.type$ -- 72
+change.case$ -- 401
+chr.to.int$ -- 0
+cite$ -- 80
+duplicate$ -- 880
+empty$ -- 1952
+format.name$ -- 388
+if$ -- 5018
+int.to.chr$ -- 0
+int.to.str$ -- 72
+missing$ -- 68
+newline$ -- 356
+num.names$ -- 144
+pop$ -- 464
+preamble$ -- 1
+purify$ -- 337
+quote$ -- 0
+skip$ -- 608
+stack$ -- 0
+substring$ -- 1479
+swap$ -- 258
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 274
+warning$ -- 8
+while$ -- 243
+width$ -- 74
+write$ -- 710
+(There were 8 warnings)
