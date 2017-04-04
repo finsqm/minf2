@@ -6,4 +6,4 @@ pip install -r requirements.txt
 
 cd src/seq2seq/wjazz
 
-python LSTM-msc.py
+python LSTM-Cross-Val.py
