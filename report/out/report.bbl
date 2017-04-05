@@ -60,6 +60,13 @@
 \newblock {\em Songs from a Room}.
 \newblock Song BMG Music Entertainment, 1969.
 
+\bibitem{conklin2003music}
+{\sc Conklin, D.}
+\newblock Music generation from statistical models.
+\newblock In {\em Proceedings of the AISB 2003 Symposium on Artificial
+  Intelligence and Creativity in the Arts and Sciences\/} (2003), Citeseer,
+  pp.~30--35.
+
 \bibitem{cybenko1989approximation}
 {\sc Cybenko, G.}
 \newblock Approximation by superpositions of a sigmoidal function.
@@ -78,6 +85,12 @@
   diatonic modal harmony.
 \newblock In {\em Multidimensional Systems (nDS), 2013. Proceedings of the 8th
   International Workshop on\/} (Sept 2013), pp.~1--6.
+
+\bibitem{duvsek2016sequence}
+{\sc Du{\v{s}}ek, O., and Jur{\v{c}}{\'\i}{\v{c}}ek, F.}
+\newblock Sequence-to-sequence generation for spoken dialogue via deep syntax
+  trees and strings.
+\newblock {\em arXiv preprint arXiv:1606.05491\/} (2016).
 
 \bibitem{dylan1975blood}
 {\sc Dylan, B.}
@@ -155,6 +168,10 @@
 \newblock Multilayer feedforward networks are universal approximators.
 \newblock {\em Neural networks 2}, 5 (1989), 359--366.
 
+\bibitem{inesta2016machine}
+{\sc I{\~n}esta, J.~M., Conklin, D., and Ram{\'\i}rez, R.}
+\newblock Machine learning and music generation, 2016.
+
 \bibitem{kostka2009tonal}
 {\sc Kostka, S., and Payne, D.}
 \newblock Tonal harmony, with an introduction to twentieth-century music . me
@@ -206,6 +223,11 @@
 \newblock Syntactic structures.
 \newblock {\em Language 33}, 3 Part 1 (1957), 375--408.
 
+\bibitem{luong2015multi}
+{\sc Luong, M.-T., Le, Q.~V., Sutskever, I., Vinyals, O., and Kaiser, L.}
+\newblock Multi-task sequence to sequence learning.
+\newblock {\em arXiv preprint arXiv:1511.06114\/} (2015).
+
 \bibitem{maxwell1992expert}
 {\sc Maxwell, H.~J.}
 \newblock An expert system for harmonizing analysis of tonal music,
@@ -228,6 +250,12 @@
 \bibitem{MuellerKBA11_SMD_ISMIR-lateBreaking}
 {\sc M{\"u}ller, M., Konz, V., Bogler, W., and Arifi-M{\"u}ller, V.}
 \newblock Saarland music data ({SMD}).
+
+\bibitem{nierhaus2009algorithmic}
+{\sc Nierhaus, G.}
+\newblock {\em Algorithmic composition: paradigms of automated music
+  generation}.
+\newblock Springer Science \& Business Media, 2009.
 
 \bibitem{numpy_2005}
 {\sc NumPy}.
@@ -261,6 +289,14 @@
 \newblock Algorithms for chordal analysis.
 \newblock {\em Computer Music Journal 26}, 2 (2002), 27--49.
 
+\bibitem{scikit-learn}
+{\sc Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B.,
+  Grisel, O., Blondel, M., Prettenhofer, P., Weiss, R., Dubourg, V.,
+  Vanderplas, J., Passos, A., Cournapeau, D., Brucher, M., Perrot, M., and
+  Duchesnay, E.}
+\newblock Scikit-learn: Machine learning in {P}ython.
+\newblock {\em Journal of Machine Learning Research 12\/} (2011), 2825--2830.
+
 \bibitem{pichotta2016using}
 {\sc Pichotta, K., and Mooney, R.~J.}
 \newblock Using sentence-level lstm language models for script inference.
@@ -275,11 +311,6 @@
 {\sc Regener, E.}
 \newblock {\em Pitch notation and equal temperament: A formal study}, vol.~6.
 \newblock University of California Press, 1973.
-
-\bibitem{rockyb_2015}
-{\sc rockyb}.
-\newblock Timecomplexity python wiki.
-\newblock \url{https://wiki.python.org/moin/TimeComplexity}, Jun 2015.
 
 \bibitem{rohrmeier2007generative}
 {\sc Rohrmeier, M.}
@@ -337,10 +368,22 @@
 \newblock In {\em Proceedings of the 1979 annual conference\/} (1979), ACM,
   pp.~110--115.
 
+\bibitem{srivastava2014dropout}
+{\sc Srivastava, N., Hinton, G.~E., Krizhevsky, A., Sutskever, I., and
+  Salakhutdinov, R.}
+\newblock Dropout: a simple way to prevent neural networks from overfitting.
+\newblock {\em Journal of Machine Learning Research 15}, 1 (2014), 1929--1958.
+
 \bibitem{sundermeyer2012lstm}
 {\sc Sundermeyer, M., Schl{\"u}ter, R., and Ney, H.}
 \newblock Lstm neural networks for language modeling.
 \newblock In {\em Interspeech\/} (2012), pp.~194--197.
+
+\bibitem{sutskever2014sequence}
+{\sc Sutskever, I., Vinyals, O., and Le, Q.~V.}
+\newblock Sequence to sequence learning with neural networks.
+\newblock In {\em Advances in neural information processing systems\/} (2014),
+  pp.~3104--3112.
 
 \bibitem{tieleman2012lecture}
 {\sc Tieleman, T., and Hinton, G.}
@@ -386,6 +429,11 @@
 {\sc Werbos, P.~J.}
 \newblock Backpropagation through time: what it does and how to do it.
 \newblock {\em Proceedings of the IEEE 78}, 10 (1990), 1550--1560.
+
+\bibitem{whorley2016music}
+{\sc Whorley, R.~P., and Conklin, D.}
+\newblock Music generation from statistical models of harmony.
+\newblock {\em Journal of New Music Research 45}, 2 (2016), 160--183.
 
 \bibitem{widmer1992qualitative}
 {\sc Widmer, G.}
