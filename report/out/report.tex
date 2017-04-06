@@ -637,7 +637,7 @@ The numbers in red represent the probabilities of transitioning between each sta
   \includegraphics[scale=0.5]{minghmm.png}
 \end{center}
 
-From this we can see that the model has learned that self transitions between chords are very likely, a result of the repeated labelling of notes with chords. This trade off can mean that the model finds it difficult to transition between chords and will prefer to try and make the sequence fit to one chord. However, in this case, the model effectively transitions to the chord $C$ $major$, as this chord is much more likely to emit the notes $E$ and $C$, and the transition to $C$ $major$ from $G$ $major$, although small, is the next most probable transition. The transition probabilities from a chord with root $G$ are shown in table \ref{trans}.
+From this we can see that the model has learned that self transitions between chords are very likely, a result of the repeated labelling of notes with chords. This trade off can mean that the model finds it difficult to transition between chords and will prefer to try and make the sequence fit to one chord. However, in this case, the model effectively transitions to the chord $C$ $major$, as this chord is much more likely to emit the notes $E$ and $C$, and the transition to $C$ $major$ from $G$ $major$, although small, is the next most probable transition. The transition probabilities from a chord with root $G$ are shown in table \ref{trans}, note they are rounded to 3 decimal places so for very small probabilities these become zero.
 
 \begin{table}[h!]
   \centering
@@ -645,18 +645,18 @@ From this we can see that the model has learned that self transitions between ch
   \label{trans}
   \begin{tabular}{l|l}
     Root of Next Chord          & Transistion Probability \\ \hline
-    G                   & $8.6 \times 10^{-1}$          \\
-    C                   & $6.0 \times 10^{-2}$          \\
-    F$\#$               & $3.6 \times 10^{-2}$          \\
-    D                   & $2.5 \times 10^{-2}$          \\
-    E$\flat$            & $2.4 \times 10^{-2}$          \\
-    A                   & $1.5 \times 10^{-2}$          \\
-    E                   & $1.2 \times 10^{-2}$          \\
-    F                   & $1.0 \times 10^{-2}$          \\
-    B                   & $6.3 \times 10^{-3}$          \\
-    A$\flat$            & $3.1 \times 10^{-3}$          \\
-    B$\flat$            & $7.3 \times 10^{-5}$          \\
-    D$\flat$            & $3.3 \times 10^{-5}$
+    G                   & $0.860$          \\
+    C                   & $0.060$          \\
+    F$\#$               & $0.036$          \\
+    D                   & $0.025$          \\
+    E$\flat$            & $0.024$          \\
+    A                   & $0.015$          \\
+    E                   & $0.012$          \\
+    F                   & $0.010$          \\
+    B                   & $0.006$          \\
+    A$\flat$            & $0.003$          \\
+    B$\flat$            & $0.000$          \\
+    D$\flat$            & $0.000$
   \end{tabular}
 \end{table}
 
@@ -782,7 +782,7 @@ The first main task of this year's work was to find a new database that containe
 
 \section{Experimental Design and Accuracy Metric}
 
-It is important to note that evaluating these models is difficult, as the nature of the problem is inherently ambiguous. The chord in the data may say $C$ $major$ but perhaps an $A$ $minor$ would work equally well. Unfortunately there in no easy way of encoding this into an accuracy metric for our model. A substitution table could be imagined but this would be highly subjective and too lenient on an accuracy metric. For this reason a hard, note by note chord comparison was used to evaluate the accuracy of the models e.g. the accuracy of a produced chord sequence is the percentage of positions where it guessed exactly the ground truth chord.
+It is important to note that evaluating these models is difficult, as the nature of the problem is inherently ambiguous. The chord in the data may say $C$ $major$ but perhaps an $A$ $minor$ would work equally well. Unfortunately there in no easy way of encoding this into an accuracy metric for our model. A substitution table could be imagined but this would be highly subjective and too lenient on an accuracy metric. For this reason a hard, note by note chord comparison was used to evaluate the accuracy of the models e.g. the accuracy of a produced chord sequence is the percentage of positions where it guessed exactly the ground truth chord. The results are reported as the percentage of the notes marked correctly.
 
 Another key problem is the choice of what to use as chord labels. Previous in this report the chords have been referred to either by their root or their root plus a $major$/$minor$ modifier. But in reality chords can take on a variety of characteristics including including $dominant$ $7ths$, $suspended$ $4ths$ and many others. Including all of these as individual categories would quickly reduce any accuracy measure to zero. For this reason the choice was made to simplify the problem to one of determining the root of the chord. It is noted that information is lost in this process, both in the expressive power of the output and the modality of the input (a $C$ $major$ and a $C$ $minor$ will now appear the same). This trade off was deemed necessary to allow for meaningful evaluation.
 
@@ -868,6 +868,18 @@ The results have confirmed one of the suspicions of the previous year's work, th
 
 The results of the two models on the KP corpus have outperformed the chosen baselines. Notably the stronger $Tonic$ baseline, that receives information about the key of the song, is outperformed by both models even when they do not receive this key information (the untransposed models). This shows that, even with a small dataset, these models are able to capture some of the harmonic structure of the melody.
 
+However, even with the KP corpus the models tend to over-classify the tonic as the most probable chord. This is the main failing point of specifically the HMM model, and a fundamental difficulty in determining chord sequences from purely symbolic melodic data; the tonic chord both occurs the most frequently in the data and is the most `forgiving' to melody, i.e. most notes in the scale can be played over it.
+
+To illustrate this we can take the example of Minuet in G used throughout the report. The in depth analysis in section \ref{HMM DES} of this piece was on an over-trained model that saw the untransposed version of the data. The main HMM predicted that the most probable chord was the tonic, $G$, at every time step.
+
+The LSTM model does not suffer from this problem in the same way. Below we can see the main LSTM model classifying the same excerpt.
+
+\begin{center}
+\includegraphics[scale=0.5]{lstmlabel}
+\end{center}
+
+The coloured labels represent the chord roots predicted by the LSTM for each note, the larger black labels are the true chord roots. The obvious downfall of this model is that it is over-labelling the data. This coupled with the method of dealing with polyphony actually means it predicts two chords at one time step in some cases. However the classifications it is making do make musical sense. If one were to accompany this melody with chords based on the roots predicted here, then the result would be pleasant to the ear, if a little quick changing. Hence the LSTM model may actually be performing better than suggested from the strict accuracy metric.
+
 \section{Future Work}
 
 The KP corpus is still not a satisfactory dataset for the evaluation of these models due to it's very small size. Due to this, the conclusions drawn from the results are dependent on the assumption that the mean accuracy seen is representative of the larger population of classical songs. For further work to be done in this field a significantly larger corpus of annotated symbolic melodies needs to be compiled.
@@ -877,6 +889,8 @@ One method to solve this problem could be to take advantage of recent advances i
 The HMM model presented is a generative model of melody generation from chords. Hence the configuration presented here could be used in the generation of simple melodic sequences. The model could also be augmented by language model, such as a grammar of chord progressions (c.f. the one proposed in \cite{steedman1984generative}) or by a simple $n$-gram model.
 
 The generative HMM model could also be augmented by an LSTM model similar to the one proposed here, but taking chord sequence as inputs and estimating their probabilities.
+
+Some extensions to the LSTM model could include a bi-directional variant that can predict from future notes, or a full sequence to sequence model that does not need to predict the same number of chords as notes.
 
 It is hoped that this field can benefit from future advances in machine learning, but to do so it is necessary for a copyright-free, annotated, and widely available corpus of a significant size to be compiled to stimulate research.
 
