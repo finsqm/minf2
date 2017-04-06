@@ -26,6 +26,11 @@
 \newblock {\em Advances in neural information processing systems 17\/} (2005),
   25--32.
 
+\bibitem{biles1994genjam}
+{\sc Biles, J.~A.}
+\newblock Genjam: A genetic algorithm for generating jazz solos.
+\newblock In {\em ICMC\/} (1994), vol.~94, pp.~131--137.
+
 \bibitem{buitinck}
 {\sc Buitinck, L.}
 \newblock seqlearn.
@@ -121,6 +126,13 @@
 \bibitem{forte1967syntax}
 {\sc Forte, A.}
 \newblock Syntax-based analytic reading of musical scores.
+
+\bibitem{goodfellow2014generative}
+{\sc Goodfellow, I., Pouget-Abadie, J., Mirza, M., Xu, B., Warde-Farley, D.,
+  Ozair, S., Courville, A., and Bengio, Y.}
+\newblock Generative adversarial nets.
+\newblock In {\em Advances in neural information processing systems\/} (2014),
+  pp.~2672--2680.
 
 \bibitem{granroth2014robust}
 {\sc Granroth-Wilding, M., and Steedman, M.}
@@ -307,6 +319,13 @@
 \newblock {\em Harmony}.
 \newblock Norton, 1948.
 
+\bibitem{ragan2014jupyter}
+{\sc Ragan-Kelley, M., Perez, F., Granger, B., Kluyver, T., Ivanov, P.,
+  Frederic, J., and Bussonier, M.}
+\newblock The jupyter/ipython architecture: a unified view of computational
+  research, from interactive exploration to communication and publication.
+\newblock In {\em AGU Fall Meeting Abstracts\/} (2014), vol.~1, p.~07.
+
 \bibitem{regener1973pitch}
 {\sc Regener, E.}
 \newblock {\em Pitch notation and equal temperament: A formal study}, vol.~6.
@@ -373,6 +392,12 @@
   Salakhutdinov, R.}
 \newblock Dropout: a simple way to prevent neural networks from overfitting.
 \newblock {\em Journal of Machine Learning Research 15}, 1 (2014), 1929--1958.
+
+\bibitem{steedman1984generative}
+{\sc Steedman, M.~J.}
+\newblock A generative grammar for jazz chord sequences.
+\newblock {\em Music Perception: An Interdisciplinary Journal 2}, 1 (1984),
+  52--77.
 
 \bibitem{sundermeyer2012lstm}
 {\sc Sundermeyer, M., Schl{\"u}ter, R., and Ney, H.}

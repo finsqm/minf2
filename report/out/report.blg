@@ -11,45 +11,45 @@ Warning--empty journal in MuellerKBA11_SMD_ISMIR-lateBreaking
 Warning--empty journal in russell2002artificial
 Warning--empty journal in turetsky2003ground
 Warning--empty school in werbos_1974
-You've used 80 entries,
+You've used 84 entries,
             2253 wiz_defined-function locations,
-            972 strings with 17311 characters,
-and the built_in function-call counts, 27323 in all, are:
-= -- 2625
-> -- 1315
+            995 strings with 18088 characters,
+and the built_in function-call counts, 29172 in all, are:
+= -- 2801
+> -- 1408
 < -- 0
-+ -- 555
-- -- 462
-* -- 2088
-:= -- 4380
-add.period$ -- 232
-call.type$ -- 80
-change.case$ -- 461
++ -- 595
+- -- 496
+* -- 2230
+:= -- 4655
+add.period$ -- 244
+call.type$ -- 84
+change.case$ -- 490
 chr.to.int$ -- 0
-cite$ -- 88
-duplicate$ -- 986
-empty$ -- 2182
-format.name$ -- 462
-if$ -- 5683
+cite$ -- 92
+duplicate$ -- 1063
+empty$ -- 2326
+format.name$ -- 496
+if$ -- 6083
 int.to.chr$ -- 0
-int.to.str$ -- 80
-missing$ -- 77
-newline$ -- 395
-num.names$ -- 160
-pop$ -- 529
+int.to.str$ -- 84
+missing$ -- 81
+newline$ -- 415
+num.names$ -- 168
+pop$ -- 567
 preamble$ -- 1
-purify$ -- 390
+purify$ -- 415
 quote$ -- 0
-skip$ -- 680
+skip$ -- 740
 stack$ -- 0
-substring$ -- 1670
-swap$ -- 290
+substring$ -- 1787
+swap$ -- 320
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 304
+type$ -- 320
 warning$ -- 8
-while$ -- 271
-width$ -- 82
-write$ -- 787
+while$ -- 288
+width$ -- 86
+write$ -- 829
 (There were 8 warnings)

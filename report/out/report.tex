@@ -27,13 +27,13 @@
 
 \date{\today}
 
-\abstract{
+\abstract{This report proposes two models for the automatic harmonic analysis of melodies. One is a generative Hidden Markov Model, the other is a discriminative Long Short Term Memory Neural Network. Each model deals only with symbolic input, notes in the form of 12 possible pitch classes, and outputs a sequence of predicted chord roots. The models are trained on two datasets, the Weimar Jazz Database (WJazz) of jazz solo transcriptions and the KP corpus of classical melody excerpts. The models perform well on the KP corpus when compared to two proposed baselines: a model which chooses the tonic chord at every times step and a model which chooses the chord with the root the same as the first note in the input. The models do not show any improvement on the $Tonic$ model for the jazz data, confirming the suspicion of last years report, that this dataset is not suitable to the task.
 }
 
 \maketitle
 %\includeshield
 \begin{acknowledgements}
-I would like to thank Mark Steedman and Andrew McLeod for their advice and guidance on this project.
+I would like to thank Mark Steedman and Andrew McLeod for their guidance on this project, Adam Lopez for organising group meetings and giving helpful advice, and Salma Saade and Sandy McAfee for making sure that this report makes sense to humans.
 \end{acknowledgements}
 \standarddeclaration
 \tableofcontents
@@ -45,15 +45,22 @@ I would like to thank Mark Steedman and Andrew McLeod for their advice and guida
 
 When listening to a melody, most people will get a sense of it moving through some kind of space separate from the notes it is comprised of, a harmonic space. Perhaps it begins joyfully and becomes melancholic. It will create tension and then release it. It embodies some kind of higher structure than just the sequences of notes themselves.
 
-This harmonic structure that we intuitively hear in melodies is directly related to any chord progression that may be accompanying the melody. In a sense, that chord progression exists behind the melody even if it is not being played.
+This harmonic structure that we intuitively hear in melodies is directly related to any chord progression that may be accompanying the melody. In a sense, that chord progression exists behind the melody even if it is not being played. This implies a direct relationship between the notes and their accompanying chords.
 
-This report is concerned with the question of whether that chord sequence can be determined from the symbolic notes themselves, without any extra audio or beat related information. Two models will be presented for the prediction of chord sequences from note sequences, one based on Hidden Markov Models (HMM) and one based on Long-Short-Term-Memory (LSTM) Neural Networks.
+This relationship is exploited in the generation of melodies for models that take a sequence of chords as input and generate melodies from them, see \cite{biles1994genjam}. In theory then, one should be able to generate a sequence of chords from an observed melody. In this instance the problem looks more like classification; we can think of the chord sequence as `generating' the observed notes, and we are trying to determine the most likely $hidden$ chord sequence.
+
+This report is concerned with the question of whether that chord sequence can be determined from the symbolic notes themselves, without any extra audio or beat related information, which is where the majority of the literature has been focussed, see section \ref{prev} for an overview. 
+
+Two models will be presented in this report on the prediction of chord sequences from note sequences, one based on Hidden Markov Models (HMM) and one based on Long-Short-Term-Memory (LSTM) Neural Networks.
 
 \section{Previous Year}
 
 In the previous year of this project, work was started on the HMM implementation, with the focus on the relationship between a single chord and the notes that were associated with it. Three models of this relationship were proposed, one based on a naive frequency distribution (Bag of Notes), one based on a complex decision tree structure (Chord Tone Model) and one sequential model that implemented a second, lower level HMM (Concatenative HMM).
 
-These models were implemented on transcriptions of jazz solos
+These models were implemented on transcriptions of jazz solos and compared to an implementation of a non-statistical template matching model from \cite{oudre2009template}.
+
+The conclusion of the year's work was that the data was unsuitable for the task, with all models, including the Template model, not being able to outperform a baseline of choosing the tonic chord repeatedly. However the Chord Tone Model and the Concatenative HMM outperformed the Template model so this suggested that this approach was worth persuing.
+
 %\begin{table}[h!]
  % \centering
  % \caption{Previous Year's Results}
@@ -73,9 +80,11 @@ The contributions of this year's work are summarized below for reference:
 
 \begin{itemize}
   \item Before any new developments could be made it was necessary to search for a new dataset, as the results of the previous year's work showed that the data being used was insufficient for training a purely symbolic note to chord model. The dataset that was found was the KP Corpus of classical melody excerpts \cite{kostka2009tonal}.
-  \item This new dataset was in a different format from the original data, hence a new data processing pipeline had to be implemented to be able to run the 
+  \item This new dataset was in a different format from the original data, hence a new data processing pipeline had to be implemented.
   \item A new, fourth HMM was designed and implemented. This model takes a simpler approach to chord to note modelling, repeating chord labels to create a one-to-one mapping between chords and notes, with a Multinomial emission model. See Section \ref{HMM} for details.
   \item An LSTM model was designed and implemented. Initially intended to be a full sequence to sequence encoder and decoder model for varying input output lengths, it was instead decided (based on the advice of Adam Lopez) to implement a single one-to-one mapping LSTM model. See section \ref{LSTM}.
+  \item The development environment (primarily Jupyter Notebooks \cite{ragan2014jupyter}) was then moved to a format that could run on the school's {\tt msccluster} of compute nodes.
+  \item The models were then properly evaluated with 10-fold cross validation.
 \end{itemize}
 
 %Summarize knowledge needed to understand project
@@ -109,7 +118,7 @@ In written music, pitch is associated with vertical direction on a {\em stave}, 
 
 Rhythm is concerned with the temporal positioning of these notes, both where and when they occur, as well as for how long to play them. In WTM a piece of music has an associated beat or {\em tempo} that defines the frequency of an underlying, unheard pulse, over which the notes of the piece are laid, typically close to 120 beats per minute. The {\em time signature} of a piece defines how to treat groups of these beats, with the most common being $\frac{4}{4}$. This corresponds to groupings of four beats (also called {\em quarter notes} or {\em crotchets}). These groupings are referred to as {\em bars} and are used to organise the temporal structure of a melody in a way that is both easy to read and represents the underlying rhythmic properties of the piece. As in western languages, time flows from left to right in written music.
 
-The above is a very brief overview of melodic structure in a piece of music. However there is another concept that is fundamental to this problem space, and that is {\em harmony}. Fundamentally, {\em harmony} is the relationship between the pitches of two notes, as they are heard together. It is concerned with the {\em intervals} between the notes and how they are perceived. The most basic interval is the {\em semitone}, the distance between one note and its neighbour, hence there are 12 semitones in an octave. The harmonic perception of an interval of two or less semitones is dissonant and jarring. The octave itself is an interval, which is perceived as resonant and uncharacterised, another way of saying that two pitches an octave apart are perceived as the same note. The next simplest interval is when two notes are 5 semitones apart, the {\em perfect fifth}, referred to as a {\em power chord} in guitar terminology, it adds the most basic harmonic colour. The intervals of 3 and 4 semitones are where harmony takes on an emotional quality, 3 semitones is referred to as a {\em minor third}, and evokes a feeling of darkness and melancholy, when perceived; whereas 4 semitones, the {\em major third} evokes the opposite emotion, that of brightness. It is this incredible connection between emotions and intervals that makes musical harmony so fascinating.
+The above is a very brief overview of melodic structure in a piece of music. However there is another concept that is fundamental to this problem space, and that is {\em harmony}. Fundamentally, {\em harmony} is the relationship between the pitches of two or more notes, as they are heard together. It is concerned with the {\em intervals} between the notes and how they are perceived. The most basic interval is the {\em semitone}, the distance between one note and its neighbour, hence there are 12 semitones in an octave. The harmonic perception of an interval of two or less semitones is dissonant and jarring. The octave itself is an interval, which is perceived as resonant and uncharacterised, another way of saying that two pitches an octave apart are perceived as the same note. The next simplest interval is when two notes are 5 semitones apart, the {\em perfect fifth}, referred to as a {\em power chord} in guitar terminology, it adds the most basic harmonic colour. The intervals of 3 and 4 semitones are where harmony takes on an emotional quality, 3 semitones is referred to as a {\em minor third}, and evokes a feeling of darkness and melancholy, when perceived; whereas 4 semitones, the {\em major third} evokes the opposite emotion, that of brightness. It is this incredible connection between emotions and intervals that makes musical harmony so fascinating.
 
 \begin{center}
   {%
@@ -301,7 +310,7 @@ The case looked at for this report is concerned with the off-line variant of thi
   {\mathrm arg}\max_{\{h\}_{t=1}^{T}} P(\{h\}_{t=1}^{T} | \{v\}_{t=1}^{T})
 \end{equation}
 
-This is calculated by a form of dynamic programming called the Viterbi Algorithm \cite{russell2002artificial}, see section \ref{HMM IMP}.
+This is calculated by a form of dynamic programming called the Viterbi Algorithm \cite{russell2002artificial}.
 
 So this model allows us to generate the most likely sequence of hidden, latent variables given an observed sequence, with the assumptions that each observed variable is only dependant on the others {\em through} its corresponding latent variable, and that each latent variable is only dependant on its past {\em through} the previous time step, and is entirely independent of its future. See section \ref{HMM DES} for a discussion on the problems these assumptions raise for this problem space.
 
@@ -311,7 +320,7 @@ One immediate concern with the HMM is that it is unable to capture long term dep
 
 What we want is a model that can carry information through it then learn when to forget it and when to incorporate it into deciding the output at a given time. A popular model for this type of system is the Recurrent Neural Network (RNN), in particular with a Long Short Term Memory (LSTM) cell.
 
-Work on neural networks architectures has flourished in the past few years, due largely in part to advances in optimised computation on GPUs \cite{oh2004gpu}\cite{krizhevsky2012imagenet}, as well as new pre-training methods such as autoencoders \cite{hinton2006reducing}\cite{vincent2008extracting}\cite{deng2010binary}. However the basic concept has not changed very significantly since its beginnings in Hebbian Learning and the Perceptron in the 1940s and 1950s \cite{hebb1949first} \cite{rosenblatt1958perceptron}.
+Work on neural network architectures has flourished in the past few years, due largely in part to advances in optimised computation on GPUs \cite{oh2004gpu}\cite{krizhevsky2012imagenet}, as well as new pre-training methods such as autoencoders \cite{hinton2006reducing}\cite{vincent2008extracting}\cite{deng2010binary}. However the basic concept has not changed very significantly since its beginnings in Hebbian Learning and the Perceptron in the 1940s and 1950s \cite{hebb1949first} \cite{rosenblatt1958perceptron}.
 
 \subsection{Perceptrons and MLPs}
 
@@ -521,7 +530,7 @@ LSTMs are currently the cutting edge for many different areas of natural languag
 
 For an in-depth discussion on LSTMs, \cite{olah_2015} or \cite{greff2016lstm} is recommended.
 
-\section{Review of Previous Work on Automatic Harmonic Analysis}
+\section{Review of Previous Work on Automatic Harmonic Analysis} \label{prev}
 
 A brief review of previous work on chord progression estimation and related works will be presented in this section. Note that this is largely unchanged from the report presented last year.
 
@@ -612,7 +621,9 @@ Now the $v_t$ each correspond to a single note, and the probabilistic model of $
 
 It is important to note that we now have to address the problem of polyphony, where two notes are played at the same time. Our HMM model requires an ordered temporal sequence of notes, hence this effective chord in the melody must be broken down. This can be achieved by simply converting the chord into an $arpeggio$, which is a chord played one note at a time. For this model the order of the arpeggio is broken arbitrarily (in the MIDI implementation the order of notes as observed in the MIDI file is preserved).
 
-For illustrative purposes, the probabilities learned from an HMM model will now be analysed on the example. Note that this HMM model has already `seen' this excerpt before in training, we will be analysing this overtrained model here just to illustrate what the model is able to capture. The section of the excerpt that will be analysed is where the model correctly determines the transition from $G$ $major$ to $C$ $Major$. Note that in the above description of the song the bass clef was omitted for simplicity, now shown below:
+For illustrative purposes, the probabilities learned from an HMM model will now be analysed on the example. Note that this HMM model has already `seen' this excerpt before in training, we will be analysing this overtrained model here just to illustrate what the model is able to capture. The data trained on is also untransposed, so the probabilities represent absolute relationships.
+
+The section of the excerpt that will be analysed is where the model correctly determines the transition from $G$ $major$ to $C$ $Major$. Note that in the above description of the song the bass clef was omitted for simplicity, now shown below:
 
 \begin{center}
   \includegraphics[scale=0.5]{ming.png}
@@ -626,7 +637,30 @@ The numbers in red represent the probabilities of transitioning between each sta
   \includegraphics[scale=0.5]{minghmm.png}
 \end{center}
 
-From this we can see that the model has learned that self transitions between chords are very likely, a result of the repeated labelling of notes with chords. This trade off can mean that the model finds it difficult to transition between chords and will prefer to try and make the sequence fit to one chord. However, in this case, the model effectively transitions to the chord $C$ $major$, as this chord is much more likely to emit the notes $E$ and $C$, and the transition to $C$ $major$ from $G$ $major$, although small, is the next most probable transition. We can see, from the following alternative chord labelling, the probabilities of emitting the notes $E$ and $C$ under staying with a $G$ $major$.
+From this we can see that the model has learned that self transitions between chords are very likely, a result of the repeated labelling of notes with chords. This trade off can mean that the model finds it difficult to transition between chords and will prefer to try and make the sequence fit to one chord. However, in this case, the model effectively transitions to the chord $C$ $major$, as this chord is much more likely to emit the notes $E$ and $C$, and the transition to $C$ $major$ from $G$ $major$, although small, is the next most probable transition. The transition probabilities from a chord with root $G$ are shown in table \ref{trans}.
+
+\begin{table}[h!]
+  \centering
+  \caption{Transition Probabilities from $G$}
+  \label{trans}
+  \begin{tabular}{l|l}
+    Root of Next Chord          & Transistion Probability \\ \hline
+    G                   & $8.6 \times 10^{-1}$          \\
+    C                   & $6.0 \times 10^{-2}$          \\
+    F$\#$               & $3.6 \times 10^{-2}$          \\
+    D                   & $2.5 \times 10^{-2}$          \\
+    E$\flat$            & $2.4 \times 10^{-2}$          \\
+    A                   & $1.5 \times 10^{-2}$          \\
+    E                   & $1.2 \times 10^{-2}$          \\
+    F                   & $1.0 \times 10^{-2}$          \\
+    B                   & $6.3 \times 10^{-3}$          \\
+    A$\flat$            & $3.1 \times 10^{-3}$          \\
+    B$\flat$            & $7.3 \times 10^{-5}$          \\
+    D$\flat$            & $3.3 \times 10^{-5}$
+  \end{tabular}
+\end{table}
+
+We can see, from the following alternative chord labelling, the probabilities of emitting the notes $E$ and $C$ under staying with a $G$ $major$.
 
 \begin{center}
   \includegraphics[scale=0.5]{mingwronghmm.png}
@@ -660,7 +694,7 @@ Another benefit of storing data as Numpy arrays is the benefit of optimised matr
 We now move on to the LSTM based system and the design decisions that were involved in building it. 
 
 \subsection{Design}
-The HMM is a very good approximate model with an intuitive understanding but it's main drawback is the first order markov assumption. We know from music theory that there is an underlying structure in the design of chord progressions \cite{krumhansl1982perceived} \cite{piston1948harmony}. One possible approach for making use of this structure would be to incorporate a grammatical `language' model of chord progressions, as constructed by \cite{granroth2014robust} or \cite{rohrmeier2007generative}. The approach taken in this project was to instead build a system that could learn an implicit representation of structure with memory. This was inspired by the success of such systems at learning language models in other applications, see \cite{schmidhuber2002learning} \cite{sundermeyer2012lstm}. Hence the decision was made to build an LSTM based sequence to sequence model.
+The HMM is a very good approximate model with an intuitive understanding but it's main drawback is the first order Markov assumption. We know from music theory that there is an underlying structure in the design of chord progressions \cite{krumhansl1982perceived} \cite{piston1948harmony}. One possible approach for making use of this structure would be to incorporate a grammatical `language' model of chord progressions, as constructed by \cite{granroth2014robust} or \cite{rohrmeier2007generative}. The approach taken in this project was to instead build a system that could learn an implicit representation of structure with memory. This was inspired by the success of such systems at learning language models in other applications, see \cite{schmidhuber2002learning} \cite{sundermeyer2012lstm}. Hence the decision was made to build an LSTM based sequence to sequence model.
 
 In general a sequence to sequence model refers to the combination of an encoder and a decoder, taking an input sequence to an output sequence, each of which can have a different length. This would have been possible to implement for this problem, but due to the direct local relationship of chords to notes it was decided that a simpler system would be more beneficial. This design makes use of the repeated representation of the data, where there is a one-to-one mapping between chord labels and notes. We can then use a model where each LSTM cell's output is treated as a chord in the prediction sequence.
 
@@ -804,7 +838,7 @@ Despite this, the results obtained from the 10-fold cross validation main experi
 
 The LSTM model was trained with 500 epochs, using a 0.4 probability dropout \cite{srivastava2014dropout} on a 50 cell LSTM layer.
 
-The results of this 10-fold evaluation on both datasets are shown in Figure \ref{main results}. For extra insight into what each model was able to capture, the results of training the models on untransposed data are also shown (i.e. where the songs were not all transposed to the key of $C$).
+The results of this 10-fold evaluation on both datasets are shown in Figure \ref{main results}. For extra insight into what each model was able to capture, the results of training the models on untransposed data are also shown (i.e. where the songs were not all transposed to the key of $C$). The accuracy values correspond to the mean accuracy over the 10 folds, and the error bars shown are the standard deviations.
 
 \begin{landscape}
   \begin{figure}[h!]
@@ -818,15 +852,33 @@ The first thing to note from these results is that there was not a model that pe
 
 What we see from the KP results, though, is that the problem with the jazz excerpts is not that there was not enough data, but that the problem is intrinsically too difficult to accomplish with the solo transcripts. This is clear from the fact that there are roughly $\frac{1}{6}$ as many excerpts in the KP corpus, but the models were able to perform significantly better than the baselines.
 
+The smaller size of the KP corpus can be seen in the standard deviations of the accuracies. The performance was clearly very dependent on the particular excerpts in each fold. These would be expected to decrease as the data size increases.
+
 From the KP results we can see that transposing the data to the same key causes a very slight improvement to the model, much smaller than with the Wjazz results. This can be understood from the results of the $Tonic$ model, where it is the only model that performed worse on the KP corpus. Clearly these excerpts do not depend on the key as heavily as the jazz pieces. The improvement transposing causes can be understood as the models learning relative relationships between, say, the tonic chord and the dominant fifth chord, rather than the absolute relationship between $C$ $major$ and $G$ $major$.
 
-As expected the LSTM model out performs the HMM model on the KP corpus, as it is able to learn to capture what the HMM explicitly models, the markov chain of chords emitting notes, while retaining the ability to model long-term dependencies. Realistically this LSTM has not learned a grammar of chord transitions, but has instead relaxed the first order markov assumption of the HMM and is able to capture long term relationships between notes. A similar improvement in performance may be noticed if an HMM with a second or third order markov assumption (c.f. n-gram models) was used.
+As expected the LSTM model out performs the HMM model on the KP corpus, as it is able to learn to capture what the HMM explicitly models, the Markov chain of chords emitting notes, while retaining the ability to model long-term dependencies. Realistically this LSTM has not learned a grammar of chord transitions, but has instead relaxed the first order Markov assumption of the HMM and is able to capture long term relationships between notes. A similar improvement in performance may be noticed if an HMM with a second or third order Markov assumption (c.f. n-gram models) was used.
 
 \chapter{Conclusion}
 
 \section{Discussion}
 
+This report has presented two models of stochastic, automatic chord labelling for melodic sequences of symbolic notes. The models take into account only the pitch classes and ordering of these notes, and from this they predict the roots of the underlying chord progression.
+
+The results have confirmed one of the suspicions of the previous year's work, that the Weimar Jazz Database is not a suitable dataset for this task. This can now be attributed to the fact that it is composed of `noisy' jazz improvisations, as opposed to the size of the dataset.
+
+The results of the two models on the KP corpus have outperformed the chosen baselines. Notably the stronger $Tonic$ baseline, that receives information about the key of the song, is outperformed by both models even when they do not receive this key information (the untransposed models). This shows that, even with a small dataset, these models are able to capture some of the harmonic structure of the melody.
+
 \section{Future Work}
+
+The KP corpus is still not a satisfactory dataset for the evaluation of these models due to it's very small size. Due to this, the conclusions drawn from the results are dependent on the assumption that the mean accuracy seen is representative of the larger population of classical songs. For further work to be done in this field a significantly larger corpus of annotated symbolic melodies needs to be compiled.
+
+One method to solve this problem could be to take advantage of recent advances in generative adversarial networks \cite{goodfellow2014generative}. These models train a generative and a discriminative model in tandem, each improving the other. A system of this form could be trained to generate melodies from chord sequences as well as providing a model to label the chords of real melodies.
+
+The HMM model presented is a generative model of melody generation from chords. Hence the configuration presented here could be used in the generation of simple melodic sequences. The model could also be augmented by language model, such as a grammar of chord progressions (c.f. the one proposed in \cite{steedman1984generative}) or by a simple $n$-gram model.
+
+The generative HMM model could also be augmented by an LSTM model similar to the one proposed here, but taking chord sequence as inputs and estimating their probabilities.
+
+It is hoped that this field can benefit from future advances in machine learning, but to do so it is necessary for a copyright-free, annotated, and widely available corpus of a significant size to be compiled to stimulate research.
 
 % use the following and \cite{} as above if you use BibTeX
 % otherwise generate bibtem entries
